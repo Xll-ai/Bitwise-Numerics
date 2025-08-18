@@ -1,11 +1,4 @@
-Ok we need all numeric formats in this JSON format in one file
- 
- 
-I need a prompt do research
-Numeric modelers (Universal Numbers, Posit, SoftFloat)
-Binary JSON (UBJSON, CBOR, MessagePack, BSON, Smile)
-Schema carriers (Avro, JData, JSON Schema, Protobuf/FlatBuffers)
-Our proposed Schema
+
 {
   "governance": {
     "type": "IEEE | vendor | de-facto",
