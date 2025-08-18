@@ -1,85 +1,461 @@
-
+[
 {
-  "governance": {
-    "type": "IEEE | vendor | de-facto",
-    "owner": "Name(s) of the standards body or vendor(s)",
-    "status": "standard | proposed | proprietary | multi-vendor",
-    "notes": "Optional clarifications"
-  }
-}
+"name": "INT2",
+"category": "integer",
+"bits_total": 2,
+"signed": true,
+"structure": {
+"sign_bits": 1,
+"exponent_bits": null,
+"mantissa_bits": null,
+"bias": null,
+"specials": { "zeros": "n/a", "infinities": false, "nans": false, "subnormals": false }
+},
+"bit_split": "SB",
+"hex_examples": { "min_signed": "0x2 (-2)", "zero": "0x0", "max_signed": "0x1 (+1)" },
+"binary_examples": [
+{ "bits": "10", "value": "-2 (signed)" },
+{ "bits": "00", "value": "0" },
+{ "bits": "01", "value": "+1 (signed)" }
+],
+"governance": { "type": "de-facto", "owner": "CPU ISAs", "status": "widely adopted", "notes": "Experimental for extreme quantization" }
+},
 {
-  "name": "FP8 (E4M3)",
-  "category": "float",
-  "bits_total": 8,
-  "signed": true,
-  "structure": { "sign_bits": 1, "exponent_bits": 4, "mantissa_bits": 3, "bias": 7,
-    "specials": { "zeros": "±0", "infinities": false, "nans": true, "subnormals": true } },
-  "bit_split": "S | EEEE | MMM",
-  "hex_examples": { "zero_pos": "0x00", "zero_neg": "0x80", "one": "0x38", "max_finite": "0x7F" },
-  "binary_examples": [
-    { "bits": "00000000", "value": "+0" },
-    { "bits": "10000000", "value": "-0" },
-    { "bits": "00111000", "value": "+1" },
-    { "bits": "01111111", "value": "max finite (~448)" }
-  ],
-  "governance": { "type": "vendor", "owner": "NVIDIA/AMD/Intel", "status": "multi-vendor", "notes": "Non-IEEE FP8 profile" }
-}
+"name": "INT4",
+"category": "integer",
+"bits_total": 4,
+"signed": true,
+"structure": {
+"sign_bits": 1,
+"exponent_bits": null,
+"mantissa_bits": null,
+"bias": null,
+"specials": { "zeros": "n/a", "infinities": false, "nans": false, "subnormals": false }
+},
+"bit_split": "SBBB",
+"hex_examples": { "min_signed": "0x8 (-8)", "zero": "0x0", "max_signed": "0x7 (+7)" },
+"binary_examples": [
+{ "bits": "1000", "value": "-8 (signed)" },
+{ "bits": "0000", "value": "0" },
+{ "bits": "0111", "value": "+7 (signed)" }
+],
+"governance": { "type": "de-facto", "owner": "CPU ISAs", "status": "widely adopted", "notes": "Used for quantization in AI" }
+},
 {
-  "name": "HiF8 (HiFloat8)",
-  "category": "float",
-  "bits_total": 8,
-  "signed": true,
-  "structure": {
-    "sign_bits": 1,
-    "exponent_bits": "tapered via Dot Field (2–5)",
-    "mantissa_bits": "tapered (1–3)",
-    "bias": "dynamic",
-    "specials": { "zeros": "single zero", "infinities": true, "nans": true, "subnormals": true }
-  },
-  "bit_split": "S | DotField (2–4) | variable exponent/mantissa",
-  "hex_examples": { "zero": "0x00" },
-  "binary_examples": [
-    { "bits": "00000000", "value": "0 (single zero encoding)" },
-    { "bits": "0???....", "value": "Dot Field determines split & scaling" }
-  ],
-  "governance": { "type": "vendor", "owner": "Huawei", "status": "proprietary", "notes": "Tapered precision; Ascend-native" }
-}
+"name": "INT8",
+"category": "integer",
+"bits_total": 8,
+"signed": true,
+"structure": {
+"sign_bits": 1,
+"exponent_bits": null,
+"mantissa_bits": null,
+"bias": null,
+"specials": { "zeros": "n/a", "infinities": false, "nans": false, "subnormals": false }
+},
+"bit_split": "SBBBBBBB",
+"hex_examples": { "min_signed": "0x80 (-128)", "zero": "0x00", "max_signed": "0x7F (+127)" },
+"binary_examples": [
+{ "bits": "10000000", "value": "-128 (signed)" },
+{ "bits": "00000000", "value": "0" },
+{ "bits": "01111111", "value": "+127 (signed)" }
+],
+"governance": { "type": "de-facto", "owner": "ISO C / CPU ISAs", "status": "widely adopted", "notes": "Not part of IEEE 754 (floating-point)" }
+},
 {
-  "name": "FP16 (binary16)",
-  "category": "float",
-  "bits_total": 16,
-  "signed": true,
-  "structure": { "sign_bits": 1, "exponent_bits": 5, "mantissa_bits": 10, "bias": 15,
-    "specials": { "zeros": "±0", "infinities": true, "nans": true, "subnormals": true } },
-  "bit_split": "S | EEEEE | MMMMMMMMMM",
-  "hex_examples": { "zero_pos": "0x0000", "zero_neg": "0x8000", "one": "0x3C00", "max_finite": "0x7BFF", "infinity": "0x7C00" },
-  "binary_examples": [
-    { "bits": "0000000000000000", "value": "+0" },
-    { "bits": "1000000000000000", "value": "-0" },
-    { "bits": "0011110000000000", "value": "+1" },
-    { "bits": "0111101111111111", "value": "max finite (65504)" },
-    { "bits": "0111110000000000", "value": "+∞" }
-  ],
-  "governance": { "type": "IEEE", "owner": "IEEE", "status": "standard", "notes": "IEEE 754 binary16" }
-}
+"name": "FP8 (E4M3)",
+"category": "float",
+"bits_total": 8,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 4, "mantissa_bits": 3, "bias": 7,
+"specials": { "zeros": "±0", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | EEEE | MMM",
+"hex_examples": { "zero_pos": "0x00", "zero_neg": "0x80", "one": "0x3C", "max_finite": "0x7F" },
+"binary_examples": [
+{ "bits": "00000000", "value": "+0" },
+{ "bits": "10000000", "value": "-0" },
+{ "bits": "00111100", "value": "+1" },
+{ "bits": "01111111", "value": "max finite (~448)" }
+],
+"governance": { "type": "vendor", "owner": "NVIDIA/AMD/Intel", "status": "multi-vendor", "notes": "Non-IEEE FP8 profile" }
+},
 {
-  "name": "INT8",
-  "category": "integer",
-  "bits_total": 8,
-  "signed": null,
-  "structure": {
-    "sign_bits": 0,
-    "exponent_bits": null,
-    "mantissa_bits": null,
-    "bias": null,
-    "specials": { "zeros": "n/a", "infinities": false, "nans": false, "subnormals": false }
-  },
-  "bit_split": "BBBBBBBB",
-  "hex_examples": { "min_signed": "0x80 (-128)", "zero": "0x00", "max_signed": "0x7F (+127)" },
-  "binary_examples": [
-    { "bits": "10000000", "value": "-128 (signed)" },
-    { "bits": "00000000", "value": "0" },
-    { "bits": "01111111", "value": "+127 (signed)" }
-  ],
-  "governance": { "type": "de-facto", "owner": "ISO C / CPU ISAs", "status": "widely adopted", "notes": "Not part of IEEE 754 (floating-point)" }
+"name": "FP8 (E5M2)",
+"category": "float",
+"bits_total": 8,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 5, "mantissa_bits": 2, "bias": 15,
+"specials": { "zeros": "±0", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | EEEEE | MM",
+"hex_examples": { "zero_pos": "0x00", "zero_neg": "0x80", "one": "0x3C", "max_finite": "0x7B" },
+"binary_examples": [
+{ "bits": "00000000", "value": "+0" },
+{ "bits": "10000000", "value": "-0" },
+{ "bits": "00111100", "value": "+1" },
+{ "bits": "01111011", "value": "max finite (~196608)" }
+],
+"governance": { "type": "vendor", "owner": "NVIDIA/AMD/Intel", "status": "multi-vendor", "notes": "Non-IEEE FP8 profile" }
+},
+{
+"name": "HiF8 (HiFloat8)",
+"category": "float",
+"bits_total": 8,
+"signed": true,
+"structure": {
+"sign_bits": 1,
+"exponent_bits": "tapered via Dot Field (2–5)",
+"mantissa_bits": "tapered (1–3)",
+"bias": "dynamic",
+"specials": { "zeros": "single zero", "infinities": true, "nans": true, "subnormals": true }
+},
+"bit_split": "S | DotField (2–4) | variable exponent/mantissa",
+"hex_examples": { "zero": "0x00" },
+"binary_examples": [
+{ "bits": "00000000", "value": "0 (single zero encoding)" },
+{ "bits": "0???....", "value": "Dot Field determines split & scaling" }
+],
+"governance": { "type": "vendor", "owner": "Huawei", "status": "proprietary", "notes": "Tapered precision; Ascend-native" }
+},
+{
+"name": "FP16 (binary16)",
+"category": "float",
+"bits_total": 16,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 5, "mantissa_bits": 10, "bias": 15,
+"specials": { "zeros": "±0", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | EEEEE | MMMMMMMMMM",
+"hex_examples": { "zero_pos": "0x0000", "zero_neg": "0x8000", "one": "0x3C00", "max_finite": "0x7BFF", "infinity": "0x7C00" },
+"binary_examples": [
+{ "bits": "0000000000000000", "value": "+0" },
+{ "bits": "1000000000000000", "value": "-0" },
+{ "bits": "0011110000000000", "value": "+1" },
+{ "bits": "0111101111111111", "value": "max finite (65504)" },
+{ "bits": "0111110000000000", "value": "+∞" }
+],
+"governance": { "type": "IEEE", "owner": "IEEE", "status": "standard", "notes": "IEEE 754 binary16" }
+},
+{
+"name": "BF16 (bfloat16)",
+"category": "float",
+"bits_total": 16,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 8, "mantissa_bits": 7, "bias": 127,
+"specials": { "zeros": "±0", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | EEEEEEEE | MMMMMMM",
+"hex_examples": { "zero_pos": "0x0000", "zero_neg": "0x8000", "one": "0x3F80", "max_finite": "0x7F7F", "infinity": "0x7F80" },
+"binary_examples": [
+{ "bits": "0000000000000000", "value": "+0" },
+{ "bits": "1000000000000000", "value": "-0" },
+{ "bits": "0011111110000000", "value": "+1" },
+{ "bits": "0111111101111111", "value": "max finite (~3.4e38)" },
+{ "bits": "0111111110000000", "value": "+∞" }
+],
+"governance": { "type": "vendor", "owner": "Google/Intel/NVIDIA", "status": "multi-vendor", "notes": "Non-IEEE bfloat16" }
+},
+{
+"name": "FP32 (binary32)",
+"category": "float",
+"bits_total": 32,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 8, "mantissa_bits": 23, "bias": 127,
+"specials": { "zeros": "±0", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | EEEEEEEE | MMMMMMMMMMMMMMMMMMMMMMM",
+"hex_examples": { "zero_pos": "0x00000000", "zero_neg": "0x80000000", "one": "0x3F800000", "max_finite": "0x7F7FFFFF", "infinity": "0x7F800000" },
+"binary_examples": [
+{ "bits": "00000000000000000000000000000000", "value": "+0" },
+{ "bits": "10000000000000000000000000000000", "value": "-0" },
+{ "bits": "00111111100000000000000000000000", "value": "+1" },
+{ "bits": "01111111011111111111111111111111", "value": "max finite (~3.4e38)" },
+{ "bits": "01111111100000000000000000000000", "value": "+∞" }
+],
+"governance": { "type": "IEEE", "owner": "IEEE", "status": "standard", "notes": "IEEE 754 binary32" }
+},
+{
+"name": "TF32 (TensorFloat-32)",
+"category": "float",
+"bits_total": 32,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 8, "mantissa_bits": 10, "bias": 127,
+"specials": { "zeros": "±0", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | EEEEEEEE | MMMMMMMMMM (truncated mantissa)",
+"hex_examples": { "zero_pos": "0x00000000", "zero_neg": "0x80000000", "one": "0x3F800000", "max_finite": "0x7F7FFFFF", "infinity": "0x7F800000" },
+"binary_examples": [
+{ "bits": "00000000000000000000000000000000", "value": "+0" },
+{ "bits": "10000000000000000000000000000000", "value": "-0" },
+{ "bits": "00111111100000000000000000000000", "value": "+1" },
+{ "bits": "01111111011111111111111111111111", "value": "max finite (~3.4e38)" },
+{ "bits": "01111111100000000000000000000000", "value": "+∞" }
+],
+"governance": { "type": "vendor", "owner": "NVIDIA", "status": "proprietary", "notes": "NVIDIA-specific for AI tensor operations" }
+},
+{
+"name": "FP64 (binary64)",
+"category": "float",
+"bits_total": 64,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 11, "mantissa_bits": 52, "bias": 1023,
+"specials": { "zeros": "±0", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | EEEEEEEEEEE | MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+"hex_examples": { "zero_pos": "0x0000000000000000", "zero_neg": "0x8000000000000000", "one": "0x3FF0000000000000", "max_finite": "0x7FEFFFFFFFFFFFFF", "infinity": "0x7FF0000000000000" },
+"binary_examples": [
+{ "bits": "0000000000000000000000000000000000000000000000000000000000000000", "value": "+0" },
+{ "bits": "1000000000000000000000000000000000000000000000000000000000000000", "value": "-0" },
+{ "bits": "0011111111110000000000000000000000000000000000000000000000000000", "value": "+1" },
+{ "bits": "0111111111101111111111111111111111111111111111111111111111111111", "value": "max finite (~1.8e308)" },
+{ "bits": "0111111111110000000000000000000000000000000000000000000000000000", "value": "+∞" }
+],
+"governance": { "type": "IEEE", "owner": "IEEE", "status": "standard", "notes": "IEEE 754 binary64" }
+},
+{
+"name": "Decimal (.NET)",
+"category": "decimal",
+"bits_total": 128,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 5, "mantissa_bits": 96, "bias": null,
+"specials": { "zeros": "±0", "infinities": false, "nans": false, "subnormals": false } },
+"bit_split": "Flags (32 bits) | Mantissa (96 bits)",
+"hex_examples": { "zero": "0x00000000000000000000000000000000", "one": "0x00000000000000000000000000000001" },
+"binary_examples": [
+{ "bits": "0000... (128 zeros)", "value": "0" },
+{ "bits": "0000...0001 (last bit 1)", "value": "1" }
+],
+"governance": { "type": "vendor", "owner": "Microsoft", "status": "proprietary", "notes": "Base-10 for financial precision" }
+},
+{
+"name": "Decimal32",
+"category": "decimal",
+"bits_total": 32,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 8, "mantissa_bits": 23, "bias": null,
+"specials": { "zeros": "n/a", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | Combination (5 bits) | Exponent (8 bits) | Mantissa (18 bits)",
+"hex_examples": { "zero": "0x00000000", "one": "0x22000001" },
+"binary_examples": [
+{ "bits": "00000000000000000000000000000000", "value": "0" },
+{ "bits": "00100010000000000000000000000001", "value": "1" }
+],
+"governance": { "type": "IEEE", "owner": "IEEE", "status": "standard", "notes": "IEEE 754 decimal32" }
+},
+{
+"name": "Decimal64",
+"category": "decimal",
+"bits_total": 64,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 10, "mantissa_bits": 53, "bias": null,
+"specials": { "zeros": "n/a", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | Combination (5 bits) | Exponent (10 bits) | Mantissa (48 bits)",
+"hex_examples": { "zero": "0x0000000000000000", "one": "0x2200000000000001" },
+"binary_examples": [
+{ "bits": "0000000000000000000000000000000000000000000000000000000000000000", "value": "0" },
+{ "bits": "0010001000000000000000000000000000000000000000000000000000000001", "value": "1" }
+],
+"governance": { "type": "IEEE", "owner": "IEEE", "status": "standard", "notes": "IEEE 754 decimal64" }
+},
+{
+"name": "Decimal128",
+"category": "decimal",
+"bits_total": 128,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": 14, "mantissa_bits": 113, "bias": null,
+"specials": { "zeros": "n/a", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | Combination (5 bits) | Exponent (14 bits) | Mantissa (108 bits)",
+"hex_examples": { "zero": "0x00000000000000000000000000000000", "one": "0x22000000000000000000000000000001" },
+"binary_examples": [
+{ "bits": "0000... (128 zeros)", "value": "0" },
+{ "bits": "00100010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001", "value": "1" }
+],
+"governance": { "type": "IEEE", "owner": "IEEE", "status": "standard", "notes": "IEEE 754 decimal128" }
+},
+{
+"name": "Unum (Type-2)",
+"category": "float",
+"bits_total": "variable (e.g., 32)",
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": "variable (3-6)", "mantissa_bits": "variable (23-26)", "bias": "dynamic",
+"specials": { "zeros": "single zero", "infinities": false, "nans": true, "subnormals": true } },
+"bit_split": "S | Regime (run-length) | Exponent | Fraction | Ubit",
+"hex_examples": { "zero": "0x00000000", "one": "0x3F800000" },
+"binary_examples": [
+{ "bits": "00000000... (all zeros)", "value": "0" },
+{ "bits": "0011111110000000...", "value": "+1" }
+],
+"governance": { "type": "proposed", "owner": "John Gustafson", "status": "experimental", "notes": "Unums Type-2 with ubit for interval arithmetic" }
+},
+{
+"name": "Posit (e.g., 32-bit, es=2)",
+"category": "float",
+"bits_total": 32,
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": "2 (es=2)", "mantissa_bits": "variable", "bias": "none",
+"specials": { "zeros": "single zero", "infinities": true, "nans": true, "subnormals": false } },
+"bit_split": "S | Regime (run-length) | Exponent (es bits) | Fraction (remaining)",
+"hex_examples": { "zero": "0x00000000", "one": "0x40000000", "infinity": "0x80000000" },
+"binary_examples": [
+{ "bits": "00000000...", "value": "0" },
+{ "bits": "01000000...", "value": "+1" },
+{ "bits": "10000000...", "value": "±∞" }
+],
+"governance": { "type": "proposed", "owner": "John Gustafson", "status": "experimental", "notes": "Posit as improved Unum, with es for exponent size" }
+},
+{
+"name": "SoftFloat (IEEE 754 Implementations)",
+"category": "float",
+"bits_total": "variable (16/32/64/80/128)",
+"signed": true,
+"structure": { "sign_bits": 1, "exponent_bits": "variable", "mantissa_bits": "variable", "bias": "variable",
+"specials": { "zeros": "±0", "infinities": true, "nans": true, "subnormals": true } },
+"bit_split": "S | Exponent | Mantissa",
+"hex_examples": { "zero": "0x0000 (FP16)", "one": "0x3C00 (FP16)" },
+"binary_examples": [
+{ "bits": "0000... (zeros)", "value": "+0" },
+{ "bits": "1000... (zeros)", "value": "-0" }
+],
+"governance": { "type": "de-facto", "owner": "UC Berkeley (John Hauser)", "status": "widely adopted", "notes": "Software implementation of IEEE 754 formats" }
+},
+{
+"name": "UBJSON",
+"category": "binary_json",
+"bits_total": "variable",
+"signed": "n/a",
+"structure": { "sign_bits": "n/a", "exponent_bits": "n/a", "mantissa_bits": "n/a", "bias": "n/a",
+"specials": { "zeros": "n/a", "infinities": "n/a", "nans": "n/a", "subnormals": "n/a" } },
+"bit_split": "Type Marker | Length (optional) | Data",
+"hex_examples": { "object_start": "0x7B", "true": "0x54" },
+"binary_examples": [
+{ "bits": "01011011", "value": "array start" },
+{ "bits": "01001101", "value": "null" }
+],
+"governance": { "type": "de-facto", "owner": "UBJSON.org", "status": "widely adopted", "notes": "Binary JSON with 13 value types" }
+},
+{
+"name": "CBOR",
+"category": "binary_json",
+"bits_total": "variable",
+"signed": "n/a",
+"structure": { "sign_bits": "n/a", "exponent_bits": "n/a", "mantissa_bits": "n/a", "bias": "n/a",
+"specials": { "zeros": "n/a", "infinities": "n/a", "nans": "n/a", "subnormals": "n/a" } },
+"bit_split": "Major Type (3 bits) | Additional Info (5 bits) | Data",
+"hex_examples": { "unsigned_0": "0x00", "true": "0xF5" },
+"binary_examples": [
+{ "bits": "00000000", "value": "0" },
+{ "bits": "11110101", "value": "true" }
+],
+"governance": { "type": "IETF", "owner": "IETF", "status": "standard", "notes": "RFC 8949 Concise Binary Object Representation" }
+},
+{
+"name": "MessagePack",
+"category": "binary_json",
+"bits_total": "variable",
+"signed": "n/a",
+"structure": { "sign_bits": "n/a", "exponent_bits": "n/a", "mantissa_bits": "n/a", "bias": "n/a",
+"specials": { "zeros": "n/a", "infinities": "n/a", "nans": "n/a", "subnormals": "n/a" } },
+"bit_split": "Type Marker (4-8 bits) | Length/Data",
+"hex_examples": { "positive_fixint_0": "0x00", "true": "0xc3" },
+"binary_examples": [
+{ "bits": "00000000", "value": "0" },
+{ "bits": "11000011", "value": "true" }
+],
+"governance": { "type": "de-facto", "owner": "MessagePack.org", "status": "widely adopted", "notes": "Binary serialization for JSON model" }
+},
+{
+"name": "BSON",
+"category": "binary_json",
+"bits_total": "variable",
+"signed": "n/a",
+"structure": { "sign_bits": "n/a", "exponent_bits": "n/a", "mantissa_bits": "n/a", "bias": "n/a",
+"specials": { "zeros": "n/a", "infinities": "n/a", "nans": "n/a", "subnormals": "n/a" } },
+"bit_split": "Length (32-bit) | Element Type | Name | Value",
+"hex_examples": { "double_1.0": "0x01 0x00... (type 0x01 for double)" },
+"binary_examples": [
+{ "bits": "00000001...", "value": "double type" },
+{ "bits": "00000101...", "value": "string type" }
+],
+"governance": { "type": "proprietary", "owner": "MongoDB Inc.", "status": "widely adopted", "notes": "Binary JSON for MongoDB" }
+},
+{
+"name": "Smile",
+"category": "binary_json",
+"bits_total": "variable",
+"signed": "n/a",
+"structure": { "sign_bits": "n/a", "exponent_bits": "n/a", "mantissa_bits": "n/a", "bias": "n/a",
+"specials": { "zeros": "n/a", "infinities": "n/a", "nans": "n/a", "subnormals": "n/a" } },
+"bit_split": "Header (3 bytes) | Data Tokens",
+"hex_examples": { "header": "0x3A 0x29 0x0A", "true": "0xFD" },
+"binary_examples": [
+{ "bits": "00111010 00101001 00001010", "value": "Smile header" },
+{ "bits": "11111101", "value": "true" }
+],
+"governance": { "type": "de-facto", "owner": "FasterXML (Jackson)", "status": "widely adopted", "notes": "Binary JSON based on JSON model" }
+},
+{
+"name": "Avro",
+"category": "schema_carrier",
+"bits_total": "variable",
+"signed": "n/a",
+"structure": { "sign_bits": "n/a", "exponent_bits": "n/a", "mantissa_bits": "n/a", "bias": "n/a",
+"specials": { "zeros": "n/a", "infinities": "n/a", "nans": "n/a", "subnormals": "n/a" } },
+"bit_split": "Schema Fingerprint | Data Blocks",
+"hex_examples": { "null": "0x00", "boolean_true": "0x01" },
+"binary_examples": [
+{ "bits": "00000000", "value": "null" },
+{ "bits": "00000001", "value": "true" }
+],
+"governance": { "type": "Apache", "owner": "Apache Software Foundation", "status": "standard", "notes": "Schema-based binary serialization" }
+},
+{
+"name": "JData",
+"category": "schema_carrier",
+"bits_total": "variable",
+"signed": "n/a",
+"structure": { "sign_bits": "n/a", "exponent_bits": "n/a", "mantissa_bits": "n/a", "bias": "n/a",
+"specials": { "zeros": "n/a", "infinities": "n/a", "nans": "n/a", "subnormals": "n/a" } },
+"bit_split": "JSON with binary extensions",
+"hex_examples": { "binary_array": "0x5F5F62696E64... (encoded)" },
+"binary_examples": [
+{ "bits": "JSON-like with binary tags", "value": "binary data" }
+],
+"governance": { "type": "de-facto", "owner": "NeuroJSON", "status": "widely adopted", "notes": "JSON extension for scientific data with binary encoding" }
+},
+{
+"name": "JSON Schema",
+"category": "schema_carrier",
+"bits_total": "n/a",
+"signed": "n/a",
+"structure": { "sign_bits": "n/a", "exponent_bits": "n/a", "mantissa_bits": "n/a", "bias": "n/a",
+"specials": { "zeros": "n/a", "infinities": "n/a", "nans": "n/a", "subnormals": "n/a" } },
+"bit_split": "JSON object for validation",
+"hex_examples": { "n/a": "n/a" },
+"binary_examples": [
+{ "bits": "n/a", "value": "n/a" }
+],
+"governance": { "type": "IETF", "owner": "IETF", "status": "draft", "notes": "JSON validation schema, not binary" }
+},
+{
+"name": "Protobuf",
+"category": "schema_carrier",
+"bits_total": "variable",
+"signed": "n/a",
+"structure": { "sign_bits": "n/a", "exponent_bits": "n/a", "mantissa_bits": "n/a", "bias": "n/a",
+"specials": { "zeros": "n/a", "infinities": "n/a", "nans": "n/a", "subnormals": "n/a" } },
+"bit_split": "Field Number (varint) | Wire Type | Value",
+"hex_examples": { "int32_1": "0x08 0x01" },
+"binary_examples": [
+{ "bits": "00001000 00000001", "value": "field 1, int32 1" }
+],
+"governance": { "type": "de-facto", "owner": "Google", "status": "widely adopted", "notes": "Binary serialization with schema" }
+},
+{
+"name": "FlatBuffers",
+"category": "schema_carrier",
+"bits_total": "variable",
+"signed": "n/a",
+"structure": { "sign_bits": "n/a", "exponent_bits": "n/a", "mantissa_bits": "n/a", "bias": "n/a",
+"specials": { "zeros": "n/a", "infinities": "n/a", "nans": "n/a", "subnormals": "n/a" } },
+"bit_split": "VTable | Offset | Data",
+"hex_examples": { "vtable": "0x0000000C 0x00000004" },
+"binary_examples": [
+{ "bits": "00001100 00000000 00000000 00000100 00000000 00000000", "value": "vtable example" }
+],
+"governance": { "type": "de-facto", "owner": "Google", "status": "widely adopted", "notes": "Zero-copy binary serialization with schema" }
 }
+]
