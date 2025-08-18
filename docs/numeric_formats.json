@@ -1,0 +1,92 @@
+Ok we need all numeric formats in this JSON format in one file
+ 
+ 
+I need a prompt do research
+Numeric modelers (Universal Numbers, Posit, SoftFloat)
+Binary JSON (UBJSON, CBOR, MessagePack, BSON, Smile)
+Schema carriers (Avro, JData, JSON Schema, Protobuf/FlatBuffers)
+Our proposed Schema
+{
+  "governance": {
+    "type": "IEEE | vendor | de-facto",
+    "owner": "Name(s) of the standards body or vendor(s)",
+    "status": "standard | proposed | proprietary | multi-vendor",
+    "notes": "Optional clarifications"
+  }
+}
+{
+  "name": "FP8 (E4M3)",
+  "category": "float",
+  "bits_total": 8,
+  "signed": true,
+  "structure": { "sign_bits": 1, "exponent_bits": 4, "mantissa_bits": 3, "bias": 7,
+    "specials": { "zeros": "±0", "infinities": false, "nans": true, "subnormals": true } },
+  "bit_split": "S | EEEE | MMM",
+  "hex_examples": { "zero_pos": "0x00", "zero_neg": "0x80", "one": "0x38", "max_finite": "0x7F" },
+  "binary_examples": [
+    { "bits": "00000000", "value": "+0" },
+    { "bits": "10000000", "value": "-0" },
+    { "bits": "00111000", "value": "+1" },
+    { "bits": "01111111", "value": "max finite (~448)" }
+  ],
+  "governance": { "type": "vendor", "owner": "NVIDIA/AMD/Intel", "status": "multi-vendor", "notes": "Non-IEEE FP8 profile" }
+}
+{
+  "name": "HiF8 (HiFloat8)",
+  "category": "float",
+  "bits_total": 8,
+  "signed": true,
+  "structure": {
+    "sign_bits": 1,
+    "exponent_bits": "tapered via Dot Field (2–5)",
+    "mantissa_bits": "tapered (1–3)",
+    "bias": "dynamic",
+    "specials": { "zeros": "single zero", "infinities": true, "nans": true, "subnormals": true }
+  },
+  "bit_split": "S | DotField (2–4) | variable exponent/mantissa",
+  "hex_examples": { "zero": "0x00" },
+  "binary_examples": [
+    { "bits": "00000000", "value": "0 (single zero encoding)" },
+    { "bits": "0???....", "value": "Dot Field determines split & scaling" }
+  ],
+  "governance": { "type": "vendor", "owner": "Huawei", "status": "proprietary", "notes": "Tapered precision; Ascend-native" }
+}
+{
+  "name": "FP16 (binary16)",
+  "category": "float",
+  "bits_total": 16,
+  "signed": true,
+  "structure": { "sign_bits": 1, "exponent_bits": 5, "mantissa_bits": 10, "bias": 15,
+    "specials": { "zeros": "±0", "infinities": true, "nans": true, "subnormals": true } },
+  "bit_split": "S | EEEEE | MMMMMMMMMM",
+  "hex_examples": { "zero_pos": "0x0000", "zero_neg": "0x8000", "one": "0x3C00", "max_finite": "0x7BFF", "infinity": "0x7C00" },
+  "binary_examples": [
+    { "bits": "0000000000000000", "value": "+0" },
+    { "bits": "1000000000000000", "value": "-0" },
+    { "bits": "0011110000000000", "value": "+1" },
+    { "bits": "0111101111111111", "value": "max finite (65504)" },
+    { "bits": "0111110000000000", "value": "+∞" }
+  ],
+  "governance": { "type": "IEEE", "owner": "IEEE", "status": "standard", "notes": "IEEE 754 binary16" }
+}
+{
+  "name": "INT8",
+  "category": "integer",
+  "bits_total": 8,
+  "signed": null,
+  "structure": {
+    "sign_bits": 0,
+    "exponent_bits": null,
+    "mantissa_bits": null,
+    "bias": null,
+    "specials": { "zeros": "n/a", "infinities": false, "nans": false, "subnormals": false }
+  },
+  "bit_split": "BBBBBBBB",
+  "hex_examples": { "min_signed": "0x80 (-128)", "zero": "0x00", "max_signed": "0x7F (+127)" },
+  "binary_examples": [
+    { "bits": "10000000", "value": "-128 (signed)" },
+    { "bits": "00000000", "value": "0" },
+    { "bits": "01111111", "value": "+127 (signed)" }
+  ],
+  "governance": { "type": "de-facto", "owner": "ISO C / CPU ISAs", "status": "widely adopted", "notes": "Not part of IEEE 754 (floating-point)" }
+}
