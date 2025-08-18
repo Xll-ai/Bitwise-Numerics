@@ -36,12 +36,14 @@
         return formats;
       } catch (error) {
         console.error('Error fetching formats:', error);
+        document.getElementById('format-details').innerHTML = `<p class="text-red-400">Error loading formats: ${error.message}</p>`;
         return [];
       }
     }
 
     function renderMenu(formats) {
       const menu = document.getElementById('menu');
+      menu.innerHTML = ''; // Clear existing menu
       formats.forEach(format => {
         const button = document.createElement('button');
         button.className = 'format-button w-full text-left py-2 px-4 bg-gray-700 text-white rounded-lg';
@@ -58,14 +60,12 @@
         <p><strong>Category:</strong> ${format.category}</p>
         <p><strong>Bits Total:</strong> ${format.bits_total}</p>
         <p><strong>Signed:</strong> ${format.signed === null ? 'N/A' : format.signed}</p>
-        <p><strong>Structure:</strong> ${JSON.stringify(format.structure, null, 2)}</p>
+        <p><strong>Structure:</strong> <pre>${JSON.stringify(format.structure, null, 2)}</pre></p>
         <p><strong>Bit Split:</strong> ${format.bit_split}</p>
-        <p><strong>Range:</strong> ${format.category === 'integer' ? 
-          (format.signed ? format.Range.Signed : format.Range.Unsigned) : 
-          format.Range}</p>
-        <p><strong>Values:</strong> ${format.Values}</p>
+        <p><strong>Range:</strong> ${format.range || 'N/A'}</p>
+        <p><strong>Values:</strong> ${format.values || 'N/A'}</p>
         <p><strong>IEEE Standard:</strong> ${format.governance.type === 'IEEE'}</p>
-        <p><strong>Governance:</strong> ${JSON.stringify(format.governance, null, 2)}</p>
+        <p><strong>Governance:</strong> <pre>${JSON.stringify(format.governance, null, 2)}</pre></p>
         <h3 class="text-xl font-semibold mt-4 mb-2">Hex Examples</h3>
         <pre>${JSON.stringify(format.hex_examples, null, 2)}</pre>
         <h3 class="text-xl font-semibold mt-4 mb-2">Binary Examples</h3>
@@ -75,8 +75,10 @@
 
     async function init() {
       const formats = await fetchFormats();
-      renderMenu(formats);
-      if (formats.length > 0) renderFormatDetails(formats[0]); // Show first format by default
+      if (formats.length > 0) {
+        renderMenu(formats);
+        renderFormatDetails(formats[0]); // Show first format by default
+      }
     }
 
     init();
