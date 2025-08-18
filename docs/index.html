@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitwise Numerics Explorer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sidebar { position: fixed; top: 0; left: 0; height: 100vh; width: 250px; overflow-y: auto; }
+    .content { margin-left: 260px; padding: 20px; }
+    .format-button { transition: background-color 0.3s, transform 0.2s; }
+    .format-button:hover { background-color: #4b5563; transform: scale(1.05); }
+    pre { background-color: #1f2937; padding: 10px; border-radius: 5px; color: #f3f4f6; }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+  <div class="flex">
+    <div class="sidebar bg-gray-800 p-4">
+      <h2 class="text-xl font-bold mb-4 text-white">Numeric Formats</h2>
+      <div id="menu" class="space-y-2"></div>
+    </div>
+    <div class="content">
+      <h1 class="text-3xl font-bold mb-6">Bitwise Numerics Explorer</h1>
+      <div id="format-details" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <p class="text-gray-400">Select a format from the menu to view details.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function fetchFormats() {
+      try {
+        const response = await fetch('https://raw.githubusercontent.com/Xll-ai/Bitwise-Numerics/main/docs/numeric_formats.json');
+        const formats = await response.json();
+        return formats;
+      } catch (error) {
+        console.error('Error fetching formats:', error);
+        return [];
+      }
+    }
+
+    function renderMenu(formats) {
+      const menu = document.getElementById('menu');
+      formats.forEach(format => {
+        const button = document.createElement('button');
+        button.className = 'format-button w-full text-left py-2 px-4 bg-gray-700 text-white rounded-lg';
+        button.textContent = format.name;
+        button.addEventListener('click', () => renderFormatDetails(format));
+        menu.appendChild(button);
+      });
+    }
+
+    function renderFormatDetails(format) {
+      const details = document.getElementById('format-details');
+      details.innerHTML = `
+        <h2 class="text-2xl font-semibold mb-4">${format.name}</h2>
+        <p><strong>Category:</strong> ${format.category}</p>
+        <p><strong>Bits Total:</strong> ${format.bits_total}</p>
+        <p><strong>Signed:</strong> ${format.signed === null ? 'N/A' : format.signed}</p>
+        <p><strong>Structure:</strong> ${JSON.stringify(format.structure, null, 2)}</p>
+        <p><strong>Bit Split:</strong> ${format.bit_split}</p>
+        <p><strong>Range:</strong> ${format.category === 'integer' ? 
+          (format.signed ? format.Range.Signed : format.Range.Unsigned) : 
+          format.Range}</p>
+        <p><strong>Values:</strong> ${format.Values}</p>
+        <p><strong>IEEE Standard:</strong> ${format.governance.type === 'IEEE'}</p>
+        <p><strong>Governance:</strong> ${JSON.stringify(format.governance, null, 2)}</p>
+        <h3 class="text-xl font-semibold mt-4 mb-2">Hex Examples</h3>
+        <pre>${JSON.stringify(format.hex_examples, null, 2)}</pre>
+        <h3 class="text-xl font-semibold mt-4 mb-2">Binary Examples</h3>
+        <pre>${JSON.stringify(format.binary_examples, null, 2)}</pre>
+      `;
+    }
+
+    async function init() {
+      const formats = await fetchFormats();
+      renderMenu(formats);
+      if (formats.length > 0) renderFormatDetails(formats[0]); // Show first format by default
+    }
+
+    init();
+  </script>
+</body>
+</html>
