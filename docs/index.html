@@ -91,6 +91,7 @@
       flex: 1;
       padding: 15px;
       overflow-y: auto;
+      max-height: calc(100vh - 120px); /* Adjusted for title and header */
     }
     .links-frame {
       flex: 0 0 40%;
@@ -124,8 +125,8 @@
       border-radius: 8px; 
       color: #1f2937; 
       font-size: 12px;
-      max-height: 120px;
-      overflow: hidden;
+      max-height: 80px; /* Reduced to prevent overflow */
+      overflow-y: auto; /* Scroll within pre if needed */
     }
     .category-header {
       display: flex;
