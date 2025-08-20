@@ -1,0 +1,366 @@
+[
+  {
+    "name": "FP8 E4M3",
+    "category": "float",
+    "bits_total": 8,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 4,
+      "mantissa_bits": 3,
+      "bias": 7,
+      "specials": { "zeros": "true", "infinities": false, "nans": true, "subnormals": true }
+    },
+    "bit_split": "SEEEEEMMM",
+    "hex_examples": { "one": "0x40 (1.0)", "max": "0x7B (240)", "nan": "0x7F" },
+    "binary_examples": [
+      { "bits": "01000000", "value": "1.0" },
+      { "bits": "01111011", "value": "240" },
+      { "bits": "01111111", "value": "NaN" }
+    ],
+    "governance": { "type": "vendor", "owner": "NVIDIA/ARM", "status": "adopted", "notes": "Optimized for DeepSeek R2 training on NVIDIA GPUs" },
+    "range": "-240 to 240",
+    "values": "finite: 496, including subnormals",
+    "language_support": [
+      {
+        "language": "CUDA",
+        "native_support": "__nv_fp8_e4m3",
+        "library_support": [
+          {
+            "library_name": "NVIDIA Transformer Engine",
+            "data_type": "fp8_e4m3",
+            "operations": ["gemm", "attention", "layernorm"],
+            "version_required": "0.11+"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "FP8 E5M2",
+    "category": "float",
+    "bits_total": 8,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 5,
+      "mantissa_bits": 2,
+      "bias": 15,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": true }
+    },
+    "bit_split": "SEEEEEEMM",
+    "hex_examples": { "one": "0x3C (1.0)", "max": "0x7B (57344)", "inf": "0x7C" },
+    "binary_examples": [
+      { "bits": "00111100", "value": "1.0" },
+      { "bits": "01111011", "value": "57344" },
+      { "bits": "01111100", "value": "Infinity" }
+    ],
+    "governance": { "type": "vendor", "owner": "NVIDIA/ARM", "status": "adopted", "notes": "Used in DeepSeek R2 training for wider range" },
+    "range": "-57344 to 57344",
+    "values": "finite: 192, including subnormals"
+  },
+  {
+    "name": "FP16",
+    "category": "float",
+    "bits_total": 16,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 5,
+      "mantissa_bits": 10,
+      "bias": 15,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": true }
+    },
+    "bit_split": "SEEEEEEMMMMMMMMMM",
+    "hex_examples": { "one": "0x3C00 (1.0)", "max": "0x7BFF (65504)", "inf": "0x7C00" },
+    "binary_examples": [
+      { "bits": "0011110000000000", "value": "1.0" },
+      { "bits": "0111101111111111", "value": "65504" },
+      { "bits": "0111110000000000", "value": "Infinity" }
+    ],
+    "governance": { "type": "IEEE", "owner": "IEEE 754", "status": "standardized", "notes": "Widely used in ML training" },
+    "range": "-65504 to 65504",
+    "values": "finite: ~2^16",
+    "language_support": [
+      {
+        "language": "C++",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "half",
+            "data_type": "half_float::half",
+            "operations": ["arithmetic", "comparison", "conversion"],
+            "version_required": "1.12+"
+          }
+        ]
+      },
+      {
+        "language": "C#",
+        "native_support": "Half",
+        "library_support": [],
+        "compiler_requirements": ".NET 5+",
+        "notes": "Native support starting .NET 5"
+      },
+      {
+        "language": "Python",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "NumPy",
+            "data_type": "np.float16",
+            "operations": ["arithmetic", "math_functions", "conversion"],
+            "version_required": "1.6+"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "BF16",
+    "category": "float",
+    "bits_total": 16,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 8,
+      "mantissa_bits": 7,
+      "bias": 127,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": false }
+    },
+    "bit_split": "SEEEEEEEEMMMMMMM",
+    "hex_examples": { "one": "0x3F80 (1.0)", "max": "0x7F7F (3.39e38)", "inf": "0x7F80" },
+    "binary_examples": [
+      { "bits": "0011111110000000", "value": "1.0" },
+      { "bits": "0111111101111111", "value": "3.39e38" },
+      { "bits": "0111111110000000", "value": "Infinity" }
+    ],
+    "governance": { "type": "vendor", "owner": "Intel/Google", "status": "adopted", "notes": "Used in ML for wider range" },
+    "range": "-3.39e38 to 3.39e38",
+    "values": "finite: ~2^15",
+    "language_support": [
+      {
+        "language": "C++",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "Intel MKL-DNN",
+            "data_type": "bfloat16",
+            "operations": ["conv", "gemm", "pooling"],
+            "version_required": "1.6+"
+          }
+        ]
+      },
+      {
+        "language": "Python",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "TensorFlow",
+            "data_type": "tf.bfloat16",
+            "operations": ["neural_network_ops", "math_ops"],
+            "version_required": "2.0+"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "FP32",
+    "category": "float",
+    "bits_total": 32,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 8,
+      "mantissa_bits": 23,
+      "bias": 127,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": true }
+    },
+    "bit_split": "SEEEEEEEEMMMMMMMMMMMMMMMMMMMMMMM",
+    "hex_examples": { "one": "0x3F800000 (1.0)", "max": "0x7F7FFFFF (3.4e38)", "inf": "0x7F800000" },
+    "binary_examples": [
+      { "bits": "00111111100000000000000000000000", "value": "1.0" },
+      { "bits": "01111111011111111111111111111111", "value": "3.4e38" },
+      { "bits": "01111111100000000000000000000000", "value": "Infinity" }
+    ],
+    "governance": { "type": "IEEE", "owner": "IEEE 754", "status": "standardized", "notes": "Standard for ML and scientific computing" },
+    "range": "-3.4e38 to 3.4e38",
+    "values": "finite: ~2^32",
+    "language_support": [
+      {
+        "language": "C",
+        "native_support": "float",
+        "library_support": [],
+        "compiler_requirements": "any"
+      },
+      {
+        "language": "C++",
+        "native_support": "float",
+        "library_support": [],
+        "compiler_requirements": "any"
+      },
+      {
+        "language": "C#",
+        "native_support": "float",
+        "library_support": [],
+        "compiler_requirements": "any"
+      },
+      {
+        "language": "Rust",
+        "native_support": "f32",
+        "library_support": [],
+        "compiler_requirements": "any"
+      },
+      {
+        "language": "Python",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "NumPy",
+            "data_type": "np.float32",
+            "operations": ["arithmetic", "transcendental", "comparison"],
+            "version_required": "1.0+"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "FP64",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": true }
+    },
+    "bit_split": "SEEEEEEEEEEEEMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+    "hex_examples": { "one": "0x3FF0000000000000 (1.0)", "max": "0x7FEFFFFFFFFFFFFF (1.8e308)", "inf": "0x7FF0000000000000" },
+    "binary_examples": [
+      { "bits": "0011111111110000000000000000000000000000000000000000000000000000", "value": "1.0" },
+      { "bits": "0111111111101111111111111111111111111111111111111111111111111111", "value": "1.8e308" },
+      { "bits": "0111111111110000000000000000000000000000000000000000000000000000", "value": "Infinity" }
+    ],
+    "governance": { "type": "IEEE", "owner": "IEEE 754", "status": "standardized", "notes": "High precision for scientific computing" },
+    "range": "-1.8e308 to 1.8e308",
+    "values": "finite: ~2^64",
+    "language_support": [
+      {
+        "language": "C",
+        "native_support": "double",
+        "library_support": [],
+        "compiler_requirements": "any"
+      },
+      {
+        "language": "C#",
+        "native_support": "double",
+        "library_support": [],
+        "compiler_requirements": "any"
+      },
+      {
+        "language": "Rust",
+        "native_support": "f64",
+        "library_support": [],
+        "compiler_requirements": "any"
+      }
+    ]
+  },
+  {
+    "name": "X87 Extended",
+    "category": "float",
+    "bits_total": 80,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 15,
+      "mantissa_bits": 64,
+      "bias": 16383,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": true }
+    },
+    "bit_split": "SEEEEEEEEEEEEEEEIMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+    "hex_examples": { "one": "0x3FFF8000000000000000", "max": "0x7FFFEFFFFFFFFFFFFFFF" },
+    "governance": { "type": "vendor", "owner": "Intel x87 FPU", "status": "legacy", "notes": "x87 FPU internal precision" },
+    "range": "±1.19e-4932 to ±1.19e+4932",
+    "values": "finite: ~2^64",
+    "extended_precision_config": {
+      "precision_type": "x87-80bit",
+      "mantissa_bits": 64,
+      "exponent_bits": 15,
+      "explicit_leading_bit": true,
+      "storage_alignment": 16,
+      "register_precision": 80
+    },
+    "language_support": [
+      {
+        "language": "C",
+        "native_support": "long double",
+        "library_support": [],
+        "compiler_requirements": "x86 with x87 FPU",
+        "notes": "Only on x86, stored as 80-bit but aligned to 96/128-bit"
+      },
+      {
+        "language": "C++",
+        "native_support": "long double",
+        "library_support": [],
+        "compiler_requirements": "x86 with x87 FPU",
+        "notes": "Implementation-defined, varies by platform"
+      }
+    ]
+  },
+  {
+    "name": "FP128 (Quadruple)",
+    "category": "float",
+    "bits_total": 128,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 15,
+      "mantissa_bits": 112,
+      "bias": 16383,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": true }
+    },
+    "bit_split": "SEEEEEEEEEEEEEEEIMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+    "hex_examples": { "one": "0x3FFF0000000000000000000000000000", "max": "0x7FFEFFFFFFFFFFFFFFFFFFFFFFFFFFFF" },
+    "governance": { "type": "IEEE", "owner": "IEEE 754", "status": "standardized", "notes": "Quadruple-precision binary floating-point" },
+    "range": "±3.36e-4932 to ±1.19e+4932",
+    "values": "finite: ~2^113",
+    "extended_precision_config": {
+      "precision_type": "quadruple",
+      "mantissa_bits": 112,
+      "exponent_bits": 15,
+      "explicit_leading_bit": false,
+      "storage_alignment": 16,
+      "register_precision": 128
+    },
+    "language_support": [
+      {
+        "language": "C",
+        "native_support": "_Float128",
+        "library_support": [
+          {
+            "library_name": "libquadmath",
+            "data_type": "__float128",
+            "operations": ["arithmetic", "transcendental", "conversion"],
+            "version_required": "GCC 4.6+"
+          }
+        ],
+        "compiler_requirements": "GCC with libquadmath"
+      },
+      {
+        "language": "C++",
+        "native_support": "_Float128",
+        "library_support": [
+          {
+            "library_name": "boost::multiprecision",
+            "data_type": "float128",
+            "operations": ["arithmetic", "transcendental", "conversion"],
+            "version_required": "1.53+"
+          }
+        ]
+      }
+    ]
+  }
+]
