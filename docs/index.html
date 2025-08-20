@@ -8,11 +8,10 @@
   <style>
     body { 
       font-family: 'Inter', sans-serif; 
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 50%, #d1d5db 100%);
       min-height: 100vh;
-      color: #e2e8f0;
+      color: #1f2937;
       margin: 0;
-      overflow: hidden;
     }
     .sidebar { 
       position: fixed; 
@@ -20,11 +19,11 @@
       left: 0; 
       height: 100vh; 
       width: 300px; 
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(20px);
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
     }
     .content { 
       margin-left: 310px; 
@@ -32,132 +31,165 @@
       height: 100vh;
       overflow: hidden;
     }
+    .sidebar-header {
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      z-index: 10;
+    }
+    .category-nav button {
+      padding: 6px 10px;
+      margin: 2px;
+      background: #e5e7eb;
+      color: #1f2937;
+      border-radius: 6px;
+      font-size: 12px;
+      transition: background-color 0.3s;
+    }
+    .category-nav button:hover {
+      background: #4b5563;
+      color: #ffffff;
+    }
     .format-details-container {
       display: flex;
       gap: 20px;
-      height: calc(100vh - 100px);
+      height: calc(100vh - 80px);
     }
     .format-details {
       flex: 0 0 60%;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 20px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
       overflow: hidden;
     }
     .links-frame {
       flex: 0 0 40%;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 20px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
+    }
+    .links-list {
+      flex: 0 0 auto;
+      margin-bottom: 10px;
+    }
+    .links-iframe {
+      flex: 1;
+      border: none;
+      border-radius: 8px;
     }
     .format-button { 
       transition: background-color 0.3s, transform 0.2s; 
     }
     .format-button:hover { 
-      background-color: #4b5563; 
+      background-color: #d1d5db; 
       transform: scale(1.05); 
     }
     pre { 
-      background-color: #1f2937; 
+      background-color: #f3f4f6; 
       padding: 10px; 
       border-radius: 8px; 
-      color: #f3f4f6; 
-      font-size: 13px;
-      max-height: 150px;
+      color: #1f2937; 
+      font-size: 12px;
+      max-height: 120px;
       overflow: hidden;
     }
     .category-header {
       display: flex;
       align-items: center;
-      padding: 12px 20px;
+      padding: 10px 15px;
       cursor: pointer;
       transition: all 0.3s ease;
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.8);
       border-left: 4px solid transparent;
       font-weight: 600;
-      color: #e2e8f0;
+      color: #1f2937;
     }
     .category-header:hover {
-      background: rgba(102, 126, 234, 0.1);
-      border-left-color: #667eea;
+      background: rgba(79, 70, 229, 0.1);
+      border-left-color: #4f46e5;
       transform: translateX(3px);
     }
     .category-header.active {
-      background: rgba(102, 126, 234, 0.15);
-      border-left-color: #667eea;
-      color: #667eea;
+      background: rgba(79, 70, 229, 0.2);
+      border-left-color: #4f46e5;
+      color: #4f46e5;
     }
     .subcategory-list {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.4s ease;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.05);
     }
     .subcategory-list.active {
-      max-height: 500px;
+      max-height: 600px;
     }
     .subcategory-item {
-      padding: 10px 20px 10px 40px;
+      padding: 8px 15px 8px 35px;
       cursor: pointer;
       transition: all 0.3s ease;
       border-left: 4px solid transparent;
-      color: #cbd5e0;
-      font-size: 14px;
+      color: #374151;
+      font-size: 13px;
     }
     .subcategory-item:hover {
-      background: rgba(102, 126, 234, 0.08);
-      border-left-color: #667eea;
-      color: #667eea;
+      background: rgba(79, 70, 229, 0.08);
+      border-left-color: #4f46e5;
+      color: #4f46e5;
       transform: translateX(3px);
     }
     .subcategory-item.selected {
-      background: rgba(102, 126, 234, 0.15);
-      border-left-color: #667eea;
-      color: #667eea;
+      background: rgba(79, 70, 229, 0.15);
+      border-left-color: #4f46e5;
+      color: #4f46e5;
       font-weight: 500;
     }
     .detail-section {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      margin-bottom: 8px;
     }
     .detail-section h3 {
-      font-size: 16px;
-      margin-bottom: 10px;
-      color: #667eea;
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: #4f46e5;
       font-weight: 600;
-      border-bottom: 2px solid rgba(102, 126, 234, 0.3);
-      padding-bottom: 5px;
+      border-bottom: 2px solid rgba(79, 70, 229, 0.3);
+      padding-bottom: 4px;
     }
     .governance-badge {
       display: inline-block;
-      padding: 3px 10px;
-      border-radius: 15px;
-      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 10px;
       font-weight: 500;
       margin: 2px;
     }
-    .governance-ieee { background: rgba(52, 211, 153, 0.2); color: #34d399; }
-    .governance-vendor { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
-    .governance-defacto { background: rgba(156, 163, 175, 0.2); color: #9ca3af; }
+    .governance-ieee { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+    .governance-vendor { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+    .governance-defacto { background: rgba(107, 114, 128, 0.2); color: #6b7280; }
     .governance-ietf { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
     .governance-apache { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
-    .governance-proprietary { background: rgba(168, 85, 247, 0.2); color: #a855f7; }
-    .governance-proposed { background: rgba(236, 72, 153, 0.2); color: #ec4899; }
+    .governance-proprietary { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+    .governance-proposed { background: rgba(219, 39, 119, 0.2); color: #db2777; }
     .links-list a {
       display: block;
-      color: #93c5fd;
+      color: #2563eb;
       text-decoration: none;
-      padding: 5px 0;
+      padding: 3px 0;
+      font-size: 12px;
       transition: color 0.3s;
     }
     .links-list a:hover {
-      color: #3b82f6;
+      color: #1e40af;
       text-decoration: underline;
     }
     @media (max-width: 1024px) {
@@ -184,21 +216,25 @@
 </head>
 <body class="flex">
   <div class="sidebar">
-    <div class="bg-gray-800 p-4 border-b border-gray-700">
-      <h2 class="text-xl font-bold mb-2 text-white">Numeric Formats</h2>
-      <input type="text" id="searchInput" class="w-full p-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Search formats...">
+    <div class="sidebar-header">
+      <div class="category-nav flex flex-wrap gap-1"></div>
+      <div class="bg-gray-100 p-3 border-b border-gray-300">
+        <h2 class="text-lg font-bold mb-2 text-gray-900">Numeric Formats</h2>
+        <input type="text" id="searchInput" class="w-full p-2 bg-gray-200 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600" placeholder="Search formats...">
+      </div>
     </div>
     <div id="menu" class="space-y-1"></div>
   </div>
   <div class="content">
-    <h1 class="text-3xl font-bold mb-4">Bitwise Numerics Explorer</h1>
+    <h1 class="text-2xl font-bold mb-4 text-gray-900">Bitwise Numerics Explorer</h1>
     <div class="format-details-container">
       <div id="format-details" class="format-details">
-        <p class="text-gray-400">Select a format from the menu to view details.</p>
+        <p class="text-gray-600">Select a format from the menu to view details.</p>
       </div>
       <div id="links-frame" class="links-frame">
-        <h3 class="text-lg font-semibold mb-3 text-indigo-400">Related Links</h3>
+        <h3 class="text-base font-semibold mb-2 text-indigo-600">Related Links</h3>
         <div id="links-list" class="links-list"></div>
+        <iframe id="links-iframe" class="links-iframe" src="https://example.com"></iframe>
       </div>
     </div>
   </div>
@@ -212,7 +248,7 @@
         return formats;
       } catch (error) {
         console.error('Error fetching formats:', error);
-        document.getElementById('format-details').innerHTML = `<p class="text-red-400">Error loading formats: ${error.message}</p>`;
+        document.getElementById('format-details').innerHTML = `<p class="text-red-600">Error loading formats: ${error.message}</p>`;
         return [];
       }
     }
@@ -255,17 +291,35 @@
 
     function renderMenu(categorizedFormats) {
       const menu = document.getElementById('menu');
+      const categoryNav = document.querySelector('.category-nav');
       menu.innerHTML = '';
+      categoryNav.innerHTML = '';
+
       Object.entries(categorizedFormats).forEach(([category, formats]) => {
+        // Category navigation button
+        const navButton = document.createElement('button');
+        navButton.textContent = getCategoryDisplayName(category);
+        navButton.addEventListener('click', () => {
+          const categoryHeader = document.querySelector(`[data-category="${category}"]`);
+          if (categoryHeader) {
+            categoryHeader.scrollIntoView({ behavior: 'smooth' });
+            categoryHeader.click();
+          }
+        });
+        categoryNav.appendChild(navButton);
+
+        // Menu category
         const categoryDiv = document.createElement('div');
         categoryDiv.className = 'menu-category';
+        categoryDiv.id = `category-${category}`;
         
         const header = document.createElement('div');
         header.className = 'category-header';
+        header.dataset.category = category;
         header.innerHTML = `
           <span class="mr-2">${getCategoryIcon(category)}</span>
           <span class="flex-1">${getCategoryDisplayName(category)}</span>
-          <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded-full text-xs">${formats.length}</span>
+          <span class="bg-gray-300 text-gray-700 px-2 py-1 rounded-full text-xs">${formats.length}</span>
           <span class="expand-icon">▶</span>
         `;
         
@@ -310,7 +364,7 @@
       const details = document.getElementById('format-details');
       const govType = format.governance.type.replace(/[^a-zA-Z]/g, '').toLowerCase();
       details.innerHTML = `
-        <h2 class="text-xl font-semibold mb-3">${format.name}</h2>
+        <h2 class="text-lg font-semibold mb-2 text-gray-900">${format.name}</h2>
         <div class="detail-section">
           <h3>Format Specifications</h3>
           <p><strong>Category:</strong> ${getCategoryDisplayName(format.category)}</p>
@@ -366,12 +420,15 @@
 
     function renderLinks(format) {
       const linksList = document.getElementById('links-list');
+      const iframe = document.getElementById('links-iframe');
       if (format.links && format.links.length > 0) {
         linksList.innerHTML = format.links.map(link => `
           <a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.text}</a>
         `).join('');
+        iframe.src = format.links[0].url || 'https://example.com';
       } else {
-        linksList.innerHTML = '<p class="text-gray-400">No links available</p>';
+        linksList.innerHTML = '<p class="text-gray-600">No links available</p>';
+        iframe.src = 'https://example.com';
       }
     }
 
