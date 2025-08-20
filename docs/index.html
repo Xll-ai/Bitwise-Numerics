@@ -244,7 +244,7 @@
   </style>
 </head>
 <body>
-  <table>
+  <table style="border-collapse: collapse; width: 100%; max-width: 400px; margin: 10px 0; font-size: 14px;">
     <tr>
       <th>Version</th>
       <th>UTC</th>
@@ -257,47 +257,49 @@
     </tr>
     <tr>
       <td>10</td>
-      <td>07-59-00.444 Wednesday 20-Aug-2025</td>
-      <td>08:59 Wed</td>
-      <td>03:51 Fri</td>
-      <td>00:59 Wed</td>
-      <td>16:59 Wed</td>
-      <td>15:59 Wed</td>
-      <td>11:59 Wed</td>
+      <td>08-00-00.000 Wednesday 20-Aug-2025</td>
+      <td>09:00 Wed</td>
+      <td>04:00 Wed</td>
+      <td>01:00 Wed</td>
+      <td>17:00 Wed</td>
+      <td>16:00 Wed</td>
+      <td>12:00 Wed</td>
     </tr>
-  </table> class="flex">
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <div class="category-nav flex flex-wrap gap-1"></div>
-      <div class="bg-gray-100 p-3 border-b border-gray-300">
-        <h2 class="text-lg font-bold mb-2 text-gray-900">Numeric Formats</h2>
-        <input type="text" id="searchInput" class="w-full p-2 bg-gray-200 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600" placeholder="Search formats...">
+  </table>
+  <div class="flex">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="category-nav flex flex-wrap gap-1"></div>
+        <div class="bg-gray-100 p-3 border-b border-gray-300">
+          <h2 class="text-lg font-bold mb-2 text-gray-900">Numeric Formats</h2>
+          <input type="text" id="searchInput" class="w-full p-2 bg-gray-200 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600" placeholder="Search formats...">
+        </div>
       </div>
+      <div id="menu" class="space-y-1"></div>
     </div>
-    <div id="menu" class="space-y-1"></div>
-  </div>
-  <div class="content">
-    <h1 class="text-2xl font-bold mb-4 text-gray-900">Bitwise Numerics Explorer</h1>
-    <div class="format-details-container">
-      <div id="format-details" class="format-details">
-        <div class="format-details-header">
-          <div class="section-nav flex flex-wrap gap-1">
-            <button data-section="format">Format</button>
-            <button data-section="structure">Structure</button>
-            <button data-section="governance">Governance</button>
-            <button data-section="range">Range</button>
-            <button data-section="hex">Hex</button>
-            <button data-section="binary">Binary</button>
+    <div class="content">
+      <h1 class="text-2xl font-bold mb-4 text-gray-900">Bitwise Numerics Explorer</h1>
+      <div class="format-details-container">
+        <div id="format-details" class="format-details">
+          <div class="format-details-header">
+            <div class="section-nav flex flex-wrap gap-1">
+              <button data-section="format">Format</button>
+              <button data-section="structure">Structure</button>
+              <button data-section="governance">Governance</button>
+              <button data-section="range">Range</button>
+              <button data-section="hex">Hex</button>
+              <button data-section="binary">Binary</button>
+            </div>
+          </div>
+          <div id="format-details-content" class="format-details-content">
+            <p class="text-gray-600">Select a format from the menu to view details.</p>
           </div>
         </div>
-        <div id="format-details-content" class="format-details-content">
-          <p class="text-gray-600">Select a format from the menu to view details.</p>
+        <div id="links-frame" class="links-frame">
+          <h3 class="text-base font-semibold mb-2 text-indigo-600">Related Links</h3>
+          <div id="links-list" class="links-list"></div>
+          <iframe id="links-iframe" class="links-iframe" src="https://example.com"></iframe>
         </div>
-      </div>
-      <div id="links-frame" class="links-frame">
-        <h3 class="text-base font-semibold mb-2 text-indigo-600">Related Links</h3>
-        <div id="links-list" class="links-list"></div>
-        <iframe id="links-iframe" class="links-iframe" src="https://example.com"></iframe>
       </div>
     </div>
   </div>
