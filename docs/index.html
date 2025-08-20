@@ -256,14 +256,14 @@
       <th>Dubai</th>
     </tr>
     <tr>
-      <td>11</td>
-      <td>17-41-00.000 Wednesday 20-Aug-2025</td>
-      <td>18:41 Wed</td>
-      <td>13:41 Wed</td>
-      <td>10:41 Wed</td>
-      <td>02:41 Thu</td>
-      <td>01:41 Thu</td>
-      <td>21:41 Wed</td>
+      <td>12</td>
+      <td>18-15-00.000 Wednesday 20-Aug-2025</td>
+      <td>19:15 Wed</td>
+      <td>14:15 Wed</td>
+      <td>11:15 Wed</td>
+      <td>03:15 Thu</td>
+      <td>02:15 Thu</td>
+      <td>22:15 Wed</td>
     </tr>
   </table>
   <div class="flex">
@@ -306,16 +306,25 @@
 
   <script>
     async function fetchFormats() {
-      try {
-        const response = await fetch('https://raw.githubusercontent.com/Xll-ai/Bitwise-Numerics/main/docs/numeric_formats.json');
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const formats = await response.json();
-        return formats;
-      } catch (error) {
-        console.error('Error fetching formats:', error);
-        document.getElementById('format-details-content').innerHTML = `<p class="text-red-600">Error loading formats: ${error.message}</p>`;
-        return [];
+      const urls = [
+        'https://raw.githubusercontent.com/Xll-ai/Bitwise-Numerics/main/docs/int.json',
+        'https://raw.githubusercontent.com/Xll-ai/Bitwise-Numerics/main/docs/float.json',
+        'https://raw.githubusercontent.com/Xll-ai/Bitwise-Numerics/main/docs/decimal.json',
+        'https://raw.githubusercontent.com/Xll-ai/Bitwise-Numerics/main/docs/vector_processing.json'
+      ];
+      const formats = [];
+      for (const url of urls) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status} for ${url}`);
+          const data = await response.json();
+          formats.push(...data);
+        } catch (error) {
+          console.error(`Error fetching ${url}:`, error);
+          document.getElementById('format-details-content').innerHTML = `<p class="text-red-600">Error loading formats from ${url}: ${error.message}</p>`;
+        }
       }
+      return formats;
     }
 
     function categorizeFormats(formats) {
