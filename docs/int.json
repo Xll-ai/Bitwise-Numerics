@@ -1,0 +1,247 @@
+[
+  {
+    "name": "INT1",
+    "category": "integer",
+    "bits_total": 1,
+    "signed": false,
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "n/a", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "B",
+    "hex_examples": { "zero": "0x0", "one": "0x1" },
+    "binary_examples": [
+      { "bits": "0", "value": "0" },
+      { "bits": "1", "value": "1" }
+    ],
+    "governance": { "type": "proprietary", "owner": "Custom ML hardware", "status": "experimental", "notes": "Binary weights in neural networks" },
+    "range": "0 to 1",
+    "values": "2",
+    "quantization_config": {
+      "quantization_type": "binary",
+      "bit_width": 1,
+      "symmetric": true,
+      "calibration_method": "sign"
+    },
+    "language_support": [
+      {
+        "language": "C++",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "BitVector",
+            "data_type": "std::bitset<1>",
+            "operations": ["bitwise_and", "bitwise_or", "bitwise_xor"],
+            "thread_safety": "safe"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "INT2",
+    "category": "integer",
+    "bits_total": 2,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "n/a", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "SB",
+    "hex_examples": { "min_signed": "0x2 (-2)", "zero": "0x0", "max_signed": "0x1 (+1)" },
+    "binary_examples": [
+      { "bits": "10", "value": "-2 (signed)" },
+      { "bits": "00", "value": "0" },
+      { "bits": "01", "value": "+1 (signed)" }
+    ],
+    "governance": { "type": "proprietary", "owner": "Custom ML hardware", "status": "experimental", "notes": "Used in specialized ML accelerators" },
+    "range": "-2 to +1",
+    "values": "4",
+    "quantization_config": {
+      "quantization_type": "linear",
+      "scale": 1.0,
+      "zero_point": 0,
+      "bit_width": 2,
+      "symmetric": true,
+      "calibration_method": "minmax"
+    }
+  },
+  {
+    "name": "INT4",
+    "category": "integer",
+    "bits_total": 4,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "n/a", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "SBBB",
+    "hex_examples": { "min_signed": "0x8 (-8)", "zero": "0x0", "max_signed": "0x7 (+7)" },
+    "binary_examples": [
+      { "bits": "1000", "value": "-8 (signed)" },
+      { "bits": "0000", "value": "0" },
+      { "bits": "0111", "value": "+7 (signed)" }
+    ],
+    "governance": { "type": "proprietary", "owner": "Custom ML hardware", "status": "experimental", "notes": "Used in quantized neural networks" },
+    "range": "-8 to +7",
+    "values": "16",
+    "quantization_config": {
+      "quantization_type": "linear",
+      "scale": 1.0,
+      "zero_point": 0,
+      "bit_width": 4,
+      "symmetric": true,
+      "calibration_method": "minmax"
+    },
+    "language_support": [
+      {
+        "language": "CUDA",
+        "native_support": "__nv_fp8_storage_t",
+        "library_support": [
+          {
+            "library_name": "cuBLAS",
+            "data_type": "int4",
+            "operations": ["gemm", "conv"],
+            "version_required": "12.0+"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "INT8",
+    "category": "integer",
+    "bits_total": 8,
+    "signed": true,
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "n/a", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "SBBBBBBB",
+    "hex_examples": { "min_signed": "0x80 (-128)", "zero": "0x00", "max_signed": "0x7F (+127)" },
+    "binary_examples": [
+      { "bits": "10000000", "value": "-128 (signed)" },
+      { "bits": "00000000", "value": "0" },
+      { "bits": "01111111", "value": "+127 (signed)" }
+    ],
+    "governance": { "type": "de-facto", "owner": "ISO C / CPU ISAs", "status": "widely adopted", "notes": "Used for DeepSeek R2 inference on Huawei Ascend" },
+    "range": "-128 to +127",
+    "values": "256",
+    "language_support": [
+      {
+        "language": "C",
+        "native_support": "int8_t",
+        "library_support": [],
+        "compiler_requirements": "C99+",
+        "notes": "Standard signed 8-bit integer"
+      },
+      {
+        "language": "C++",
+        "native_support": "int8_t",
+        "library_support": [],
+        "compiler_requirements": "C++11+",
+        "notes": "Standard signed 8-bit integer"
+      },
+      {
+        "language": "C#",
+        "native_support": "sbyte",
+        "library_support": [],
+        "compiler_requirements": "any",
+        "notes": ".NET signed byte"
+      },
+      {
+        "language": "Rust",
+        "native_support": "i8",
+        "library_support": [],
+        "compiler_requirements": "any",
+        "notes": "Primitive signed 8-bit integer"
+      },
+      {
+        "language": "Python",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "NumPy",
+            "data_type": "np.int8",
+            "operations": ["arithmetic", "bitwise", "comparison"],
+            "version_required": "1.0+"
+          }
+        ]
+      }
+    ],
+    "simd_support": [
+      {
+        "architecture": "x86",
+        "instruction_set": "AVX2",
+        "register_size_bits": 256,
+        "elements_per_register": 32,
+        "data_type": "__m256i",
+        "supported_operations": ["add", "sub", "mult", "pack", "unpack"],
+        "throughput_factor": 32.0
+      },
+      {
+        "architecture": "ARM",
+        "instruction_set": "NEON",
+        "register_size_bits": 128,
+        "elements_per_register": 16,
+        "data_type": "int8x16_t",
+        "supported_operations": ["add", "sub", "mult", "min", "max"],
+        "throughput_factor": 16.0
+      }
+    ]
+  },
+  {
+    "name": "UINT8",
+    "category": "integer",
+    "bits_total": 8,
+    "signed": false,
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "n/a", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "BBBBBBBB",
+    "hex_examples": { "min": "0x00 (0)", "max": "0xFF (255)" },
+    "binary_examples": [
+      { "bits": "00000000", "value": "0" },
+      { "bits": "11111111", "value": "255" }
+    ],
+    "governance": { "type": "de-facto", "owner": "ISO C / CPU ISAs", "status": "widely adopted", "notes": "Standard unsigned byte" },
+    "range": "0 to 255",
+    "values": "256",
+    "language_support": [
+      {
+        "language": "C",
+        "native_support": "uint8_t",
+        "library_support": [],
+        "compiler_requirements": "C99+"
+      },
+      {
+        "language": "C#",
+        "native_support": "byte",
+        "library_support": [],
+        "compiler_requirements": "any"
+      },
+      {
+        "language": "Rust",
+        "native_support": "u8",
+        "library_support": [],
+        "compiler_requirements": "any"
+      }
+    ]
+  }
+]
