@@ -60,10 +60,37 @@
     .format-details {
       flex: 0 0 60%;
       background: rgba(255, 255, 255, 0.9);
-      padding: 15px;
       border-radius: 8px;
       border: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
+    }
+    .format-details-header {
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      z-index: 10;
+    }
+    .section-nav button {
+      padding: 6px 10px;
+      margin: 2px;
+      background: #e5e7eb;
+      color: #1f2937;
+      border-radius: 6px;
+      font-size: 12px;
+      transition: background-color 0.3s;
+    }
+    .section-nav button:hover {
+      background: #4b5563;
+      color: #ffffff;
+    }
+    .format-details-content {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
     }
     .links-frame {
       flex: 0 0 40%;
@@ -187,6 +214,7 @@
       padding: 3px 0;
       font-size: 12px;
       transition: color 0.3s;
+      cursor: pointer;
     }
     .links-list a:hover {
       color: #1e40af;
@@ -229,7 +257,19 @@
     <h1 class="text-2xl font-bold mb-4 text-gray-900">Bitwise Numerics Explorer</h1>
     <div class="format-details-container">
       <div id="format-details" class="format-details">
-        <p class="text-gray-600">Select a format from the menu to view details.</p>
+        <div class="format-details-header">
+          <div class="section-nav flex flex-wrap gap-1">
+            <button data-section="format">Format</button>
+            <button data-section="structure">Structure</button>
+            <button data-section="governance">Governance</button>
+            <button data-section="range">Range</button>
+            <button data-section="hex">Hex</button>
+            <button data-section="binary">Binary</button>
+          </div>
+        </div>
+        <div id="format-details-content" class="format-details-content">
+          <p class="text-gray-600">Select a format from the menu to view details.</p>
+        </div>
       </div>
       <div id="links-frame" class="links-frame">
         <h3 class="text-base font-semibold mb-2 text-indigo-600">Related Links</h3>
@@ -248,7 +288,7 @@
         return formats;
       } catch (error) {
         console.error('Error fetching formats:', error);
-        document.getElementById('format-details').innerHTML = `<p class="text-red-600">Error loading formats: ${error.message}</p>`;
+        document.getElementById('format-details-content').innerHTML = `<p class="text-red-600">Error loading formats: ${error.message}</p>`;
         return [];
       }
     }
@@ -361,18 +401,18 @@
     }
 
     function renderFormatDetails(format) {
-      const details = document.getElementById('format-details');
+      const detailsContent = document.getElementById('format-details-content');
       const govType = format.governance.type.replace(/[^a-zA-Z]/g, '').toLowerCase();
-      details.innerHTML = `
+      detailsContent.innerHTML = `
         <h2 class="text-lg font-semibold mb-2 text-gray-900">${format.name}</h2>
-        <div class="detail-section">
+        <div class="detail-section" data-section="format">
           <h3>Format Specifications</h3>
           <p><strong>Category:</strong> ${getCategoryDisplayName(format.category)}</p>
           <p><strong>Bits Total:</strong> ${format.bits_total}</p>
           <p><strong>Signed:</strong> ${format.signed === null ? 'N/A' : format.signed ? 'Yes' : 'No'}</p>
           <p><strong>Bit Split:</strong> ${format.bit_split || 'N/A'}</p>
         </div>
-        <div class="detail-section">
+        <div class="detail-section" data-section="structure">
           <h3>Structure</h3>
           <p><strong>Sign Bits:</strong> ${format.structure.sign_bits || 'N/A'}</p>
           <p><strong>Exponent Bits:</strong> ${format.structure.exponent_bits || 'N/A'}</p>
@@ -383,39 +423,50 @@
             NaNs: ${format.structure.specials.nans}, 
             Subnormals: ${format.structure.specials.subnormals}</p>
         </div>
-        <div class="detail-section">
+        <div class="detail-section" data-section="governance">
           <h3>Governance</h3>
           <p><strong>Type:</strong> <span class="governance-badge governance-${govType}">${format.governance.type}</span></p>
           <p><strong>Owner:</strong> ${format.governance.owner}</p>
           <p><strong>Status:</strong> ${format.governance.status}</p>
           <p><strong>Notes:</strong> ${format.governance.notes || 'None'}</p>
         </div>
-        <div class="detail-section">
+        <div class="detail-section" data-section="range">
           <h3>Range & Values</h3>
           <p><strong>Range:</strong> ${format.range || 'N/A'}</p>
           <p><strong>Values:</strong> ${format.values || 'N/A'}</p>
         </div>
-        <div class="detail-section">
+        <div class="detail-section" data-section="hex">
           <h3>Hex Examples</h3>
           <pre>${format.hex_examples ? JSON.stringify(format.hex_examples, null, 2) : 'No hex examples available'}</pre>
         </div>
-        <div class="detail-section">
+        <div class="detail-section" data-section="binary">
           <h3>Binary Examples</h3>
           <pre>${format.binary_examples && format.binary_examples.length > 0 ? JSON.stringify(format.binary_examples, null, 2) : 'No binary examples available'}</pre>
         </div>
         ${format.platform_support ? `
-          <div class="detail-section">
+          <div class="detail-section" data-section="platform">
             <h3>Platform Support</h3>
             <pre>${JSON.stringify(format.platform_support, null, 2)}</pre>
           </div>
         ` : ''}
         ${format.language_support ? `
-          <div class="detail-section">
+          <div class="detail-section" data-section="language">
             <h3>Language Support</h3>
             <pre>${JSON.stringify(format.language_support, null, 2)}</pre>
           </div>
         ` : ''}
       `;
+
+      // Setup section navigation buttons
+      document.querySelectorAll('.section-nav button').forEach(button => {
+        button.addEventListener('click', () => {
+          const section = button.dataset.section;
+          const sectionElement = document.querySelector(`.detail-section[data-section="${section}"]`);
+          if (sectionElement) {
+            sectionElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
     }
 
     function renderLinks(format) {
@@ -423,7 +474,7 @@
       const iframe = document.getElementById('links-iframe');
       if (format.links && format.links.length > 0) {
         linksList.innerHTML = format.links.map(link => `
-          <a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.text}</a>
+          <a href="#" onclick="document.getElementById('links-iframe').src='${link.url}'; return false;">${link.text}</a>
         `).join('');
         iframe.src = format.links[0].url || 'https://example.com';
       } else {
