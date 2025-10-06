@@ -1,0 +1,693 @@
+[
+  {
+    "name": "SQL TINYINT",
+    "category": "integer",
+    "bits_total": 8,
+    "signed": true,
+    "range": "-128 to 127 (or 0 to 255 unsigned)",
+    "values": "256",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": "NULL", "subnormals": false }
+    },
+    "bit_split": "SBBBBBBB",
+    "governance": { "type": "de-facto", "owner": "SQL standard", "status": "standardized", "notes": "Database 8-bit integer" },
+    "language_support": [
+      { "language": "C#", "native_support": "sbyte/byte", "notes": "Maps to sbyte or byte" },
+      { "language": "Java", "native_support": "byte", "notes": "Maps to byte (always signed)" },
+      { "language": "Python", "native_support": "none", "library": "SQL libraries", "notes": "Mapped by DB-API" }
+    ],
+    "links": []
+  },
+  {
+    "name": "SQL SMALLINT",
+    "category": "integer",
+    "bits_total": 16,
+    "signed": true,
+    "range": "-32768 to 32767",
+    "values": "65536",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": "NULL", "subnormals": false }
+    },
+    "bit_split": "16-bit signed",
+    "governance": { "type": "de-facto", "owner": "SQL standard", "status": "standardized", "notes": "Database 16-bit integer" },
+    "language_support": [
+      { "language": "C#", "native_support": "short", "notes": "Maps to Int16" },
+      { "language": "Java", "native_support": "short", "notes": "Maps to short" }
+    ],
+    "links": []
+  },
+  {
+    "name": "SQL INT/INTEGER",
+    "category": "integer",
+    "bits_total": 32,
+    "signed": true,
+    "range": "-2147483648 to 2147483647",
+    "values": "2^32",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": "NULL", "subnormals": false }
+    },
+    "bit_split": "32-bit signed",
+    "governance": { "type": "de-facto", "owner": "SQL standard", "status": "standardized", "notes": "Standard database integer" },
+    "language_support": [
+      { "language": "C#", "native_support": "int", "notes": "Maps to Int32" },
+      { "language": "Java", "native_support": "int", "notes": "Maps to int" },
+      { "language": "Python", "native_support": "int", "notes": "Python int is arbitrary, but DB maps to 32-bit" }
+    ],
+    "links": []
+  },
+  {
+    "name": "SQL BIGINT",
+    "category": "integer",
+    "bits_total": 64,
+    "signed": true,
+    "range": "-9223372036854775808 to 9223372036854775807",
+    "values": "2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": "NULL", "subnormals": false }
+    },
+    "bit_split": "64-bit signed",
+    "governance": { "type": "de-facto", "owner": "SQL standard", "status": "standardized", "notes": "Database 64-bit integer" },
+    "language_support": [
+      { "language": "C#", "native_support": "long", "notes": "Maps to Int64" },
+      { "language": "Java", "native_support": "long", "notes": "Maps to long" }
+    ],
+    "links": []
+  },
+  {
+    "name": "SQL REAL",
+    "category": "float",
+    "bits_total": 32,
+    "signed": true,
+    "range": "±3.4e38",
+    "values": "~4.3B",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 8,
+      "mantissa_bits": 23,
+      "bias": 127,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "NULL", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP32",
+    "governance": { "type": "de-facto", "owner": "SQL standard", "status": "standardized", "notes": "Single precision float" },
+    "language_support": [
+      { "language": "C#", "native_support": "float", "notes": "Maps to Single" },
+      { "language": "Java", "native_support": "float", "notes": "Maps to float" }
+    ],
+    "links": []
+  },
+  {
+    "name": "SQL FLOAT/DOUBLE PRECISION",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±1.8e308",
+    "values": "~18Q",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "NULL", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP64",
+    "governance": { "type": "de-facto", "owner": "SQL standard", "status": "standardized", "notes": "Double precision float" },
+    "language_support": [
+      { "language": "C#", "native_support": "double", "notes": "Maps to Double" },
+      { "language": "Java", "native_support": "double", "notes": "Maps to double" },
+      { "language": "R", "native_support": "numeric", "notes": "R's default numeric" }
+    ],
+    "links": []
+  },
+  {
+    "name": "SQL NUMERIC/DECIMAL",
+    "category": "decimal",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Depends on precision and scale",
+    "values": "10^precision",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": "variable decimal digits",
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": "NULL", "subnormals": false }
+    },
+    "bit_split": "Fixed-point decimal with precision and scale",
+    "governance": { "type": "de-facto", "owner": "SQL standard", "status": "standardized", "notes": "Exact numeric with scale" },
+    "language_support": [
+      { "language": "C#", "native_support": "decimal", "notes": "Maps to Decimal for small precisions" },
+      { "language": "Java", "native_support": "BigDecimal", "notes": "Maps to BigDecimal" },
+      { "language": "Python", "native_support": "Decimal", "library": "decimal", "notes": "Via Decimal class" }
+    ],
+    "links": []
+  },
+  {
+    "name": "SQL MONEY (SQL Server)",
+    "category": "decimal",
+    "bits_total": 64,
+    "signed": true,
+    "range": "-922337203685477.5808 to 922337203685477.5807",
+    "values": "2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": "NULL", "subnormals": false }
+    },
+    "bit_split": "64-bit integer / 10000 (4 decimal places)",
+    "governance": { "type": "vendor", "owner": "Microsoft SQL Server", "status": "vendor-specific", "notes": "Currency type" },
+    "language_support": [
+      { "language": "C#", "native_support": "none", "notes": "Map to decimal or use SqlMoney" }
+    ],
+    "links": []
+  },
+  {
+    "name": "SQL SMALLMONEY (SQL Server)",
+    "category": "decimal",
+    "bits_total": 32,
+    "signed": true,
+    "range": "-214748.3648 to 214748.3647",
+    "values": "2^32",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": "NULL", "subnormals": false }
+    },
+    "bit_split": "32-bit integer / 10000 (4 decimal places)",
+    "governance": { "type": "vendor", "owner": "Microsoft SQL Server", "status": "vendor-specific", "notes": "Small currency type" },
+    "language_support": [
+      { "language": "C#", "native_support": "none", "notes": "Map to decimal" }
+    ],
+    "links": []
+  },
+  {
+    "name": "OpenGL GLfloat",
+    "category": "float",
+    "bits_total": 32,
+    "signed": true,
+    "range": "±3.4e38",
+    "values": "~4.3B",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 8,
+      "mantissa_bits": 23,
+      "bias": 127,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP32",
+    "governance": { "type": "de-facto", "owner": "Khronos OpenGL", "status": "graphics standard", "notes": "OpenGL float type" },
+    "language_support": [
+      { "language": "C", "native_support": "GLfloat", "header": "<GL/gl.h>", "notes": "typedef for float" },
+      { "language": "C++", "native_support": "GLfloat", "header": "<GL/gl.h>", "notes": "OpenGL type" }
+    ],
+    "links": []
+  },
+  {
+    "name": "OpenGL GLdouble",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±1.8e308",
+    "values": "~18Q",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP64",
+    "governance": { "type": "de-facto", "owner": "Khronos OpenGL", "status": "graphics standard", "notes": "OpenGL double type" },
+    "language_support": [
+      { "language": "C", "native_support": "GLdouble", "header": "<GL/gl.h>", "notes": "typedef for double" },
+      { "language": "C++", "native_support": "GLdouble", "header": "<GL/gl.h>", "notes": "OpenGL type" }
+    ],
+    "links": []
+  },
+  {
+    "name": "DirectX HALF",
+    "category": "float",
+    "bits_total": 16,
+    "signed": true,
+    "range": "±65504",
+    "values": "~65536",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 5,
+      "mantissa_bits": 10,
+      "bias": 15,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP16",
+    "governance": { "type": "vendor", "owner": "Microsoft DirectX", "status": "graphics API", "notes": "DirectX half precision" },
+    "language_support": [
+      { "language": "C++", "native_support": "HALF", "notes": "DirectX HLSL type" },
+      { "language": "C#", "native_support": "Half", "version": ".NET 5.0+", "notes": "Native in modern .NET" }
+    ],
+    "links": []
+  },
+  {
+    "name": "GLSL float",
+    "category": "float",
+    "bits_total": 32,
+    "signed": true,
+    "range": "±3.4e38",
+    "values": "~4.3B",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 8,
+      "mantissa_bits": 23,
+      "bias": 127,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "implementation-dependent" }
+    },
+    "bit_split": "IEEE 754 FP32",
+    "governance": { "type": "de-facto", "owner": "Khronos GLSL", "status": "shader language", "notes": "GLSL float type" },
+    "language_support": [
+      { "language": "GLSL", "native_support": "float", "notes": "Shader language float" }
+    ],
+    "links": []
+  },
+  {
+    "name": "GLSL double",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±1.8e308",
+    "values": "~18Q",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP64",
+    "governance": { "type": "de-facto", "owner": "Khronos GLSL", "status": "shader language", "notes": "GLSL double (optional)" },
+    "language_support": [
+      { "language": "GLSL", "native_support": "double", "notes": "Optional extension, not all GPUs" }
+    ],
+    "links": []
+  },
+  {
+    "name": "GLSL vec2/vec3/vec4",
+    "category": "vector_processing",
+    "bits_total": "64/96/128",
+    "signed": true,
+    "range": "2/3/4 × FP32 values",
+    "values": "Product of components",
+    "structure": {
+      "sign_bits": "2/3/4",
+      "exponent_bits": "16/24/32",
+      "mantissa_bits": "46/69/92",
+      "bias": 127,
+      "specials": { "zeros": "per component", "infinities": "per component", "nans": "per component", "subnormals": "per component" }
+    },
+    "bit_split": "2/3/4 × float",
+    "governance": { "type": "de-facto", "owner": "Khronos GLSL", "status": "shader language", "notes": "GLSL vector types" },
+    "language_support": [
+      { "language": "GLSL", "native_support": "vec2, vec3, vec4", "notes": "Built-in vector types for shaders" }
+    ],
+    "links": []
+  },
+  {
+    "name": "GLSL mat2/mat3/mat4",
+    "category": "vector_processing",
+    "bits_total": "128/288/512",
+    "signed": true,
+    "range": "Matrix of floats",
+    "values": "Product of all elements",
+    "structure": {
+      "sign_bits": "4/9/16",
+      "exponent_bits": "32/72/128",
+      "mantissa_bits": "92/207/368",
+      "bias": 127,
+      "specials": { "zeros": "per element", "infinities": "per element", "nans": "per element", "subnormals": "per element" }
+    },
+    "bit_split": "2×2 / 3×3 / 4×4 matrix of floats",
+    "governance": { "type": "de-facto", "owner": "Khronos GLSL", "status": "shader language", "notes": "GLSL matrix types" },
+    "language_support": [
+      { "language": "GLSL", "native_support": "mat2, mat3, mat4", "notes": "Built-in matrix types" }
+    ],
+    "links": []
+  },
+  {
+    "name": "HLSL float",
+    "category": "float",
+    "bits_total": 32,
+    "signed": true,
+    "range": "±3.4e38",
+    "values": "~4.3B",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 8,
+      "mantissa_bits": 23,
+      "bias": 127,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP32",
+    "governance": { "type": "vendor", "owner": "Microsoft HLSL", "status": "shader language", "notes": "HLSL float type" },
+    "language_support": [
+      { "language": "HLSL", "native_support": "float", "notes": "DirectX shader float" }
+    ],
+    "links": []
+  },
+  {
+    "name": "HLSL half",
+    "category": "float",
+    "bits_total": 16,
+    "signed": true,
+    "range": "±65504",
+    "values": "~65536",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 5,
+      "mantissa_bits": 10,
+      "bias": 15,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP16",
+    "governance": { "type": "vendor", "owner": "Microsoft HLSL", "status": "shader language", "notes": "HLSL half precision" },
+    "language_support": [
+      { "language": "HLSL", "native_support": "half", "notes": "Half precision in shaders" }
+    ],
+    "links": []
+  },
+  {
+    "name": "HLSL min16float",
+    "category": "float",
+    "bits_total": 16,
+    "signed": true,
+    "range": "±65504",
+    "values": "~65536",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 5,
+      "mantissa_bits": 10,
+      "bias": 15,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP16 or higher",
+    "governance": { "type": "vendor", "owner": "Microsoft HLSL", "status": "shader language", "notes": "Minimum 16-bit precision hint" },
+    "language_support": [
+      { "language": "HLSL", "native_support": "min16float", "notes": "Performance hint for at least 16-bit" }
+    ],
+    "links": []
+  },
+  {
+    "name": "UNORM",
+    "category": "integer",
+    "bits_total": "variable (8, 16, etc.)",
+    "signed": false,
+    "range": "0.0 to 1.0",
+    "values": "2^n where n is bit count",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0x00", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Unsigned integer normalized to [0,1]",
+    "governance": { "type": "vendor", "owner": "DirectX/Vulkan", "status": "graphics API", "notes": "Normalized unsigned integer" },
+    "language_support": [
+      { "language": "HLSL", "native_support": "unorm", "notes": "Type modifier in HLSL" },
+      { "language": "GLSL", "native_support": "none", "notes": "Handled via texture formats" }
+    ],
+    "links": []
+  },
+  {
+    "name": "SNORM",
+    "category": "integer",
+    "bits_total": "variable (8, 16, etc.)",
+    "signed": true,
+    "range": "-1.0 to 1.0",
+    "values": "2^n",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0x00", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Signed integer normalized to [-1,1]",
+    "governance": { "type": "vendor", "owner": "DirectX/Vulkan", "status": "graphics API", "notes": "Normalized signed integer" },
+    "language_support": [
+      { "language": "HLSL", "native_support": "snorm", "notes": "Type modifier in HLSL" }
+    ],
+    "links": []
+  },
+  {
+    "name": "RGB10A2",
+    "category": "vector_processing",
+    "bits_total": 32,
+    "signed": false,
+    "range": "RGB: 0-1023, A: 0-3",
+    "values": "2^32",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0x00000000", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "10R + 10G + 10B + 2A",
+    "governance": { "type": "de-facto", "owner": "Graphics APIs", "status": "graphics standard", "notes": "Packed color format" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Manual bit packing" },
+      { "language": "C++", "native_support": "none", "notes": "Manual bit packing" },
+      { "language": "GLSL", "native_support": "none", "notes": "Via texture format" }
+    ],
+    "links": []
+  },
+  {
+    "name": "R11G11B10F",
+    "category": "vector_processing",
+    "bits_total": 32,
+    "signed": false,
+    "range": "RGB: unsigned floats",
+    "values": "Product of component ranges",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": "15 total (5+5+5)",
+      "mantissa_bits": "17 total (6+6+5)",
+      "bias": "15 for R/G, 15 for B",
+      "specials": { "zeros": "per component", "infinities": "per component", "nans": false, "subnormals": "per component" }
+    },
+    "bit_split": "11-bit R + 11-bit G + 10-bit B (unsigned floats)",
+    "governance": { "type": "de-facto", "owner": "Graphics APIs", "status": "graphics standard", "notes": "Packed HDR color" },
+    "language_support": [
+      { "language": "GLSL", "native_support": "none", "notes": "Via texture format" },
+      { "language": "HLSL", "native_support": "none", "notes": "Via texture format" }
+    ],
+    "links": []
+  },
+  {
+    "name": "sRGB (8-bit per channel)",
+    "category": "integer",
+    "bits_total": 24,
+    "signed": false,
+    "range": "0-255 per channel (gamma corrected)",
+    "values": "256^3",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0x000000", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "8R + 8G + 8B (gamma encoded)",
+    "governance": { "type": "de-facto", "owner": "IEC 61966-2-1", "status": "standardized", "notes": "Gamma-corrected color space" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Manual encoding/decoding" },
+      { "language": "GLSL", "native_support": "none", "notes": "Automatic conversion in hardware" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Java byte",
+    "category": "integer",
+    "bits_total": 8,
+    "signed": true,
+    "range": "-128 to 127",
+    "values": "256",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "SBBBBBBB",
+    "governance": { "type": "language-standard", "owner": "Java", "status": "Java standard", "notes": "Always signed in Java" },
+    "language_support": [
+      { "language": "Java", "native_support": "byte", "version": "1.0+", "notes": "Always 8-bit signed" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Java char",
+    "category": "integer",
+    "bits_total": 16,
+    "signed": false,
+    "range": "0 to 65535 (UTF-16 code unit)",
+    "values": "65536",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "\\u0000", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "16 bits unsigned",
+    "governance": { "type": "language-standard", "owner": "Java", "status": "Java standard", "notes": "UTF-16 code unit" },
+    "language_support": [
+      { "language": "Java", "native_support": "char", "version": "1.0+", "notes": "Always 16-bit unsigned, UTF-16" }
+    ],
+    "links": []
+  },
+  {
+    "name": "C# nint/nuint",
+    "category": "integer",
+    "bits_total": "platform-dependent (32 or 64)",
+    "signed": true,
+    "range": "Platform-dependent",
+    "values": "2^32 or 2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Platform native int size",
+    "governance": { "type": "language-standard", "owner": "Microsoft .NET", "status": "C# 9.0+", "notes": "Native-sized integer" },
+    "language_support": [
+      { "language": "C#", "native_support": "nint/nuint", "version": "C# 9.0+", "notes": "IntPtr/UIntPtr aliases" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Pascal Integer",
+    "category": "integer",
+    "bits_total": 16,
+    "signed": true,
+    "range": "-32768 to 32767",
+    "values": "65536",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "16-bit signed",
+    "governance": { "type": "language-standard", "owner": "Pascal/Delphi", "status": "legacy", "notes": "Classic Pascal integer" },
+    "language_support": [
+      { "language": "Pascal/Delphi", "native_support": "Integer", "notes": "Platform-dependent, historically 16-bit" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Fortran INTEGER",
+    "category": "integer",
+    "bits_total": "variable (typically 32)",
+    "signed": true,
+    "range": "Implementation-dependent",
+    "values": "Implementation-dependent",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Compiler-dependent",
+    "governance": { "type": "language-standard", "owner": "Fortran standard", "status": "standardized", "notes": "Default integer" },
+    "language_support": [
+      { "language": "Fortran", "native_support": "INTEGER", "notes": "Default kind, typically 32-bit" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Fortran REAL",
+    "category": "float",
+    "bits_total": "variable (typically 32)",
+    "signed": true,
+    "range": "Implementation-dependent",
+    "values": "Implementation-dependent",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "typically 8",
+      "mantissa_bits": "typically 23",
+      "bias": 127,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "Typically IEEE 754 FP32",
+    "governance": { "type": "language-standard", "owner": "Fortran standard", "status": "standardized", "notes": "Default real" },
+    "language_support": [
+      { "language": "Fortran", "native_support": "REAL", "notes": "Default kind, typically single precision" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Fortran DOUBLE PRECISION",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±1.8e308",
+    "values": "~18Q",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP64",
+    "governance": { "type": "language-standard", "owner": "Fortran standard", "status": "standardized", "notes": "Double precision" },
+    "language_support": [
+      { "language": "Fortran", "native_support": "DOUBLE PRECISION", "notes": "64-bit float" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Fortran COMPLEX",
+    "category": "float",
+    "bits_total": "variable (typically 64)",
+    "signed": true,
+    "range": "Two real components",
+    "values": "Product of component ranges",
+    "structure": {
+      "sign_bits": 2,
+      "exponent_bits": "2 × real component",
+      "mantissa_bits": "2 × real component",
+      "bias": "real component bias",
+      "specials": { "zeros": "(0,0)", "infinities": "per component", "nans": "per component", "subnormals": "per component" }
+    },
+    "bit_split": "Two REAL values",
+    "governance": { "type": "language-standard", "owner": "Fortran standard", "status": "standardized", "notes": "Complex number" },
+    "language_support": [
+      { "language": "Fortran", "native_support": "COMPLEX", "notes": "Built-in complex type" }
+    ],
+    "links": []
+  }
+]

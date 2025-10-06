@@ -1,0 +1,501 @@
+[
+  {
+    "name": "Dual Number",
+    "category": "other",
+    "bits_total": "variable (typically 64 or 128)",
+    "signed": true,
+    "range": "Depends on base type",
+    "values": "Depends on base type",
+    "structure": {
+      "sign_bits": "2 (one per component)",
+      "exponent_bits": "depends on base",
+      "mantissa_bits": "depends on base",
+      "bias": null,
+      "specials": { "zeros": "0 + 0ε", "infinities": "per component", "nans": "per component", "subnormals": "per component" }
+    },
+    "bit_split": "a + bε where ε² = 0 (two scalar components)",
+    "governance": { "type": "de-facto", "owner": "Automatic differentiation libraries", "status": "library-specific", "notes": "For automatic differentiation" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Manual or library implementation" },
+      { "language": "C++", "native_support": "none", "library": "autodiff, CppAD", "notes": "Via AD libraries" },
+      { "language": "C#", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Java", "native_support": "none", "notes": "Manual or library" },
+      { "language": "Go", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Rust", "native_support": "none", "library": "num-dual", "notes": "Via dual number crates" },
+      { "language": "Python", "native_support": "none", "library": "JAX, autograd", "notes": "Via automatic differentiation libraries" },
+      { "language": "Haskell", "native_support": "none", "library": "ad", "notes": "Via automatic differentiation package" },
+      { "language": "JavaScript", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Maple", "native_support": "none", "notes": "Symbolic derivatives preferred" },
+      { "language": "Julia", "native_support": "none", "library": "ForwardDiff.jl", "notes": "Dual numbers for automatic differentiation" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Symbolic differentiation" },
+      { "language": "R", "native_support": "none", "notes": "Manual implementation" }
+    ],
+    "links": []
+  },
+  {
+    "name": "BCD (Binary Coded Decimal)",
+    "category": "integer",
+    "bits_total": "variable (typically 8 per digit)",
+    "signed": false,
+    "range": "0-9 per nibble",
+    "values": "10 per nibble",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0x00", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "4 bits per decimal digit",
+    "governance": { "type": "de-facto", "owner": "IBM, legacy systems", "status": "legacy", "notes": "Each nibble represents 0-9" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "C++", "native_support": "none", "notes": "Manual bit manipulation" },
+      { "language": "C#", "native_support": "none", "notes": "No native BCD" },
+      { "language": "Java", "native_support": "none", "notes": "No native BCD" },
+      { "language": "Go", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Rust", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Python", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Haskell", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "JavaScript", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No BCD" },
+      { "language": "CUDA", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Maple", "native_support": "none", "notes": "Not used" },
+      { "language": "Julia", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Not used" },
+      { "language": "R", "native_support": "none", "notes": "Not used" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Fixed Q7.8",
+    "category": "integer",
+    "bits_total": 16,
+    "signed": true,
+    "range": "-128 to 127.99609375",
+    "values": "2^16",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "7 integer bits + 8 fractional bits + 1 sign",
+    "governance": { "type": "de-facto", "owner": "DSP/embedded", "status": "widely used", "notes": "Fixed-point" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Manual using int16_t" },
+      { "language": "C++", "native_support": "none", "notes": "Manual or fixed-point libraries" },
+      { "language": "Rust", "native_support": "none", "library": "fixed", "notes": "Via fixed crate" },
+      { "language": "Julia", "native_support": "none", "library": "FixedPointNumbers.jl", "notes": "Via package" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Fixed Q0.31",
+    "category": "integer",
+    "bits_total": 32,
+    "signed": true,
+    "range": "-1 to 0.9999999995343387",
+    "values": "2^32",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "0 integer bits + 31 fractional bits + 1 sign",
+    "governance": { "type": "de-facto", "owner": "Audio DSP", "status": "widely used", "notes": "Fixed-point for [-1,1) range" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Manual using int32_t" },
+      { "language": "C++", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Rust", "native_support": "none", "library": "fixed", "notes": "Via fixed crate" }
+    ],
+    "links": []
+  },
+  {
+    "name": "IEEE 754 Decimal64",
+    "category": "decimal",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±9.999999999999999×10^384",
+    "values": "~10^16",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 10,
+      "mantissa_bits": 53,
+      "bias": 398,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": false }
+    },
+    "bit_split": "S + 10E + 53M (densely packed decimal or binary integer decimal)",
+    "governance": { "type": "IEEE", "owner": "IEEE 754-2008", "status": "standardized", "notes": "Decimal floating-point" },
+    "language_support": [
+      { "language": "C", "native_support": "_Decimal64", "header": "none", "standard": "ISO/IEC TR 24732", "notes": "GCC extension" },
+      { "language": "C++", "native_support": "_Decimal64", "notes": "GCC extension" },
+      { "language": "C#", "native_support": "none", "notes": "No IEEE decimal64" },
+      { "language": "Java", "native_support": "none", "notes": "Use BigDecimal" },
+      { "language": "Go", "native_support": "none", "notes": "No decimal64" },
+      { "language": "Rust", "native_support": "none", "notes": "No standard support" },
+      { "language": "Python", "native_support": "none", "library": "decimal", "notes": "Can simulate with Decimal" },
+      { "language": "Haskell", "native_support": "none", "notes": "No decimal64" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No decimal64" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "Binary float only" },
+      { "language": "CUDA", "native_support": "none", "notes": "No decimal support" },
+      { "language": "Maple", "native_support": "none", "notes": "Arbitrary precision" },
+      { "language": "Julia", "native_support": "none", "library": "DecFP.jl", "notes": "Via package" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Arbitrary precision" },
+      { "language": "R", "native_support": "none", "notes": "No decimal64" }
+    ],
+    "links": []
+  },
+  {
+    "name": "IEEE 754 Decimal128",
+    "category": "decimal",
+    "bits_total": 128,
+    "signed": true,
+    "range": "±9.999999999999999999999999999999999×10^6144",
+    "values": "~10^34",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 14,
+      "mantissa_bits": 113,
+      "bias": 6176,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": false }
+    },
+    "bit_split": "S + 14E + 113M (densely packed decimal)",
+    "governance": { "type": "IEEE", "owner": "IEEE 754-2008", "status": "standardized", "notes": "Quadruple precision decimal" },
+    "language_support": [
+      { "language": "C", "native_support": "_Decimal128", "header": "none", "standard": "ISO/IEC TR 24732", "notes": "GCC extension" },
+      { "language": "C++", "native_support": "_Decimal128", "notes": "GCC extension" },
+      { "language": "Julia", "native_support": "none", "library": "DecFP.jl", "notes": "Via package" }
+    ],
+    "links": []
+  },
+  {
+    "name": "double2 (CUDA Vector)",
+    "category": "vector_processing",
+    "bits_total": 128,
+    "signed": true,
+    "range": "2x FP64 values",
+    "values": "2 × 18Q",
+    "structure": {
+      "sign_bits": "2",
+      "exponent_bits": "22 (11 per element)",
+      "mantissa_bits": "104 (52 per element)",
+      "bias": 1023,
+      "specials": { "zeros": "per element", "infinities": "per element", "nans": "per element", "subnormals": "per element" }
+    },
+    "bit_split": "2 × double",
+    "governance": { "type": "vendor", "owner": "NVIDIA", "status": "adopted", "notes": "Vectorized double precision" },
+    "language_support": [
+      { "language": "CUDA", "native_support": "double2", "version": "all", "notes": "Two doubles for memory coalescing" }
+    ],
+    "links": []
+  },
+  {
+    "name": "int4 (CUDA Vector)",
+    "category": "vector_processing",
+    "bits_total": 128,
+    "signed": true,
+    "range": "4x INT32 values",
+    "values": "4 × 4.3B",
+    "structure": {
+      "sign_bits": "4",
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true per element", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "4 × int",
+    "governance": { "type": "vendor", "owner": "NVIDIA", "status": "adopted", "notes": "Vectorized int" },
+    "language_support": [
+      { "language": "CUDA", "native_support": "int4", "version": "all", "notes": "Four ints for parallel ops" }
+    ],
+    "links": []
+  },
+  {
+    "name": "__m128 (SSE)",
+    "category": "vector_processing",
+    "bits_total": 128,
+    "signed": true,
+    "range": "4x FP32 values",
+    "values": "4 × 4.3B",
+    "structure": {
+      "sign_bits": "4",
+      "exponent_bits": "32",
+      "mantissa_bits": "92",
+      "bias": 127,
+      "specials": { "zeros": "per element", "infinities": "per element", "nans": "per element", "subnormals": "per element" }
+    },
+    "bit_split": "4 × float",
+    "governance": { "type": "vendor", "owner": "Intel", "status": "x86 standard", "notes": "SSE SIMD type" },
+    "language_support": [
+      { "language": "C", "native_support": "__m128", "header": "<xmmintrin.h>", "notes": "x86 SSE intrinsics" },
+      { "language": "C++", "native_support": "__m128", "header": "<xmmintrin.h>", "notes": "SSE intrinsics" },
+      { "language": "Rust", "native_support": "none", "library": "std::arch", "notes": "Via platform intrinsics" }
+    ],
+    "links": []
+  },
+  {
+    "name": "__m256 (AVX)",
+    "category": "vector_processing",
+    "bits_total": 256,
+    "signed": true,
+    "range": "8x FP32 values",
+    "values": "8 × 4.3B",
+    "structure": {
+      "sign_bits": "8",
+      "exponent_bits": "64",
+      "mantissa_bits": "184",
+      "bias": 127,
+      "specials": { "zeros": "per element", "infinities": "per element", "nans": "per element", "subnormals": "per element" }
+    },
+    "bit_split": "8 × float",
+    "governance": { "type": "vendor", "owner": "Intel", "status": "x86 standard", "notes": "AVX SIMD type" },
+    "language_support": [
+      { "language": "C", "native_support": "__m256", "header": "<immintrin.h>", "notes": "AVX intrinsics" },
+      { "language": "C++", "native_support": "__m256", "header": "<immintrin.h>", "notes": "AVX intrinsics" },
+      { "language": "Rust", "native_support": "none", "library": "std::arch", "notes": "Via platform intrinsics" }
+    ],
+    "links": []
+  },
+  {
+    "name": "__m512 (AVX-512)",
+    "category": "vector_processing",
+    "bits_total": 512,
+    "signed": true,
+    "range": "16x FP32 values",
+    "values": "16 × 4.3B",
+    "structure": {
+      "sign_bits": "16",
+      "exponent_bits": "128",
+      "mantissa_bits": "368",
+      "bias": 127,
+      "specials": { "zeros": "per element", "infinities": "per element", "nans": "per element", "subnormals": "per element" }
+    },
+    "bit_split": "16 × float",
+    "governance": { "type": "vendor", "owner": "Intel", "status": "x86 standard", "notes": "AVX-512 SIMD type" },
+    "language_support": [
+      { "language": "C", "native_support": "__m512", "header": "<immintrin.h>", "notes": "AVX-512 intrinsics" },
+      { "language": "C++", "native_support": "__m512", "header": "<immintrin.h>", "notes": "AVX-512 intrinsics" },
+      { "language": "Rust", "native_support": "none", "library": "std::arch", "notes": "Via platform intrinsics" }
+    ],
+    "links": []
+  },
+  {
+    "name": "float32x4_t (NEON)",
+    "category": "vector_processing",
+    "bits_total": 128,
+    "signed": true,
+    "range": "4x FP32 values",
+    "values": "4 × 4.3B",
+    "structure": {
+      "sign_bits": "4",
+      "exponent_bits": "32",
+      "mantissa_bits": "92",
+      "bias": 127,
+      "specials": { "zeros": "per element", "infinities": "per element", "nans": "per element", "subnormals": "per element" }
+    },
+    "bit_split": "4 × float",
+    "governance": { "type": "vendor", "owner": "ARM", "status": "ARM standard", "notes": "ARM NEON SIMD type" },
+    "language_support": [
+      { "language": "C", "native_support": "float32x4_t", "header": "<arm_neon.h>", "notes": "ARM NEON intrinsics" },
+      { "language": "C++", "native_support": "float32x4_t", "header": "<arm_neon.h>", "notes": "NEON intrinsics" },
+      { "language": "Rust", "native_support": "none", "library": "std::arch", "notes": "Via platform intrinsics" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Modular Integer (Z/nZ)",
+    "category": "integer",
+    "bits_total": "variable",
+    "signed": false,
+    "range": "0 to n-1",
+    "values": "n",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0 mod n", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Same as underlying integer",
+    "governance": { "type": "de-facto", "owner": "Cryptography, number theory", "status": "library-specific", "notes": "Integers modulo n" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "library": "GMP", "notes": "Via mpz_mod" },
+      { "language": "C++", "native_support": "none", "library": "Boost, NTL", "notes": "Number theory libraries" },
+      { "language": "C#", "native_support": "none", "notes": "Manual mod operation" },
+      { "language": "Java", "native_support": "none", "library": "BigInteger.mod", "notes": "Via BigInteger" },
+      { "language": "Go", "native_support": "none", "library": "math/big", "notes": "big.Int.Mod" },
+      { "language": "Rust", "native_support": "none", "library": "num-modular", "notes": "Via crates" },
+      { "language": "Python", "native_support": "% operator", "notes": "Built-in modulo, or SymPy for symbolic" },
+      { "language": "Haskell", "native_support": "none", "library": "modular-arithmetic", "notes": "Via packages" },
+      { "language": "JavaScript", "native_support": "% operator", "notes": "Manual modulo" },
+      { "language": "Excel Lambda", "native_support": "MOD function", "notes": "MOD function" },
+      { "language": "CUDA", "native_support": "% operator", "notes": "Manual modulo" },
+      { "language": "Maple", "native_support": "mod operator", "notes": "Native modular arithmetic" },
+      { "language": "Julia", "native_support": "mod function", "notes": "Built-in modulo" },
+      { "language": "Wolfram", "native_support": "Mod function", "notes": "Built-in Mod" },
+      { "language": "R", "native_support": "%% operator", "notes": "Modulo operator" }
+    ],
+    "links": []
+  },
+  {
+    "name": "p-adic Number",
+    "category": "other",
+    "bits_total": "variable",
+    "signed": null,
+    "range": "p-adic integers or rationals",
+    "values": "Uncountable",
+    "structure": {
+      "sign_bits": null,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Series expansion in powers of prime p",
+    "governance": { "type": "proposed", "owner": "Number theory", "status": "research", "notes": "Alternative number system" },
+    "language_support": [
+      { "language": "Maple", "native_support": "none", "library": "padic package", "notes": "Via add-on" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Limited support for p-adic representations" },
+      { "language": "Python", "native_support": "none", "library": "SageMath", "notes": "Via SageMath computer algebra system" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Gaussian Integer",
+    "category": "other",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "a + bi where a, b are integers",
+    "values": "Countably infinite",
+    "structure": {
+      "sign_bits": "2 (one per component)",
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0 + 0i", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Two integer components",
+    "governance": { "type": "de-facto", "owner": "Number theory", "status": "mathematical", "notes": "Complex integers" },
+    "language_support": [
+      { "language": "Python", "native_support": "complex with int", "notes": "Can use complex(int, int)" },
+      { "language": "Maple", "native_support": "I", "notes": "Native support for Gaussian integers" },
+      { "language": "Wolfram", "native_support": "default", "notes": "Native Gaussian integer support" },
+      { "language": "Haskell", "native_support": "none", "library": "Data.Complex with Integer", "notes": "Complex Integer" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Algebraic Number",
+    "category": "symbolic",
+    "bits_total": "variable",
+    "signed": null,
+    "range": "Roots of polynomials with integer coefficients",
+    "values": "Countably infinite",
+    "structure": {
+      "sign_bits": null,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Polynomial representation",
+    "governance": { "type": "de-facto", "owner": "Computer algebra systems", "status": "research", "notes": "Exact algebraic numbers" },
+    "language_support": [
+      { "language": "Maple", "native_support": "RootOf", "notes": "Exact algebraic number representation" },
+      { "language": "Wolfram", "native_support": "Root, AlgebraicNumber", "notes": "Native algebraic number support" },
+      { "language": "Python", "native_support": "none", "library": "SymPy", "notes": "Via AlgebraicNumber in SymPy" },
+      { "language": "Haskell", "native_support": "none", "library": "numeric-prelude", "notes": "Algebraic number extensions" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Float (Julia Subnormal)",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±1.8e308 (with subnormals enabled)",
+    "values": "~18 quintillion",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "configurable" }
+    },
+    "bit_split": "Same as FP64",
+    "governance": { "type": "IEEE", "owner": "IEEE 754 + Julia", "status": "language-specific behavior", "notes": "Subnormals can be disabled in Julia" },
+    "language_support": [
+      { "language": "Julia", "native_support": "Float64", "version": "0.1+", "notes": "set_zero_subnormals(true) to flush to zero for performance" }
+    ],
+    "links": []
+  },
+  {
+    "name": "MX9 (Microsoft Microscaling)",
+    "category": "float",
+    "bits_total": 9,
+    "signed": true,
+    "range": "Variable with block scaling",
+    "values": "~512",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "shared block exponent",
+      "mantissa_bits": 8,
+      "bias": "variable",
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Block-wise shared exponent + 9-bit elements",
+    "governance": { "type": "proposed", "owner": "Microsoft/OCP", "status": "experimental", "notes": "Microscaling format for ML" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "library": "experimental", "notes": "Research implementations only" }
+    ],
+    "links": []
+  },
+  {
+    "name": "FP6 E3M2",
+    "category": "float",
+    "bits_total": 6,
+    "signed": true,
+    "range": "±28",
+    "values": "~64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 3,
+      "mantissa_bits": 2,
+      "bias": 3,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": true }
+    },
+    "bit_split": "SEEEMM",
+    "governance": { "type": "proposed", "owner": "ML research", "status": "experimental", "notes": "Ultra-low precision ML" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "notes": "Research implementations only" }
+    ],
+    "links": []
+  },
+  {
+    "name": "FP6 E2M3",
+    "category": "float",
+    "bits_total": 6,
+    "signed": true,
+    "range": "±7.5",
+    "values": "~64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 2,
+      "mantissa_bits": 3,
+      "bias": 1,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": true }
+    },
+    "bit_split": "SEEMMM",
+    "governance": { "type": "proposed", "owner": "ML research", "status": "experimental", "notes": "Ultra-low precision ML" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "notes": "Research implementations only" }
+    ],
+    "links": []
+  }
+]

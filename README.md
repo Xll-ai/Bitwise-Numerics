@@ -22,11 +22,9 @@ The catalog emerged from analysis of AI/ML numeric requirements, particularly ex
 - Vector/SIMD: packed formats for parallel processing
 - Specialized: database types, graphics formats, time representations, legacy systems
 
-**Languages:**
-C, C++, C#, Java, Go, Rust, Python, Haskell, JavaScript, Excel Lambda, CUDA, Maple, Julia, Wolfram Language, R, Fortran, GLSL, HLSL, SQL
+**Languages:** C, C++, C#, Java, Go, Rust, Python, Haskell, JavaScript, Excel Lambda, CUDA, Maple, Julia, Wolfram Language, R, Fortran, GLSL, HLSL, SQL
 
-**Platforms:**
-CPU (x86, x86-64, ARM), GPU (NVIDIA CUDA, AMD, Intel), NPU (Huawei Ascend), TPU (Google), database systems, graphics APIs (OpenGL, DirectX, Vulkan)
+**Platforms:** CPU (x86, x86-64, ARM), GPU (NVIDIA CUDA, AMD, Intel), NPU (Huawei Ascend), TPU (Google), database systems, graphics APIs (OpenGL, DirectX, Vulkan)
 
 ## Goals
 
@@ -53,123 +51,159 @@ CPU (x86, x86-64, ARM), GPU (NVIDIA CUDA, AMD, Intel), NPU (Huawei Ascend), TPU 
 /viewer/         # Interactive HTML format explorer
 ```
 
-## Format Categories
+## Numeric Formats Reference
 
 ### Integer Formats
 
-**Fixed Precision:**
-- INT1 (binary): 2 values
-- INT2: 4 values (-2 to +1 signed)
-- INT4: 16 values (-8 to +7 signed)
-- INT8/UINT8: 256 values
-- INT16/UINT16: 65,536 values
-- INT32/UINT32: ~4.3 billion values
-- INT64/UINT64: ~18.4 quintillion values
-- INT128/UINT128: 2^128 values (limited compiler support)
-
-**Arbitrary Precision:**
-- BigInteger (Java, C#, Python, Go, Rust, Haskell)
-- Integer (Haskell, Wolfram, Maple)
-- int (Python 3+)
-
-**Platform-Dependent:**
-- size_t, ptrdiff_t, intptr_t, uintptr_t
-- Platform-specific int/uint (Go, Rust isize/usize)
+| Format | Structure | Range | Values | IEEE 754 | Platform Support |
+|--------|-----------|-------|--------|----------|------------------|
+| **INT1** | 1-bit unsigned | 0 to 1 | 2 | No | ML hardware (binary quantization) |
+| **INT2** | 2-bit signed | -2 to +1 | 4 | No | ML accelerators (experimental) |
+| **INT4** | 4-bit signed | -8 to +7 | 16 | No | ML quantization, CUDA 12.0+ |
+| **INT8** | 8-bit signed | -128 to +127 | 256 | No | Universal (Ascend inference) |
+| **UINT8** | 8-bit unsigned | 0 to 255 | 256 | No | Universal |
+| **INT16** | 16-bit signed | -32,768 to +32,767 | 65,536 | No | Universal |
+| **INT32** | 32-bit signed | ±2.1B | ~4.3B | No | Universal (most common) |
+| **INT64** | 64-bit signed | ±9.2×10¹⁸ | ~18.4Q | No | Universal |
+| **INT128** | 128-bit signed | ±2¹²⁷ | 2¹²⁸ | No | GCC/Clang, Rust, Julia only |
 
 ### Floating-Point Formats
 
-**Low Precision (ML/Graphics):**
-- FP4 (E2M1, E1M2): 16 values, experimental
-- FP6 (E3M2, E2M3): 64 values, experimental
-- FP8 E4M3: ~240 values, NVIDIA ML training
-- FP8 E5M2: ~192 values, NVIDIA ML training
-- FP8 HiF8: Huawei proprietary (planned)
-
-**Half Precision:**
-- FP16 (IEEE 754): ~65,536 values, standard half precision
-- BF16 (Brain Float): ~32,768 values, Google/Intel ML format
-
-**Single Precision:**
-- FP32 (IEEE 754): ~4.3 billion values, standard float
-- TF32 (Tensor Float): ~524,288 values, NVIDIA tensor cores
-
-**Double Precision:**
-- FP64 (IEEE 754): ~18.4 quintillion values, standard double
-- x87 Extended (80-bit): legacy x86 FPU format
-- FP128 (Quadruple): IEEE 754 quadruple precision
-
-**Arbitrary Precision:**
-- MPFR: configurable precision floating-point
-- BigFloat (Julia, Python via mpmath)
-- Arbitrary precision (Wolfram, Maple)
+| Format | Structure | Range | Values | IEEE 754 | ML/AI Use |
+|--------|-----------|-------|--------|----------|-----------|
+| **FP4 E2M1** | 1s + 2e + 1m | ±6 | 16 | No | Experimental quantization |
+| **FP6 E3M2** | 1s + 3e + 2m | ±28 | 64 | No | Research (ultra-low precision) |
+| **FP8 E4M3** | 1s + 4e + 3m | ±448 | ~240 | No | NVIDIA training (H100) |
+| **FP8 E5M2** | 1s + 5e + 2m | ±57,344 | ~192 | No | NVIDIA training (activations) |
+| **HiF8** | 1s + 4e + 3m (est.) | ~±448 | ~240 | No | Huawei Ascend (planned) |
+| **FP16** | 1s + 5e + 10m | ±65,504 | ~65K | Yes | Ascend fallback, mixed precision |
+| **BF16** | 1s + 8e + 7m | ±3.4×10³⁸ | ~32K | No | Google/Intel ML, Ascend |
+| **FP32** | 1s + 8e + 23m | ±3.4×10³⁸ | ~4.3B | Yes | Standard float, high precision |
+| **TF32** | 1s + 8e + 10m | ±3.4×10³⁸ | ~524K | No | NVIDIA tensor cores (A100+) |
+| **FP64** | 1s + 11e + 52m | ±1.8×10³⁰⁸ | ~18.4Q | Yes | Standard double precision |
+| **x87 Extended** | 1s + 15e + 64m | ±1.2×10⁴⁹³² | ~2⁶⁴ | No | x86 FPU (legacy) |
+| **FP128** | 1s + 15e + 112m | ±1.2×10⁴⁹³² | ~2¹¹³ | Yes | Quadruple precision (GCC) |
 
 ### Decimal Formats
 
-**Fixed Precision:**
-- Decimal (.NET): 128-bit, 28-29 decimal digits
-- Decimal32 (IEEE 754): ~10^7 values
-- Decimal64 (IEEE 754): ~10^16 values
-- Decimal128 (IEEE 754): ~10^34 values
+| Format | Structure | Range | Precision | IEEE 754 | Use Case |
+|--------|-----------|-------|-----------|----------|----------|
+| **Decimal32** | 32-bit base-10 | ±9.99×10⁹⁶ | 7 digits | Yes | Compact decimal |
+| **Decimal64** | 64-bit base-10 | ±9.99×10³⁸⁴ | 16 digits | Yes | Financial (IEEE) |
+| **Decimal128** | 128-bit base-10 | ±9.99×10⁶¹⁴⁴ | 34 digits | Yes | High-precision financial |
+| **.NET Decimal** | 128-bit base-10 | ±7.9×10²⁸ | 28-29 digits | No | C# financial calculations |
 
-**Arbitrary Precision:**
-- BigDecimal (Java)
-- Decimal (Python)
-- Scientific (Haskell)
+### Arbitrary Precision Formats
 
-### Rational Numbers
-
-- Ratio/Rational (Haskell)
-- Fraction (Python)
-- Rat (Go math/big)
-- mpq_t (GMP)
-- Native support in Wolfram, Maple, Julia
-
-### Complex Numbers
-
-- Complex&lt;float&gt; (32-bit components): C++, Go complex64
-- Complex&lt;double&gt; (64-bit components): C++, C#, Python, Julia, Fortran, Go complex128, R
-- Arbitrary precision complex (Julia, Wolfram, Maple)
+| Format | Type | Precision | Representation | Languages |
+|--------|------|-----------|----------------|-----------|
+| **BigInteger** | Integer | Unlimited | Array of limbs | Java, C#, Python, Go, Rust, Haskell, JS |
+| **Rational** | Fraction | Unlimited | num/den pair | Haskell, Python, Julia, Go, Maple |
+| **MPFR** | Float | Configurable | Arbitrary mantissa | C/C++ (lib), Julia (BigFloat), Python |
+| **BigDecimal** | Decimal | Unlimited | Unscaled int + scale | Java, Python (Decimal) |
+| **Symbolic** | Exact | Infinite | Expression tree | Wolfram, Maple, SymPy, Haskell |
 
 ### Vector/SIMD Formats
 
-**CUDA:**
-- half2, float4, double2, int4
-
-**x86 SSE/AVX:**
-- __m128, __m256, __m512 (4, 8, 16 floats)
-- Integer variants for packed operations
-
-**ARM NEON:**
-- float32x4_t, int8x16_t, etc.
-
-**Shader Languages:**
-- GLSL: vec2/3/4, mat2/3/4, ivec, dvec
-- HLSL: float2/3/4, half2/3/4, min16float
+| Format | Elements | Element Type | Total Bits | Platform |
+|--------|----------|--------------|------------|----------|
+| **half2** | 2 | FP16 | 32 | CUDA (NVIDIA) |
+| **float4** | 4 | FP32 | 128 | CUDA (NVIDIA) |
+| **double2** | 2 | FP64 | 128 | CUDA (NVIDIA) |
+| **__m128** | 4 | FP32 | 128 | x86 SSE |
+| **__m256** | 8 | FP32 | 256 | x86 AVX |
+| **__m512** | 16 | FP32 | 512 | x86 AVX-512 |
+| **float32x4_t** | 4 | FP32 | 128 | ARM NEON |
+| **vec4** | 4 | FP32 | 128 | GLSL/HLSL shaders |
 
 ### Specialized Formats
 
-**Time Representations:**
-- Unix time_t (32-bit, 64-bit)
-- Windows FILETIME (64-bit, 100ns ticks)
-- .NET DateTime (62-bit ticks + 2-bit Kind)
-- Java Instant (64-bit seconds + 32-bit nanos)
-- JavaScript Date (FP64 milliseconds)
-- Language-specific Duration types
+| Format | Type | Size | Use Case | Platform |
+|--------|------|------|----------|----------|
+| **size_t** | Unsigned int | 32/64-bit | Object sizes | C/C++, platform-dependent |
+| **wchar_t** | Character | 16/32-bit | Wide characters | C/C++, platform-dependent |
+| **time_t** | Integer | 32/64-bit | Unix timestamps | POSIX systems |
+| **DateTime** | Integer | 64-bit | .NET timestamps | .NET (100ns ticks) |
+| **UNORM/SNORM** | Normalized int | 8/16-bit | Graphics [0,1]/[-1,1] | DirectX, Vulkan |
+| **RGB10A2** | Packed color | 32-bit | 10-bit RGB + 2-bit alpha | Graphics APIs |
+| **SQL NUMERIC** | Decimal | Variable | Exact database values | SQL databases |
 
-**Database Types:**
-- SQL: TINYINT, SMALLINT, INT, BIGINT, REAL, FLOAT, DOUBLE PRECISION, NUMERIC, DECIMAL, MONEY
+### Historical/Legacy Formats
 
-**Graphics:**
-- UNORM/SNORM (normalized integers)
-- RGB10A2 (packed 10-bit color)
-- R11G11B10F (packed HDR)
-- sRGB (gamma-corrected)
+| Format | Structure | Range | Platform | Status |
+|--------|-----------|-------|----------|--------|
+| **IBM Hex Float** | Base-16 exponent | ±7.2×10⁷⁵ | IBM mainframes | Legacy |
+| **VAX F-float** | Non-IEEE 32-bit | ±1.7×10³⁸ | DEC VAX | Legacy |
+| **VAX D-float** | Non-IEEE 64-bit | ±1.7×10³⁸ | DEC VAX | Legacy |
+| **Cray Float** | 64-bit custom | ±10²⁴⁶⁶ | Cray supercomputers | Legacy |
+| **BCD** | 4 bits per digit | 0-9 per nibble | Legacy systems | Legacy |
 
-**Historical/Legacy:**
-- IBM Hexadecimal Float (base-16)
-- DEC VAX F/D/G floating-point
-- Cray-1 floating-point
-- BCD (Binary Coded Decimal)
+### Format Properties
+
+**Two's Complement**: All signed integers use two's complement representation (e.g., INT8: -128 = 0x80 = 10000000₂), ensuring consistent behavior across platforms.
+
+**Special Values**:
+- **IEEE 754 formats** (FP16, FP32, FP64, Decimal32/64/128): Support ±0, ±Infinity, NaN, and subnormals per standard
+- **Vendor formats** (FP8, BF16, TF32): Vendor-specific special value handling
+- **HiF8**: Likely supports IEEE-style special values (to be confirmed)
+
+**Precision vs Range Trade-offs**:
+- **FP8 E4M3**: 4 exponent bits, 3 mantissa bits → high precision, limited range (±448)
+- **FP8 E5M2**: 5 exponent bits, 2 mantissa bits → wide range (±57K), lower precision
+- **BF16**: Matches FP32 range (8 exp bits) with reduced precision (7 mantissa bits)
+- **FP16**: Balanced precision (10 mantissa bits) with limited range (5 exp bits)
+
+**Consistency Guarantees**:
+- **Always identical**: IEEE 754 formats (FP16, FP32, FP64, Decimal), standard integers (INT8-INT64)
+- **Vendor-consistent**: FP8 E4M3/E5M2 (NVIDIA spec), BF16 (Google/Intel), TF32 (NVIDIA)
+- **Platform-dependent**: size_t, intptr_t, long double, wchar_t
+- **Potentially different**: HiF8 (Huawei, not yet released), Posit/Unum (experimental)
+
+### DeepSeek R2 ML Training Context
+
+| Format | Use Case | System | Performance Impact |
+|--------|----------|--------|-------------------|
+| **FP8 E4M3** | Forward pass gradients | NVIDIA H100 | 4× throughput vs FP16 |
+| **FP8 E5M2** | Activations | NVIDIA H100 | ~700GB model size |
+| **FP16** | Fallback training | Ascend 910B/C | ~1.4TB model size |
+| **BF16** | Fallback training | Ascend 910B/C | 2× memory vs FP8 |
+| **FP32** | Master weights | All platforms | Accumulation accuracy |
+| **INT8** | Inference | Ascend | Throughput optimized |
+| **TF32** | Tensor cores | NVIDIA A100+ | Automatic acceleration |
+
+**Key Insights**:
+- NVIDIA H100's FP8 support enabled successful DeepSeek R2 training with ~700GB memory footprint
+- Huawei Ascend's lack of FP8 forced FP16/BF16 fallback, doubling memory to ~1.4TB
+- Memory bandwidth bottlenecks and framework maturity (CANN) caused Ascend training failures
+- INT8 quantization used for production inference across all platforms
+
+### Format Selection Guidelines
+
+**Machine Learning**:
+- Training: FP8 E4M3/E5M2 (NVIDIA), FP16/BF16 (fallback), FP32 (master weights)
+- Inference: INT8 quantization with per-layer scaling
+
+**Scientific Computing**:
+- General: FP64 for accumulation accuracy
+- Climate/weather: FP64 for long-term stability
+- Graphics: FP16 for colors, FP32 for geometry
+
+**Financial**:
+- Use decimal formats (Decimal64, .NET Decimal, BigDecimal) to avoid binary rounding errors
+- Never use binary floating-point for currency calculations
+
+**Embedded Systems**:
+- Fixed-point formats (Q7.8, Q15.16, Q0.31) for deterministic performance
+- Platform-native integer sizes for efficiency
+
+**Cryptography**:
+- Arbitrary-precision integers (BigInteger, GMP) for large number arithmetic
+- Constant-time operations to prevent timing attacks
+
+**Database**:
+- SQL NUMERIC/DECIMAL for exact values
+- FLOAT/DOUBLE for approximate scientific data
+- INT64 for identifiers and counters
 
 ## Language Support Matrix
 
@@ -316,8 +350,9 @@ Analysis of DeepSeek R2 training workflow:
 The repository includes an HTML-based interactive viewer (`/viewer/index.html`) that provides:
 
 - Searchable catalog of all formats
-- Side-by-side format comparison
 - Language support filtering
+- Category-based navigation
+- Detailed format specifications
 - Bit layout visualization
 - Links to specifications and documentation
 - Platform compatibility matrix

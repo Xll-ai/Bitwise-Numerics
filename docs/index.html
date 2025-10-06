@@ -1,329 +1,428 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bitwise Numerics Explorer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { 
-      font-family: 'Inter', sans-serif; 
-      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 50%, #d1d5db 100%);
-      min-height: 100vh;
-      color: #1f2937;
-      margin: 0;
-    }
-    .sidebar { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      height: 100vh; 
-      width: 300px; 
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(0, 0, 0, 0.1);
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-      overflow-y: auto;
-    }
-    .content { 
-      margin-left: 310px; 
-      padding: 20px; 
-      height: 100vh;
-      overflow: hidden;
-    }
-    .sidebar-header {
-      position: sticky;
-      top: 0;
-      background: #ffffff;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      padding: 10px;
-      z-index: 10;
-    }
-    .category-nav button {
-      padding: 6px 10px;
-      margin: 2px;
-      background: #e5e7eb;
-      color: #1f2937;
-      border-radius: 6px;
-      font-size: 12px;
-      transition: background-color 0.3s;
-    }
-    .category-nav button:hover {
-      background: #4b5563;
-      color: #ffffff;
-    }
-    .format-details-container {
-      display: flex;
-      gap: 20px;
-      height: calc(100vh - 80px);
-    }
-    .format-details {
-      flex: 0 0 60%;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 8px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    .format-details-header {
-      position: sticky;
-      top: 0;
-      background: #ffffff;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      padding: 10px;
-      z-index: 10;
-    }
-    .section-nav button {
-      padding: 6px 10px;
-      margin: 2px;
-      background: #e5e7eb;
-      color: #1f2937;
-      border-radius: 6px;
-      font-size: 12px;
-      transition: background-color 0.3s;
-    }
-    .section-nav button:hover {
-      background: #4b5563;
-      color: #ffffff;
-    }
-    .format-details-content {
-      flex: 1;
-      padding: 15px;
-      overflow-y: auto;
-      max-height: calc(100vh - 120px); /* Adjusted for title and header */
-    }
-    .links-frame {
-      flex: 0 0 40%;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    .links-list {
-      flex: 0 0 auto;
-      margin-bottom: 10px;
-    }
-    .links-iframe {
-      flex: 1;
-      border: none;
-      border-radius: 8px;
-    }
-    .format-button { 
-      transition: background-color 0.3s, transform 0.2s; 
-    }
-    .format-button:hover { 
-      background-color: #d1d5db; 
-      transform: scale(1.05); 
-    }
-    pre { 
-      background-color: #f3f4f6; 
-      padding: 10px; 
-      border-radius: 8px; 
-      color: #1f2937; 
-      font-size: 12px;
-      max-height: 80px; /* Reduced to prevent overflow */
-      overflow-y: auto; /* Scroll within pre if needed */
-    }
-    .category-header {
-      display: flex;
-      align-items: center;
-      padding: 10px 15px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      background: rgba(255, 255, 255, 0.8);
-      border-left: 4px solid transparent;
-      font-weight: 600;
-      color: #1f2937;
-    }
-    .category-header:hover {
-      background: rgba(79, 70, 229, 0.1);
-      border-left-color: #4f46e5;
-      transform: translateX(3px);
-    }
-    .category-header.active {
-      background: rgba(79, 70, 229, 0.2);
-      border-left-color: #4f46e5;
-      color: #4f46e5;
-    }
-    .subcategory-list {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-      background: rgba(0, 0, 0, 0.05);
-    }
-    .subcategory-list.active {
-      max-height: 600px;
-    }
-    .subcategory-item {
-      padding: 8px 15px 8px 35px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border-left: 4px solid transparent;
-      color: #374151;
-      font-size: 13px;
-    }
-    .subcategory-item:hover {
-      background: rgba(79, 70, 229, 0.08);
-      border-left-color: #4f46e5;
-      color: #4f46e5;
-      transform: translateX(3px);
-    }
-    .subcategory-item.selected {
-      background: rgba(79, 70, 229, 0.15);
-      border-left-color: #4f46e5;
-      color: #4f46e5;
-      font-weight: 500;
-    }
-    .detail-section {
-      background: rgba(255, 255, 255, 0.8);
-      padding: 12px;
-      border-radius: 6px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      margin-bottom: 8px;
-    }
-    .detail-section h3 {
-      font-size: 15px;
-      margin-bottom: 8px;
-      color: #4f46e5;
-      font-weight: 600;
-      border-bottom: 2px solid rgba(79, 70, 229, 0.3);
-      padding-bottom: 4px;
-    }
-    .governance-badge {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-size: 10px;
-      font-weight: 500;
-      margin: 2px;
-    }
-    .governance-ieee { background: rgba(16, 185, 129, 0.2); color: #10b981; }
-    .governance-vendor { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
-    .governance-defacto { background: rgba(107, 114, 128, 0.2); color: #6b7280; }
-    .governance-ietf { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
-    .governance-apache { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
-    .governance-proprietary { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
-    .governance-proposed { background: rgba(219, 39, 119, 0.2); color: #db2777; }
-    .links-list a {
-      display: block;
-      color: #2563eb;
-      text-decoration: none;
-      padding: 3px 0;
-      font-size: 12px;
-      transition: color 0.3s;
-      cursor: pointer;
-    }
-    .links-list a:hover {
-      color: #1e40af;
-      text-decoration: underline;
-    }
-    @media (max-width: 1024px) {
-      .sidebar { width: 250px; }
-      .content { margin-left: 260px; }
-      .format-details-container { flex-direction: column; }
-      .format-details, .links-frame { flex: 1; }
-    }
-    @media (max-width: 768px) {
-      .sidebar { 
-        position: relative; 
-        width: 100%; 
-        height: auto; 
-        max-height: 50vh;
-      }
-      .content { 
-        margin-left: 0; 
-        padding: 15px; 
-      }
-      .format-details-container { flex-direction: column; }
-      .format-details, .links-frame { flex: 1; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitwise Numerics Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            color: #e2e8f0;
+            margin: 0;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 320px;
+            background: #1e293b;
+            border-right: 1px solid #334155;
+            overflow-y: auto;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .content {
+            margin-left: 320px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #1e293b;
+            padding: 20px;
+            border-bottom: 1px solid #334155;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .filter-button {
+            padding: 6px 12px;
+            background: #334155;
+            color: #e2e8f0;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+            .filter-button:hover {
+                background: #475569;
+            }
+
+            .filter-button.active {
+                background: #6366f1;
+                border-color: #818cf8;
+            }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #1e293b;
+            border-left: 3px solid transparent;
+            font-weight: 600;
+            color: #e2e8f0;
+            user-select: none;
+        }
+
+            .category-header:hover {
+                background: #2d3748;
+                border-left-color: #6366f1;
+            }
+
+            .category-header.active {
+                background: #334155;
+                border-left-color: #6366f1;
+                color: #818cf8;
+            }
+
+        .category-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .subcategory-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #0f172a;
+        }
+
+            .subcategory-list.active {
+                max-height: 1200px;
+            }
+
+        .subcategory-item {
+            padding: 10px 16px 10px 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            color: #cbd5e1;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .subcategory-item:hover {
+                background: #1e293b;
+                border-left-color: #6366f1;
+                color: #e2e8f0;
+            }
+
+            .subcategory-item.selected {
+                background: #334155;
+                border-left-color: #6366f1;
+                color: #818cf8;
+                font-weight: 500;
+            }
+
+        .format-badge {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .badge-fixed {
+            background: #059669;
+            color: #d1fae5;
+        }
+
+        .badge-variable {
+            background: #d97706;
+            color: #fed7aa;
+        }
+
+        .badge-arbitrary {
+            background: #7c3aed;
+            color: #e9d5ff;
+        }
+
+        .format-details {
+            background: #1e293b;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .detail-card {
+            background: #0f172a;
+            padding: 16px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
+
+            .detail-card h4 {
+                font-size: 12px;
+                text-transform: uppercase;
+                color: #94a3b8;
+                margin-bottom: 8px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+            }
+
+            .detail-card .value {
+                font-size: 16px;
+                color: #e2e8f0;
+                font-weight: 500;
+            }
+
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .language-card {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
+
+            .language-card .lang-name {
+                font-weight: 600;
+                color: #818cf8;
+                margin-bottom: 6px;
+                font-size: 14px;
+            }
+
+            .language-card .support-type {
+                font-size: 12px;
+                color: #cbd5e1;
+                margin-bottom: 4px;
+            }
+
+            .language-card .native {
+                color: #34d399;
+                font-weight: 500;
+            }
+
+            .language-card .library {
+                color: #fbbf24;
+            }
+
+            .language-card .none {
+                color: #64748b;
+            }
+
+        .code-block {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            color: #e2e8f0;
+            overflow-x: auto;
+            margin-top: 8px;
+        }
+
+        .governance-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .gov-ieee {
+            background: #065f46;
+            color: #d1fae5;
+        }
+
+        .gov-vendor {
+            background: #92400e;
+            color: #fed7aa;
+        }
+
+        .gov-defacto {
+            background: #374151;
+            color: #e5e7eb;
+        }
+
+        .gov-ietf {
+            background: #1e3a8a;
+            color: #dbeafe;
+        }
+
+        .gov-apache {
+            background: #991b1b;
+            color: #fecaca;
+        }
+
+        .gov-proprietary {
+            background: #581c87;
+            color: #e9d5ff;
+        }
+
+        .gov-proposed {
+            background: #831843;
+            color: #fce7f3;
+        }
+
+        .gov-languagestandard {
+            background: #0e7490;
+            color: #cffafe;
+        }
+
+        .gov-historical {
+            background: #4c1d95;
+            color: #ddd6fe;
+        }
+
+        .section-header {
+            font-size: 18px;
+            font-weight: 700;
+            color: #818cf8;
+            margin: 24px 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #334155;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px 14px;
+            background: #0f172a;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+            .search-box:focus {
+                border-color: #6366f1;
+            }
+
+        .expand-icon {
+            margin-left: auto;
+            transition: transform 0.3s;
+        }
+
+        .category-header.active .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 280px;
+            }
+
+            .content {
+                margin-left: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-  <table style="border-collapse: collapse; width: 100%; max-width: 400px; margin: 10px 0; font-size: 14px;">
-    <tr>
-      <th>Version</th>
-      <th>UTC</th>
-      <th>London</th>
-      <th>New York</th>
-      <th>Mountain View</th>
-      <th>Tokyo</th>
-      <th>Singapore</th>
-      <th>Dubai</th>
-    </tr>
-    <tr>
-      <td>12</td>
-      <td>18-15-00.000 Wednesday 20-Aug-2025</td>
-      <td>19:15 Wed</td>
-      <td>14:15 Wed</td>
-      <td>11:15 Wed</td>
-      <td>03:15 Thu</td>
-      <td>02:15 Thu</td>
-      <td>22:15 Wed</td>
-    </tr>
-  </table>
-  <div class="flex">
     <div class="sidebar">
-      <div class="sidebar-header">
-        <div class="category-nav flex flex-wrap gap-1"></div>
-        <div class="bg-gray-100 p-3 border-b border-gray-300">
-          <h2 class="text-lg font-bold mb-2 text-gray-900">Numeric Formats</h2>
-          <input type="text" id="searchInput" class="w-full p-2 bg-gray-200 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600" placeholder="Search formats...">
+        <div style="padding: 20px; border-bottom: 1px solid #334155;">
+            <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; color: #818cf8;">Numeric Formats</h2>
+            <input type="text" id="searchInput" class="search-box" placeholder="Search formats...">
+            <div id="loadStatus" style="font-size: 11px; color: #64748b; margin-top: 8px;"></div>
         </div>
-      </div>
-      <div id="menu" class="space-y-1"></div>
+        <div id="menu"></div>
     </div>
-    <div class="content">
-      <h1 class="text-2xl font-bold mb-4 text-gray-900">Bitwise Numerics Explorer</h1>
-      <div class="format-details-container">
-        <div id="format-details" class="format-details">
-          <div class="format-details-header">
-            <div class="section-nav flex flex-wrap gap-1">
-              <button data-section="format">Format</button>
-              <button data-section="structure">Structure</button>
-              <button data-section="governance">Governance</button>
-              <button data-section="range">Range</button>
-              <button data-section="hex">Hex</button>
-              <button data-section="binary">Binary</button>
-            </div>
-          </div>
-          <div id="format-details-content" class="format-details-content">
-            <p class="text-gray-600">Select a format from the menu to view details.</p>
-          </div>
-        </div>
-        <div id="links-frame" class="links-frame">
-          <h3 class="text-base font-semibold mb-2 text-indigo-600">Related Links</h3>
-          <div id="links-list" class="links-list"></div>
-          <iframe id="links-iframe" class="links-iframe" src="https://example.com"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <script>
+    <div class="content">
+        <div class="header">
+            <h1 style="font-size: 28px; font-weight: 700; color: #e2e8f0;">Bitwise Numerics Explorer</h1>
+            <div class="filters" id="filters">
+                <span style="color: #94a3b8; font-size: 13px; margin-right: 8px;">Filter by:</span>
+            </div>
+        </div>
+
+        <div id="format-details" class="loading">Loading formats...</div>
+    </div>
+
+    <script>let allFormats = [];
+    let activeFilters = new Set();
+
     async function fetchFormats() {
-      const urls = [
-        'https://raw.githubusercontent.com/Xll-ai/Bitwise-Numerics/main/docs/int.json',
-        'https://raw.githubusercontent.com/Xll-ai/Bitwise-Numerics/main/docs/float.json',
-        'https://raw.githubusercontent.com/Xll-ai/Bitwise-Numerics/main/docs/decimal.json',
-        'https://raw.githubusercontent.com/Xll-ai/Bitwise-Numerics/main/docs/vector_processing.json'
+      const files = [
+        'arbitrary_precision_formats.json',
+        'comprehensive_formats.json',
+        'database_graphics_formats.json',
+        'historical_specialized_formats.json',
+        'language_ecosystem_formats.json',
+        'ml_scientific_formats.json',
+        'platform_specific_formats.json',
+        'specialized_formats.json'
       ];
+
       const formats = [];
-      for (const url of urls) {
+      const status = document.getElementById('loadStatus');
+      let loaded = 0;
+
+      for (const file of files) {
         try {
-          const response = await fetch(url);
-          if (!response.ok) throw new Error(`HTTP error! status: ${response.status} for ${url}`);
-          const data = await response.json();
-          formats.push(...data);
+          const response = await fetch(file);
+          if (response.ok) {
+            const data = await response.json();
+            formats.push(...data);
+            loaded++;
+            status.textContent = `Loaded ${loaded}/${files.length} files`;
+          }
         } catch (error) {
-          console.error(`Error fetching ${url}:`, error);
-          document.getElementById('format-details-content').innerHTML = `<p class="text-red-600">Error loading formats from ${url}: ${error.message}</p>`;
+          console.warn(`Could not fetch ${file}:`, error);
         }
       }
+
+      status.textContent = `✓ ${loaded} files loaded`;
       return formats;
     }
 
@@ -337,97 +436,75 @@
       return categories;
     }
 
-    function getCategoryIcon(category) {
-      const icons = {
-        'integer': '🔢',
-        'float': '🌊',
-        'decimal': '💰',
-        'vector_processing': '🚀',
-        'binary_json': '📦',
-        'schema_carrier': '📋',
-        'other': '❓'
+    function getCategoryConfig(category) {
+      const configs = {
+        'integer': { icon: '🔢', name: 'Integer', color: '#10b981' },
+        'float': { icon: '∞', name: 'Floating Point', color: '#3b82f6' },
+        'decimal': { icon: '💰', name: 'Decimal', color: '#f59e0b' },
+        'rational': { icon: '÷', name: 'Rational', color: '#8b5cf6' },
+        'symbolic': { icon: 'π', name: 'Symbolic', color: '#ec4899' },
+        'interval': { icon: '[]', name: 'Interval', color: '#06b6d4' },
+        'vector_processing': { icon: '⚡', name: 'Vector/SIMD', color: '#f97316' },
+        'complex': { icon: 'ℂ', name: 'Complex', color: '#f472b6' },
+        'fixed_point': { icon: '•', name: 'Fixed Point', color: '#14b8a6' },
+        'other': { icon: '◆', name: 'Other', color: '#6b7280' }
       };
-      return icons[category] || '❓';
+      return configs[category] || { icon: '?', name: category, color: '#6b7280' };
     }
 
-    function getCategoryDisplayName(category) {
-      const names = {
-        'integer': 'Integer',
-        'float': 'Floating Point',
-        'decimal': 'Decimal',
-        'vector_processing': 'Vector Processing',
-        'binary_json': 'Binary JSON',
-        'schema_carrier': 'Schema Formats',
-        'other': 'Other'
-      };
-      return names[category] || category.charAt(0).toUpperCase() + category.slice(1);
+    function getBitsBadge(bits) {
+      if (bits === 'variable' || bits === 'symbolic') {
+        return '<span class="format-badge badge-variable">VAR</span>';
+      } else if (typeof bits === 'string' && bits.includes('arbitrary')) {
+        return '<span class="format-badge badge-arbitrary">∞</span>';
+      } else {
+        return '<span class="format-badge badge-fixed">' + bits + 'b</span>';
+      }
     }
 
     function renderMenu(categorizedFormats) {
       const menu = document.getElementById('menu');
-      const categoryNav = document.querySelector('.category-nav');
       menu.innerHTML = '';
-      categoryNav.innerHTML = '';
 
-      Object.entries(categorizedFormats).forEach(([category, formats]) => {
-        // Category navigation button
-        const navButton = document.createElement('button');
-        navButton.textContent = getCategoryDisplayName(category);
-        navButton.addEventListener('click', () => {
-          const categoryHeader = document.querySelector(`[data-category="${category}"]`);
-          if (categoryHeader) {
-            categoryHeader.scrollIntoView({ behavior: 'smooth' });
-            categoryHeader.click();
-          }
-        });
-        categoryNav.appendChild(navButton);
+      Object.entries(categorizedFormats).sort().forEach(([category, formats]) => {
+        const config = getCategoryConfig(category);
 
-        // Menu category
         const categoryDiv = document.createElement('div');
         categoryDiv.className = 'menu-category';
-        categoryDiv.id = `category-${category}`;
-        
+
         const header = document.createElement('div');
         header.className = 'category-header';
-        header.dataset.category = category;
         header.innerHTML = `
-          <span class="mr-2">${getCategoryIcon(category)}</span>
-          <span class="flex-1">${getCategoryDisplayName(category)}</span>
-          <span class="bg-gray-300 text-gray-700 px-2 py-1 rounded-full text-xs">${formats.length}</span>
-          <span class="expand-icon">▶</span>
+          <span class="category-icon">${config.icon}</span>
+          <span style="flex: 1;">${config.name}</span>
+          <span style="background: #334155; padding: 2px 8px; border-radius: 12px; font-size: 11px;">${formats.length}</span>
+          <span class="expand-icon">▸</span>
         `;
-        
+
         const subcategoryList = document.createElement('div');
         subcategoryList.className = 'subcategory-list';
-        
-        formats.forEach(format => {
+
+        formats.sort((a, b) => a.name.localeCompare(b.name)).forEach(format => {
           const item = document.createElement('div');
           item.className = 'subcategory-item';
-          item.textContent = format.name;
+          item.innerHTML = `
+            <span>${format.name}</span>
+            ${getBitsBadge(format.bits_total)}
+          `;
           item.dataset.formatName = format.name;
           item.addEventListener('click', () => {
             document.querySelectorAll('.subcategory-item').forEach(i => i.classList.remove('selected'));
             item.classList.add('selected');
             renderFormatDetails(format);
-            renderLinks(format);
           });
           subcategoryList.appendChild(item);
         });
-        
+
         header.addEventListener('click', () => {
-          const isActive = header.classList.contains('active');
-          document.querySelectorAll('.category-header').forEach(h => {
-            h.classList.remove('active');
-            h.nextElementSibling.classList.remove('active');
-            h.querySelector('.expand-icon').textContent = '▶';
-          });
-          if (!isActive) {
-            header.classList.add('active');
-            subcategoryList.classList.add('active');
-            header.querySelector('.expand-icon').textContent = '▼';
-          }
+          header.classList.toggle('active');
+          subcategoryList.classList.toggle('active');
         });
-        
+
         categoryDiv.appendChild(header);
         categoryDiv.appendChild(subcategoryList);
         menu.appendChild(categoryDiv);
@@ -435,86 +512,238 @@
     }
 
     function renderFormatDetails(format) {
-      const detailsContent = document.getElementById('format-details-content');
-      const govType = format.governance.type.replace(/[^a-zA-Z]/g, '').toLowerCase();
-      detailsContent.innerHTML = `
-        <h2 class="text-lg font-semibold mb-2 text-gray-900">${format.name}</h2>
-        <div class="detail-section" data-section="format">
-          <h3>Format Specifications</h3>
-          <p><strong>Category:</strong> ${getCategoryDisplayName(format.category)}</p>
-          <p><strong>Bits Total:</strong> ${format.bits_total}</p>
-          <p><strong>Signed:</strong> ${format.signed === null ? 'N/A' : format.signed ? 'Yes' : 'No'}</p>
-          <p><strong>Bit Split:</strong> ${format.bit_split || 'N/A'}</p>
-        </div>
-        <div class="detail-section" data-section="structure">
-          <h3>Structure</h3>
-          <p><strong>Sign Bits:</strong> ${format.structure.sign_bits || 'N/A'}</p>
-          <p><strong>Exponent Bits:</strong> ${format.structure.exponent_bits || 'N/A'}</p>
-          <p><strong>Mantissa Bits:</strong> ${format.structure.mantissa_bits || 'N/A'}</p>
-          <p><strong>Bias:</strong> ${format.structure.bias || 'N/A'}</p>
-          <p><strong>Specials:</strong> Zeros: ${format.structure.specials.zeros || 'N/A'}, 
-            Infinities: ${format.structure.specials.infinities}, 
-            NaNs: ${format.structure.specials.nans}, 
-            Subnormals: ${format.structure.specials.subnormals}</p>
-        </div>
-        <div class="detail-section" data-section="governance">
-          <h3>Governance</h3>
-          <p><strong>Type:</strong> <span class="governance-badge governance-${govType}">${format.governance.type}</span></p>
-          <p><strong>Owner:</strong> ${format.governance.owner}</p>
-          <p><strong>Status:</strong> ${format.governance.status}</p>
-          <p><strong>Notes:</strong> ${format.governance.notes || 'None'}</p>
-        </div>
-        <div class="detail-section" data-section="range">
-          <h3>Range & Values</h3>
-          <p><strong>Range:</strong> ${format.range || 'N/A'}</p>
-          <p><strong>Values:</strong> ${format.values || 'N/A'}</p>
-        </div>
-        <div class="detail-section" data-section="hex">
-          <h3>Hex Examples</h3>
-          <pre>${format.hex_examples ? JSON.stringify(format.hex_examples, null, 2) : 'No hex examples available'}</pre>
-        </div>
-        <div class="detail-section" data-section="binary">
-          <h3>Binary Examples</h3>
-          <pre>${format.binary_examples && format.binary_examples.length > 0 ? JSON.stringify(format.binary_examples, null, 2) : 'No binary examples available'}</pre>
-        </div>
-        ${format.platform_support ? `
-          <div class="detail-section" data-section="platform">
-            <h3>Platform Support</h3>
-            <pre>${JSON.stringify(format.platform_support, null, 2)}</pre>
+      const details = document.getElementById('format-details');
+      const govClass = 'gov-' + (format.governance?.type || 'other').replace(/[^a-zA-Z]/g, '').toLowerCase();
+
+      let html = `
+        <div class="format-details">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+            <h2 style="font-size: 32px; font-weight: 700; color: #e2e8f0; margin: 0;">${format.name}</h2>
+            ${getBitsBadge(format.bits_total)}
+            ${format.governance ? `<span class="governance-badge ${govClass}">${format.governance.type}</span>` : ''}
           </div>
-        ` : ''}
-        ${format.language_support ? `
-          <div class="detail-section" data-section="language">
-            <h3>Language Support</h3>
-            <pre>${JSON.stringify(format.language_support, null, 2)}</pre>
+
+          <div class="detail-grid">
+            <div class="detail-card">
+              <h4>Category</h4>
+              <div class="value">${getCategoryConfig(format.category).name}</div>
+            </div>
+            <div class="detail-card">
+              <h4>Total Bits</h4>
+              <div class="value">${format.bits_total}</div>
+            </div>
+            <div class="detail-card">
+              <h4>Signed</h4>
+              <div class="value">${format.signed === null ? 'N/A' : format.signed ? 'Yes' : 'No'}</div>
+            </div>
+            <div class="detail-card">
+              <h4>Range</h4>
+              <div class="value" style="font-size: 13px;">${format.range || 'N/A'}</div>
+            </div>
+            ${format.values ? `
+            <div class="detail-card">
+              <h4>Distinct Values</h4>
+              <div class="value">${format.values}</div>
+            </div>` : ''}
+            ${format.bit_split ? `
+            <div class="detail-card">
+              <h4>Bit Layout</h4>
+              <div class="value" style="font-family: monospace; font-size: 13px;">${format.bit_split}</div>
+            </div>` : ''}
           </div>
-        ` : ''}
       `;
 
-      // Setup section navigation buttons
-      document.querySelectorAll('.section-nav button').forEach(button => {
-        button.addEventListener('click', () => {
-          const section = button.dataset.section;
-          const sectionElement = document.querySelector(`.detail-section[data-section="${section}"]`);
-          if (sectionElement) {
-            sectionElement.scrollIntoView({ behavior: 'smooth' });
+      if (format.structure) {
+        html += `
+          <div class="section-header">Structure</div>
+          <div class="detail-grid">
+            ${format.structure.sign_bits ? `
+            <div class="detail-card">
+              <h4>Sign Bits</h4>
+              <div class="value">${format.structure.sign_bits}</div>
+            </div>` : ''}
+            ${format.structure.exponent_bits ? `
+            <div class="detail-card">
+              <h4>Exponent Bits</h4>
+              <div class="value">${format.structure.exponent_bits}</div>
+            </div>` : ''}
+            ${format.structure.mantissa_bits ? `
+            <div class="detail-card">
+              <h4>Mantissa Bits</h4>
+              <div class="value">${format.structure.mantissa_bits}</div>
+            </div>` : ''}
+            ${format.structure.bias ? `
+            <div class="detail-card">
+              <h4>Bias</h4>
+              <div class="value">${format.structure.bias}</div>
+            </div>` : ''}
+          </div>
+        `;
+
+        if (format.structure.specials) {
+          html += `
+          <div style="margin-top: 16px;">
+            <strong style="color: #94a3b8;">Special Values:</strong>
+            <span style="color: #e2e8f0; margin-left: 8px;">
+              Zeros: ${format.structure.specials.zeros} |
+              Infinities: ${format.structure.specials.infinities} |
+              NaNs: ${format.structure.specials.nans} |
+              Subnormals: ${format.structure.specials.subnormals}
+            </span>
+          </div>`;
+        }
+      }
+
+      if (format.governance) {
+        html += `
+          <div class="section-header">Governance</div>
+          <div style="color: #cbd5e1;">
+            ${format.governance.owner ? `<p><strong style="color: #94a3b8;">Owner:</strong> ${format.governance.owner}</p>` : ''}
+            ${format.governance.status ? `<p><strong style="color: #94a3b8;">Status:</strong> ${format.governance.status}</p>` : ''}
+            ${format.governance.notes ? `<p><strong style="color: #94a3b8;">Notes:</strong> ${format.governance.notes}</p>` : ''}
+          </div>
+        `;
+      }
+
+      if (format.arbitrary_precision_config) {
+        html += `
+          <div class="section-header">Arbitrary Precision Configuration</div>
+          <div class="detail-grid">
+            <div class="detail-card">
+              <h4>Precision Type</h4>
+              <div class="value">${format.arbitrary_precision_config.precision_type}</div>
+            </div>
+            ${format.arbitrary_precision_config.memory_scaling ? `
+            <div class="detail-card">
+              <h4>Memory Scaling</h4>
+              <div class="value" style="font-size: 14px;">${format.arbitrary_precision_config.memory_scaling}</div>
+            </div>` : ''}
+          </div>
+        `;
+
+        if (format.arbitrary_precision_config.computational_complexity) {
+          html += `
+            <div style="margin-top: 12px;">
+              <strong style="color: #94a3b8;">Computational Complexity:</strong>
+              <div class="code-block" style="margin-top: 8px;">
+                Addition: ${format.arbitrary_precision_config.computational_complexity.addition || 'N/A'}<br>
+                Multiplication: ${format.arbitrary_precision_config.computational_complexity.multiplication || 'N/A'}<br>
+                Division: ${format.arbitrary_precision_config.computational_complexity.division || 'N/A'}
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      if (format.hex_examples) {
+        html += `
+          <div class="section-header">Hex Examples</div>
+          <div class="code-block">${JSON.stringify(format.hex_examples, null, 2)}</div>
+        `;
+      }
+
+      if (format.binary_examples && format.binary_examples.length > 0) {
+        html += `
+          <div class="section-header">Binary Examples</div>
+          <div class="code-block">${JSON.stringify(format.binary_examples, null, 2)}</div>
+        `;
+      }
+
+      if (format.language_support && format.language_support.length > 0) {
+        html += `<div class="section-header">Language Support</div>`;
+        html += '<div class="language-grid">';
+
+        format.language_support.forEach(lang => {
+          const hasNative = lang.native_support && lang.native_support !== 'none';
+          const hasLibrary = lang.library_support && lang.library_support.length > 0;
+
+          let supportType = '';
+          if (hasNative) {
+            supportType = `<span class="native">Native: ${lang.native_support}</span>`;
+          } else if (hasLibrary) {
+            supportType = `<span class="library">Library: ${lang.library_support[0].library_name}</span>`;
+          } else {
+            supportType = '<span class="none">Not supported</span>';
           }
+
+          html += `
+            <div class="language-card">
+              <div class="lang-name">${lang.language}</div>
+              <div class="support-type">${supportType}</div>
+              ${lang.notes ? `<div style="font-size: 11px; color: #64748b; margin-top: 4px;">${lang.notes}</div>` : ''}
+            </div>
+          `;
         });
+
+        html += '</div>';
+      }
+
+      if (format.links && format.links.length > 0) {
+        html += `<div class="section-header">Resources</div>`;
+        format.links.forEach(link => {
+          html += `<a href="${link.url}" target="_blank" style="display: block; color: #818cf8; margin: 8px 0; text-decoration: none; text-decoration: underline;">${link.text} →</a>`;
+        });
+      }
+
+      html += '</div>';
+      details.innerHTML = html;
+    }
+
+    function setupFilters() {
+      const languages = new Set();
+      allFormats.forEach(f => {
+        if (f.language_support) {
+          f.language_support.forEach(l => languages.add(l.language));
+        }
+      });
+
+      const filters = document.getElementById('filters');
+      const commonLangs = ['C', 'C++', 'C#', 'Java', 'Python', 'Rust', 'Go', 'JavaScript', 'Haskell', 'Julia', 'Swift', 'Kotlin'];
+
+      commonLangs.forEach(lang => {
+        if (languages.has(lang)) {
+          const btn = document.createElement('button');
+          btn.className = 'filter-button';
+          btn.textContent = lang;
+          btn.onclick = () => toggleFilter(lang, btn);
+          filters.appendChild(btn);
+        }
       });
     }
 
-    function renderLinks(format) {
-      const linksList = document.getElementById('links-list');
-      const iframe = document.getElementById('links-iframe');
-      if (format.links && format.links.length > 0) {
-        linksList.innerHTML = format.links.map(link => `
-          <a href="#" onclick="document.getElementById('links-iframe').src='${link.url}'; return false;">${link.text}</a>
-        `).join('');
-        iframe.src = format.links[0].url || 'https://example.com';
+    function toggleFilter(lang, btn) {
+      if (activeFilters.has(lang)) {
+        activeFilters.delete(lang);
+        btn.classList.remove('active');
       } else {
-        linksList.innerHTML = '<p class="text-gray-600">No links available</p>';
-        iframe.src = 'https://example.com';
+        activeFilters.add(lang);
+        btn.classList.add('active');
       }
+      applyFilters();
+    }
+
+    function applyFilters() {
+      if (activeFilters.size === 0) {
+        document.querySelectorAll('.subcategory-item').forEach(item => {
+          item.style.display = '';
+        });
+        return;
+      }
+
+      document.querySelectorAll('.subcategory-item').forEach(item => {
+        const formatName = item.dataset.formatName;
+        const format = allFormats.find(f => f.name === formatName);
+
+        if (format && format.language_support) {
+          const hasSupport = format.language_support.some(l =>
+            activeFilters.has(l.language) &&
+            (l.native_support !== 'none' || (l.library_support && l.library_support.length > 0))
+          );
+          item.style.display = hasSupport ? '' : 'none';
+        } else {
+          item.style.display = 'none';
+        }
+      });
     }
 
     function setupSearch() {
@@ -523,41 +752,32 @@
         const query = e.target.value.toLowerCase();
         document.querySelectorAll('.subcategory-item').forEach(item => {
           const formatName = item.textContent.toLowerCase();
-          item.classList.toggle('hidden', !formatName.includes(query));
-        });
-        document.querySelectorAll('.menu-category').forEach(category => {
-          const hasVisibleItems = category.querySelectorAll('.subcategory-item:not(.hidden)').length > 0;
-          const header = category.querySelector('.category-header');
-          const list = category.querySelector('.subcategory-list');
-          if (hasVisibleItems && query.length > 0) {
-            header.classList.add('active');
-            list.classList.add('active');
-            header.querySelector('.expand-icon').textContent = '▼';
-          } else if (query.length === 0) {
-            header.classList.remove('active');
-            list.classList.remove('active');
-            header.querySelector('.expand-icon').textContent = '▶';
-          }
+          const shouldShow = formatName.includes(query);
+          item.style.display = shouldShow ? '' : 'none';
         });
       });
     }
 
     async function init() {
-      const formats = await fetchFormats();
-      if (formats.length > 0) {
-        const categorizedFormats = categorizeFormats(formats);
-        renderMenu(categorizedFormats);
+      allFormats = await fetchFormats();
+      if (allFormats.length > 0) {
+        const categorized = categorizeFormats(allFormats);
+        renderMenu(categorized);
         setupSearch();
-        renderFormatDetails(formats[0]);
-        renderLinks(formats[0]);
+        setupFilters();
+        renderFormatDetails(allFormats[0]);
+
         const firstCategory = document.querySelector('.category-header');
         if (firstCategory) firstCategory.click();
+
         const firstItem = document.querySelector('.subcategory-item');
         if (firstItem) firstItem.classList.add('selected');
+      } else {
+        document.getElementById('format-details').innerHTML =
+          '<div class="format-details"><p style="color: #94a3b8;">No formats loaded. Make sure the JSON files are accessible.</p></div>';
       }
     }
 
-    init();
-  </script>
+    init();</script>
 </body>
 </html>

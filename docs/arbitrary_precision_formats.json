@@ -1,0 +1,582 @@
+[
+  {
+    "name": "BigInteger",
+    "category": "integer",
+    "bits_total": "variable",
+    "signed": true,
+    "structure": {
+      "sign_bits": "1",
+      "exponent_bits": null,
+      "mantissa_bits": "variable",
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "arbitrary_precision_config": {
+      "precision_type": "unlimited_integer",
+      "default_precision_bits": null,
+      "max_practical_precision": "memory-limited",
+      "memory_scaling": "O(n) where n = number of digits",
+      "computational_complexity": {
+        "addition": "O(n)",
+        "multiplication": "O(n²) or O(n log n) with Karatsuba/FFT",
+        "division": "O(n²)"
+      },
+      "representation": "array of limbs (typically 32 or 64-bit chunks)"
+    },
+    "bit_split": "variable",
+    "hex_examples": { "small": "0x01", "large": "0x123456789ABCDEF... (unlimited)" },
+    "binary_examples": [
+      { "bits": "variable", "value": "Any integer expressible in memory" }
+    ],
+    "governance": { 
+      "type": "language-standard", 
+      "owner": "Java (java.math.BigInteger), C# (System.Numerics.BigInteger), Python (int)", 
+      "status": "standardized in multiple languages", 
+      "notes": "Part of standard libraries" 
+    },
+    "range": "Theoretically unlimited (±2^(memory in bits))",
+    "values": "Infinite within memory constraints",
+    "language_support": [
+      {
+        "language": "Java",
+        "native_support": "java.math.BigInteger",
+        "library_support": [],
+        "compiler_requirements": "Java 1.1+",
+        "notes": "Immutable arbitrary-precision integers"
+      },
+      {
+        "language": "C#",
+        "native_support": "System.Numerics.BigInteger",
+        "library_support": [],
+        "compiler_requirements": ".NET 4.0+",
+        "notes": "Struct-based, mutable"
+      },
+      {
+        "language": "Python",
+        "native_support": "int",
+        "library_support": [],
+        "compiler_requirements": "Python 3.x (Python 2.x had separate long type)",
+        "notes": "Seamless automatic promotion from fixed-size"
+      },
+      {
+        "language": "C++",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "GMP",
+            "data_type": "mpz_t",
+            "operations": ["arithmetic", "bitwise", "modular", "primality"],
+            "version_required": "any"
+          },
+          {
+            "library_name": "Boost.Multiprecision",
+            "data_type": "cpp_int",
+            "operations": ["arithmetic", "bitwise", "comparison"],
+            "version_required": "1.53+"
+          }
+        ]
+      },
+      {
+        "language": "Go",
+        "native_support": "math/big.Int",
+        "library_support": [],
+        "compiler_requirements": "Go 1.0+",
+        "notes": "Part of standard library"
+      },
+      {
+        "language": "Rust",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "num-bigint",
+            "data_type": "BigInt",
+            "operations": ["arithmetic", "bitwise", "conversion"],
+            "version_required": "0.2+"
+          }
+        ]
+      },
+      {
+        "language": "JavaScript",
+        "native_support": "BigInt",
+        "library_support": [],
+        "compiler_requirements": "ES2020+",
+        "notes": "Native BigInt type with 'n' suffix"
+      }
+    ],
+    "links": [
+      { "text": "Java BigInteger API", "url": "https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html" },
+      { "text": "Python int documentation", "url": "https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex" },
+      { "text": "GMP Library", "url": "https://gmplib.org/" }
+    ]
+  },
+  {
+    "name": "Rational (Haskell)",
+    "category": "rational",
+    "bits_total": "variable",
+    "signed": true,
+    "structure": {
+      "sign_bits": "inherited from numerator",
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "arbitrary_precision_config": {
+      "precision_type": "unlimited_rational",
+      "default_precision_bits": null,
+      "max_practical_precision": "memory-limited",
+      "memory_scaling": "O(n_num + n_den) where n = digits in numerator/denominator",
+      "computational_complexity": {
+        "addition": "O(n²) due to GCD operations",
+        "multiplication": "O(n²) with reduction",
+        "division": "O(n²) with reduction"
+      },
+      "representation": "numerator/denominator pair (both arbitrary-precision integers, always in lowest terms)"
+    },
+    "bit_split": "variable (numerator % denominator representation)",
+    "hex_examples": { "one_third": "1 % 3", "pi_approx": "355 % 113" },
+    "binary_examples": [
+      { "bits": "variable", "value": "Exact representation of any rational number" }
+    ],
+    "governance": { 
+      "type": "language-standard", 
+      "owner": "Haskell (Data.Ratio), Python (fractions.Fraction), Ruby (Rational)", 
+      "status": "standardized", 
+      "notes": "Built into language type systems" 
+    },
+    "range": "All rational numbers within memory limits",
+    "values": "Infinite (all Q)",
+    "language_support": [
+      {
+        "language": "Haskell",
+        "native_support": "Ratio Integer (Rational is type alias)",
+        "library_support": [],
+        "compiler_requirements": "GHC (any version)",
+        "notes": "First-class type with % operator, automatic normalization to lowest terms"
+      },
+      {
+        "language": "Python",
+        "native_support": "fractions.Fraction",
+        "library_support": [],
+        "compiler_requirements": "Python 2.6+",
+        "notes": "Standard library module, automatic reduction"
+      },
+      {
+        "language": "Ruby",
+        "native_support": "Rational",
+        "library_support": [],
+        "compiler_requirements": "Ruby 1.9+",
+        "notes": "Built-in type with literal syntax"
+      },
+      {
+        "language": "C++",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "GMP",
+            "data_type": "mpq_t",
+            "operations": ["arithmetic", "comparison", "conversion"],
+            "version_required": "any"
+          },
+          {
+            "library_name": "Boost.Rational",
+            "data_type": "rational<T>",
+            "operations": ["arithmetic", "comparison"],
+            "version_required": "1.0+"
+          }
+        ]
+      },
+      {
+        "language": "Scheme",
+        "native_support": "exact rational",
+        "library_support": [],
+        "compiler_requirements": "R5RS+",
+        "notes": "First-class numeric tower support"
+      }
+    ],
+    "links": [
+      { "text": "Haskell Data.Ratio", "url": "https://hackage.haskell.org/package/base/docs/Data-Ratio.html" },
+      { "text": "Python fractions", "url": "https://docs.python.org/3/library/fractions.html" },
+      { "text": "GMP Rationals (mpq)", "url": "https://gmplib.org/manual/Rational-Number-Functions" }
+    ]
+  },
+  {
+    "name": "MPFR (Arbitrary Float)",
+    "category": "float",
+    "bits_total": "variable",
+    "signed": true,
+    "structure": {
+      "sign_bits": "1",
+      "exponent_bits": "configurable",
+      "mantissa_bits": "configurable (user-specified precision)",
+      "bias": "computed based on exponent range",
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": true }
+    },
+    "arbitrary_precision_config": {
+      "precision_type": "configurable_float",
+      "default_precision_bits": 53,
+      "max_practical_precision": "millions of bits",
+      "memory_scaling": "O(precision_bits)",
+      "computational_complexity": {
+        "addition": "O(p) where p = precision",
+        "multiplication": "O(p²) or O(p log p) with FFT",
+        "division": "O(p²)"
+      },
+      "representation": "sign, exponent, mantissa with user-defined precision; IEEE 754 semantics"
+    },
+    "bit_split": "S | E...(variable) | M...(user-specified precision)",
+    "hex_examples": { "depends_on_precision": "varies with configuration" },
+    "binary_examples": [
+      { "bits": "variable", "value": "IEEE 754-like with arbitrary mantissa precision" }
+    ],
+    "governance": { 
+      "type": "de-facto", 
+      "owner": "MPFR Development Team (GNU project)", 
+      "status": "widely adopted", 
+      "notes": "Extends IEEE 754 to arbitrary precision with correct rounding" 
+    },
+    "range": "Configurable exponent range, typically ±2^(2^30)",
+    "values": "Depends on precision setting",
+    "language_support": [
+      {
+        "language": "C",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "MPFR",
+            "data_type": "mpfr_t",
+            "operations": ["arithmetic", "transcendental", "rounding", "special_functions"],
+            "version_required": "2.1+"
+          }
+        ],
+        "notes": "Reference implementation in C"
+      },
+      {
+        "language": "C++",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "Boost.Multiprecision",
+            "data_type": "mpfr_float",
+            "operations": ["arithmetic", "transcendental", "comparison"],
+            "version_required": "1.53+"
+          }
+        ]
+      },
+      {
+        "language": "Python",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "mpmath",
+            "data_type": "mpf",
+            "operations": ["arithmetic", "transcendental", "special_functions"],
+            "version_required": "0.10+"
+          },
+          {
+            "library_name": "gmpy2",
+            "data_type": "mpfr",
+            "operations": ["arithmetic", "transcendental"],
+            "version_required": "2.0+"
+          }
+        ]
+      },
+      {
+        "language": "Julia",
+        "native_support": "BigFloat (uses MPFR)",
+        "library_support": [],
+        "compiler_requirements": "Julia 0.3+",
+        "notes": "Native arbitrary-precision float type"
+      }
+    ],
+    "links": [
+      { "text": "MPFR Official", "url": "https://www.mpfr.org/" },
+      { "text": "MPFR Manual", "url": "https://www.mpfr.org/mpfr-current/mpfr.html" },
+      { "text": "Julia BigFloat", "url": "https://docs.julialang.org/en/v1/base/numbers/#BigFloats" }
+    ]
+  },
+  {
+    "name": "Decimal (Python/C#)",
+    "category": "decimal",
+    "bits_total": "variable",
+    "signed": true,
+    "structure": {
+      "sign_bits": "1",
+      "exponent_bits": "variable",
+      "mantissa_bits": "variable (arbitrary decimal digits)",
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": false }
+    },
+    "arbitrary_precision_config": {
+      "precision_type": "configurable_float",
+      "default_precision_bits": null,
+      "max_practical_precision": "C#: 28-29 decimal digits; Python: unlimited",
+      "memory_scaling": "O(number of decimal digits)",
+      "computational_complexity": {
+        "addition": "O(p) where p = precision in decimal digits",
+        "multiplication": "O(p²)",
+        "division": "O(p²)"
+      },
+      "representation": "base-10 floating-point: sign, coefficient (integer), exponent"
+    },
+    "bit_split": "variable (decimal coefficient + exponent)",
+    "hex_examples": { "not_applicable": "stored as decimal, not binary" },
+    "binary_examples": [
+      { "bits": "variable", "value": "Base-10 representation avoids binary/decimal conversion errors" }
+    ],
+    "governance": { 
+      "type": "language-standard", 
+      "owner": "Python (decimal module), C# (System.Decimal), Java (BigDecimal)", 
+      "status": "standardized in languages", 
+      "notes": "Python's decimal follows IEEE 754-2008 decimal arithmetic" 
+    },
+    "range": "C#: ±1.0×10^-28 to ±7.9×10^28; Python: configurable",
+    "values": "C#: ~10^28; Python: unlimited",
+    "language_support": [
+      {
+        "language": "Python",
+        "native_support": "decimal.Decimal",
+        "library_support": [],
+        "compiler_requirements": "Python 2.4+",
+        "notes": "Arbitrary precision, configurable context, IEEE 754-2008 decimal arithmetic"
+      },
+      {
+        "language": "C#",
+        "native_support": "decimal",
+        "library_support": [],
+        "compiler_requirements": ".NET any",
+        "notes": "128-bit fixed precision, 28-29 significant digits, for financial calculations"
+      },
+      {
+        "language": "Java",
+        "native_support": "java.math.BigDecimal",
+        "library_support": [],
+        "compiler_requirements": "Java 1.1+",
+        "notes": "Immutable, arbitrary-precision signed decimal"
+      },
+      {
+        "language": "JavaScript",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "decimal.js",
+            "data_type": "Decimal",
+            "operations": ["arithmetic", "transcendental"],
+            "version_required": "any"
+          },
+          {
+            "library_name": "big.js",
+            "data_type": "Big",
+            "operations": ["arithmetic", "comparison"],
+            "version_required": "any"
+          }
+        ]
+      }
+    ],
+    "links": [
+      { "text": "Python decimal", "url": "https://docs.python.org/3/library/decimal.html" },
+      { "text": "C# decimal", "url": "https://learn.microsoft.com/en-us/dotnet/api/system.decimal" },
+      { "text": "Java BigDecimal", "url": "https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" }
+    ]
+  },
+  {
+    "name": "Symbolic (Mathematica/SymPy)",
+    "category": "symbolic",
+    "bits_total": "variable",
+    "signed": null,
+    "structure": {
+      "sign_bits": null,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": "true", "nans": false, "subnormals": false }
+    },
+    "arbitrary_precision_config": {
+      "precision_type": "symbolic",
+      "default_precision_bits": null,
+      "max_practical_precision": "infinite (exact symbolic representation)",
+      "memory_scaling": "O(size of expression tree)",
+      "computational_complexity": {
+        "addition": "O(tree size)",
+        "multiplication": "O(tree size), may expand expression",
+        "division": "symbolic simplification dependent"
+      },
+      "representation": "expression tree (AST) with symbolic constants (π, e, √2, etc.)"
+    },
+    "bit_split": "n/a (symbolic representation)",
+    "hex_examples": { "not_applicable": "symbolic, not numeric encoding" },
+    "binary_examples": [
+      { "bits": "n/a", "value": "Expressions like π, √2, e^(i×π), algebraic numbers" }
+    ],
+    "governance": { 
+      "type": "vendor", 
+      "owner": "Wolfram (Mathematica), SymPy, Maple, Maxima, SageMath", 
+      "status": "vendor-specific implementations", 
+      "notes": "Computer algebra systems with exact symbolic arithmetic" 
+    },
+    "range": "All representable algebraic and transcendental numbers",
+    "values": "Infinite (symbolic)",
+    "language_support": [
+      {
+        "language": "Mathematica/Wolfram",
+        "native_support": "built-in symbolic engine",
+        "library_support": [],
+        "notes": "Proprietary CAS with exact arithmetic, algebraic number fields, symbolic constants"
+      },
+      {
+        "language": "Python",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "SymPy",
+            "data_type": "Symbol, Integer, Rational, etc.",
+            "operations": ["symbolic_algebra", "calculus", "number_theory", "simplification"],
+            "version_required": "0.7+"
+          },
+          {
+            "library_name": "SageMath",
+            "data_type": "symbolic expressions",
+            "operations": ["comprehensive_CAS"],
+            "version_required": "any"
+          }
+        ]
+      },
+      {
+        "language": "Haskell",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "HaskellForMaths",
+            "data_type": "algebraic types",
+            "operations": ["polynomial_rings", "algebraic_structures"],
+            "version_required": "0.4+"
+          },
+          {
+            "library_name": "symengine-hs",
+            "data_type": "Basic",
+            "operations": ["symbolic_manipulation"],
+            "version_required": "0.1+"
+          },
+          {
+            "library_name": "numeric-prelude",
+            "data_type": "algebraic number types",
+            "operations": ["exact_algebra"],
+            "version_required": "0.4+"
+          }
+        ],
+        "notes": "Type system enables exact arithmetic with Rational, algebraic extensions, lazy evaluation for computable reals"
+      },
+      {
+        "language": "Maple",
+        "native_support": "built-in symbolic engine",
+        "library_support": [],
+        "notes": "Proprietary CAS"
+      },
+      {
+        "language": "Maxima",
+        "native_support": "built-in symbolic engine",
+        "library_support": [],
+        "notes": "Open-source CAS (Common Lisp)"
+      }
+    ],
+    "links": [
+      { "text": "Mathematica", "url": "https://www.wolfram.com/mathematica/" },
+      { "text": "SymPy Documentation", "url": "https://docs.sympy.org/" },
+      { "text": "HaskellForMaths", "url": "https://hackage.haskell.org/package/HaskellForMaths" },
+      { "text": "Maxima Manual", "url": "https://maxima.sourceforge.io/" }
+    ]
+  },
+  {
+    "name": "Interval Arithmetic",
+    "category": "interval",
+    "bits_total": "variable",
+    "signed": true,
+    "structure": {
+      "sign_bits": "inherited from bounds",
+      "exponent_bits": "depends on underlying float format",
+      "mantissa_bits": "depends on underlying float format",
+      "bias": null,
+      "specials": { "zeros": "interval [0,0]", "infinities": "unbounded intervals", "nans": false, "subnormals": "inherited" }
+    },
+    "arbitrary_precision_config": {
+      "precision_type": "interval",
+      "default_precision_bits": "depends on base format (e.g., FP64 for bounds)",
+      "max_practical_precision": "depends on base format",
+      "memory_scaling": "O(2 × base_format_size) for [lower, upper]",
+      "computational_complexity": {
+        "addition": "2 additions (lower+lower, upper+upper)",
+        "multiplication": "4 multiplications + comparisons for [a,b]×[c,d]",
+        "division": "4 divisions + comparisons"
+      },
+      "representation": "[lower_bound, upper_bound] with guaranteed error bounds"
+    },
+    "bit_split": "2 × underlying format (one for lower, one for upper bound)",
+    "hex_examples": { "interval": "[1.5, 1.6] represented as two FP64 values" },
+    "binary_examples": [
+      { "bits": "variable", "value": "Pair of floating-point numbers representing guaranteed bounds" }
+    ],
+    "governance": { 
+      "type": "de-facto", 
+      "owner": "MPFI, Boost.Interval, Arb, IEEE 1788-2015", 
+      "status": "IEEE 1788-2015 standardizes interval arithmetic", 
+      "notes": "Rigorous error bound tracking" 
+    },
+    "range": "Depends on underlying float format",
+    "values": "Each interval contains infinitely many real numbers",
+    "language_support": [
+      {
+        "language": "C",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "MPFI",
+            "data_type": "mpfi_t",
+            "operations": ["interval_arithmetic", "guaranteed_bounds"],
+            "version_required": "1.5+"
+          }
+        ]
+      },
+      {
+        "language": "C++",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "Boost.Interval",
+            "data_type": "interval<T>",
+            "operations": ["arithmetic", "comparison", "transcendental"],
+            "version_required": "1.32+"
+          }
+        ]
+      },
+      {
+        "language": "Julia",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "IntervalArithmetic.jl",
+            "data_type": "Interval",
+            "operations": ["arithmetic", "rigorous_bounds"],
+            "version_required": "0.1+"
+          }
+        ]
+      },
+      {
+        "language": "Python",
+        "native_support": "none",
+        "library_support": [
+          {
+            "library_name": "mpmath (intervals)",
+            "data_type": "mpi",
+            "operations": ["interval_arithmetic"],
+            "version_required": "0.10+"
+          }
+        ]
+      }
+    ],
+    "links": [
+      { "text": "IEEE 1788-2015 Standard", "url": "https://standards.ieee.org/standard/1788-2015.html" },
+      { "text": "MPFI", "url": "https://gitlab.inria.fr/mpfi/mpfi" },
+      { "text": "Boost.Interval", "url": "https://www.boost.org/doc/libs/1_84_0/libs/numeric/interval/doc/interval.htm" }
+    ]
+  }
+]

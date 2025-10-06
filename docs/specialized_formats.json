@@ -1,0 +1,341 @@
+[
+  {
+    "name": "FP8 E4M3",
+    "category": "float",
+    "bits_total": 8,
+    "signed": true,
+    "range": "±448",
+    "values": "~240",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 4,
+      "mantissa_bits": 3,
+      "bias": 7,
+      "specials": { "zeros": "true", "infinities": false, "nans": true, "subnormals": true }
+    },
+    "bit_split": "SEEEEEMMM",
+    "governance": { "type": "vendor", "owner": "NVIDIA/ARM", "status": "adopted", "notes": "ML training format" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Hardware-specific, no standard support" },
+      { "language": "C++", "native_support": "none", "notes": "Requires vendor libraries" },
+      { "language": "C#", "native_support": "none", "notes": "No FP8 support" },
+      { "language": "Java", "native_support": "none", "notes": "No FP8 support" },
+      { "language": "Go", "native_support": "none", "notes": "No FP8 support" },
+      { "language": "Rust", "native_support": "none", "notes": "No standard FP8" },
+      { "language": "Python", "native_support": "none", "library": "PyTorch/TensorFlow", "notes": "Via ML frameworks for GPUs" },
+      { "language": "Haskell", "native_support": "none", "notes": "No FP8 support" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No FP8 support" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "__nv_fp8_e4m3", "version": "11.8+", "notes": "Native on H100/Hopper GPUs" },
+      { "language": "Maple", "native_support": "none", "notes": "No FP8" },
+      { "language": "Julia", "native_support": "none", "notes": "No standard FP8" },
+      { "language": "Wolfram", "native_support": "none", "notes": "No FP8" },
+      { "language": "R", "native_support": "none", "notes": "No FP8" }
+    ],
+    "links": []
+  },
+  {
+    "name": "FP8 E5M2",
+    "category": "float",
+    "bits_total": 8,
+    "signed": true,
+    "range": "±57344",
+    "values": "~192",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 5,
+      "mantissa_bits": 2,
+      "bias": 15,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": true }
+    },
+    "bit_split": "SEEEEEEMM",
+    "governance": { "type": "vendor", "owner": "NVIDIA/ARM", "status": "adopted", "notes": "ML training, wider range" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Hardware-specific" },
+      { "language": "C++", "native_support": "none", "notes": "Vendor libraries only" },
+      { "language": "C#", "native_support": "none", "notes": "No FP8" },
+      { "language": "Java", "native_support": "none", "notes": "No FP8" },
+      { "language": "Go", "native_support": "none", "notes": "No FP8" },
+      { "language": "Rust", "native_support": "none", "notes": "No FP8" },
+      { "language": "Python", "native_support": "none", "library": "ML frameworks", "notes": "PyTorch/TensorFlow for GPUs" },
+      { "language": "Haskell", "native_support": "none", "notes": "No FP8" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No FP8" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "__nv_fp8_e5m2", "version": "11.8+", "notes": "Native on H100/Hopper" },
+      { "language": "Maple", "native_support": "none", "notes": "No FP8" },
+      { "language": "Julia", "native_support": "none", "notes": "No FP8" },
+      { "language": "Wolfram", "native_support": "none", "notes": "No FP8" },
+      { "language": "R", "native_support": "none", "notes": "No FP8" }
+    ],
+    "links": []
+  },
+  {
+    "name": "TF32",
+    "category": "float",
+    "bits_total": 32,
+    "signed": true,
+    "range": "±3.4e38",
+    "values": "~524288",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 8,
+      "mantissa_bits": 10,
+      "bias": 127,
+      "specials": { "zeros": "true", "infinities": true, "nans": true, "subnormals": false }
+    },
+    "bit_split": "SEEEEEEEEMMMMMMMMMMM (19 bits used, rest zero-padded)",
+    "governance": { "type": "vendor", "owner": "NVIDIA", "status": "adopted", "notes": "Tensor operations on Ampere+" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "CUDA-specific format" },
+      { "language": "C++", "native_support": "none", "notes": "CUDA-specific" },
+      { "language": "C#", "native_support": "none", "notes": "No TF32" },
+      { "language": "Java", "native_support": "none", "notes": "No TF32" },
+      { "language": "Go", "native_support": "none", "notes": "No TF32" },
+      { "language": "Rust", "native_support": "none", "notes": "No TF32" },
+      { "language": "Python", "native_support": "none", "library": "PyTorch", "notes": "Used automatically in tensor cores" },
+      { "language": "Haskell", "native_support": "none", "notes": "No TF32" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No TF32" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "implicit", "version": "11.0+", "notes": "Used by tensor cores on A100/H100" },
+      { "language": "Maple", "native_support": "none", "notes": "No TF32" },
+      { "language": "Julia", "native_support": "none", "notes": "No TF32" },
+      { "language": "Wolfram", "native_support": "none", "notes": "No TF32" },
+      { "language": "R", "native_support": "none", "notes": "No TF32" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Fixed Q15.16",
+    "category": "integer",
+    "bits_total": 32,
+    "signed": true,
+    "range": "-32768 to 32767.99998",
+    "values": "2^32",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "15 integer bits + 16 fractional bits + 1 sign",
+    "governance": { "type": "de-facto", "owner": "DSP/embedded systems", "status": "widely used", "notes": "Fixed-point arithmetic" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Manual implementation using int32_t" },
+      { "language": "C++", "native_support": "none", "library": "Fixed-point libraries", "notes": "Manual or library implementation" },
+      { "language": "C#", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Java", "native_support": "none", "notes": "Manual using int" },
+      { "language": "Go", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Rust", "native_support": "none", "library": "fixed crate", "notes": "Via fixed-point crates" },
+      { "language": "Python", "native_support": "none", "notes": "Manual using integers" },
+      { "language": "Haskell", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "JavaScript", "native_support": "none", "notes": "Manual using integers" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No fixed-point" },
+      { "language": "CUDA", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Maple", "native_support": "none", "notes": "Not needed, arbitrary precision" },
+      { "language": "Julia", "native_support": "none", "library": "FixedPointNumbers.jl", "notes": "Via package" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Not needed" },
+      { "language": "R", "native_support": "none", "notes": "No fixed-point" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Posit32",
+    "category": "other",
+    "bits_total": 32,
+    "signed": true,
+    "range": "~±6e36",
+    "values": "2^32",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "variable (regime + exponent)",
+      "mantissa_bits": "variable",
+      "bias": "variable",
+      "specials": { "zeros": "true", "infinities": "±∞ as single value", "nans": false, "subnormals": false }
+    },
+    "bit_split": "S + regime + exponent + fraction (all variable)",
+    "governance": { "type": "proposed", "owner": "John Gustafson / Posit Working Group", "status": "experimental", "notes": "Alternative to IEEE 754" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "library": "SoftPosit", "notes": "Software emulation library" },
+      { "language": "C++", "native_support": "none", "library": "Universal library", "notes": "Third-party implementation" },
+      { "language": "C#", "native_support": "none", "notes": "No Posit support" },
+      { "language": "Java", "native_support": "none", "notes": "No Posit support" },
+      { "language": "Go", "native_support": "none", "notes": "No Posit support" },
+      { "language": "Rust", "native_support": "none", "notes": "Experimental libraries exist" },
+      { "language": "Python", "native_support": "none", "library": "posit", "notes": "Experimental packages" },
+      { "language": "Haskell", "native_support": "none", "notes": "No Posit support" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No Posit support" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "none", "notes": "No Posit support" },
+      { "language": "Maple", "native_support": "none", "notes": "No Posit" },
+      { "language": "Julia", "native_support": "none", "library": "SoftPosit.jl", "notes": "Experimental package" },
+      { "language": "Wolfram", "native_support": "none", "notes": "No Posit" },
+      { "language": "R", "native_support": "none", "notes": "No Posit" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Excel Number",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±1.79769313486231E+308",
+    "values": "~18 quintillion",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": false, "nans": "#NUM! errors", "subnormals": true }
+    },
+    "bit_split": "IEEE 754 FP64 with special error values",
+    "governance": { "type": "vendor", "owner": "Microsoft Excel", "status": "proprietary semantics", "notes": "FP64 with Excel-specific behavior" },
+    "language_support": [
+      { "language": "Excel Lambda", "native_support": "default", "notes": "All numbers are IEEE 754 double with 15-17 digit precision; errors as #NUM!, #VALUE!, etc." }
+    ],
+    "links": []
+  },
+  {
+    "name": "Symbolic (Mathematica)",
+    "category": "symbolic",
+    "bits_total": "variable",
+    "signed": null,
+    "range": "All expressible algebraic and transcendental numbers",
+    "values": "Infinite (symbolic)",
+    "structure": {
+      "sign_bits": null,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": "∞", "nans": false, "subnormals": false }
+    },
+    "bit_split": "Expression tree (AST)",
+    "governance": { "type": "vendor", "owner": "Wolfram Research", "status": "proprietary", "notes": "Exact symbolic computation" },
+    "language_support": [
+      { "language": "Wolfram", "native_support": "default", "notes": "Exact symbolic by default: π, √2, etc." }
+    ],
+    "links": []
+  },
+  {
+    "name": "Symbolic (Maple)",
+    "category": "symbolic",
+    "bits_total": "variable",
+    "signed": null,
+    "range": "All expressible algebraic numbers",
+    "values": "Infinite (symbolic)",
+    "structure": {
+      "sign_bits": null,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": "∞", "nans": false, "subnormals": false }
+    },
+    "bit_split": "Expression DAG",
+    "governance": { "type": "vendor", "owner": "Maplesoft", "status": "proprietary", "notes": "Computer algebra system" },
+    "language_support": [
+      { "language": "Maple", "native_support": "default", "notes": "Exact symbolic: Pi, sqrt(2), etc." }
+    ],
+    "links": []
+  },
+  {
+    "name": "Interval (MPFI)",
+    "category": "interval",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Depends on base format",
+    "values": "Each interval represents range of reals",
+    "structure": {
+      "sign_bits": "inherited from bounds",
+      "exponent_bits": "inherited",
+      "mantissa_bits": "inherited",
+      "bias": null,
+      "specials": { "zeros": "[0,0]", "infinities": "unbounded intervals", "nans": false, "subnormals": "inherited" }
+    },
+    "bit_split": "[lower_bound, upper_bound] pair",
+    "governance": { "type": "de-facto", "owner": "IEEE 1788-2015 + MPFI", "status": "standardized", "notes": "Rigorous error bounds" },
+    "arbitrary_precision_config": {
+      "precision_type": "interval",
+      "representation": "pair of arbitrary-precision floats",
+      "memory_scaling": "2 × base format size"
+    },
+    "language_support": [
+      { "language": "C", "native_support": "none", "library": "MPFI", "type": "mpfi_t", "notes": "Multiple precision interval arithmetic" },
+      { "language": "C++", "native_support": "none", "library": "Boost.Interval", "type": "interval<T>", "notes": "Template-based intervals" },
+      { "language": "C#", "native_support": "none", "notes": "No standard interval support" },
+      { "language": "Java", "native_support": "none", "library": "JInterval", "notes": "Third-party libraries" },
+      { "language": "Go", "native_support": "none", "notes": "No standard interval support" },
+      { "language": "Rust", "native_support": "none", "notes": "Experimental crates exist" },
+      { "language": "Python", "native_support": "none", "library": "mpmath", "type": "mpi", "notes": "Interval arithmetic in mpmath" },
+      { "language": "Haskell", "native_support": "none", "library": "intervals", "notes": "Via intervals package" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No standard support" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No interval support" },
+      { "language": "CUDA", "native_support": "none", "notes": "No interval arithmetic" },
+      { "language": "Maple", "native_support": "none", "library": "RealRange", "notes": "Via RealRange type" },
+      { "language": "Julia", "native_support": "none", "library": "IntervalArithmetic.jl", "notes": "Rigorous interval arithmetic" },
+      { "language": "Wolfram", "native_support": "Interval", "notes": "Built-in Interval type" },
+      { "language": "R", "native_support": "none", "notes": "No standard interval support" }
+    ],
+    "links": []
+  },
+  {
+    "name": "INT4",
+    "category": "integer",
+    "bits_total": 4,
+    "signed": true,
+    "range": "-8 to 7",
+    "values": "16",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "SBBB",
+    "governance": { "type": "proprietary", "owner": "ML hardware vendors", "status": "experimental", "notes": "Quantized neural networks" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Manual packing into bytes" },
+      { "language": "C++", "native_support": "none", "notes": "Manual bit manipulation" },
+      { "language": "C#", "native_support": "none", "notes": "No 4-bit integers" },
+      { "language": "Java", "native_support": "none", "notes": "No 4-bit integers" },
+      { "language": "Go", "native_support": "none", "notes": "No 4-bit integers" },
+      { "language": "Rust", "native_support": "none", "notes": "No 4-bit integers" },
+      { "language": "Python", "native_support": "none", "library": "PyTorch", "notes": "Quantization in ML frameworks" },
+      { "language": "Haskell", "native_support": "none", "notes": "No 4-bit integers" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No 4-bit integers" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "experimental", "version": "12.0+", "notes": "INT4 for quantized inference" },
+      { "language": "Maple", "native_support": "none", "notes": "Arbitrary precision only" },
+      { "language": "Julia", "native_support": "none", "notes": "No 4-bit integers" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Arbitrary precision" },
+      { "language": "R", "native_support": "none", "notes": "No 4-bit support" }
+    ],
+    "links": []
+  },
+  {
+    "name": "BigDecimal (Java)",
+    "category": "decimal",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Unlimited (memory-bound)",
+    "values": "Infinite",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "variable",
+      "mantissa_bits": "variable (arbitrary decimal digits)",
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "unscaled value (BigInteger) + 32-bit scale",
+    "governance": { "type": "language-standard", "owner": "Java", "status": "standardized", "notes": "Arbitrary precision decimal" },
+    "arbitrary_precision_config": {
+      "precision_type": "configurable_float",
+      "representation": "unscaled BigInteger × 10^(-scale)",
+      "memory_scaling": "O(digits)"
+    },
+    "language_support": [
+      { "language": "Java", "native_support": "BigDecimal", "package": "java.math", "version": "1.1+", "notes": "Immutable, arbitrary-precision signed decimal" }
+    ],
+    "links": []
+  }
+]

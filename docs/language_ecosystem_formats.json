@@ -1,0 +1,581 @@
+[
+  {
+    "name": "Float (R numeric)",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±1.8e308 + NA",
+    "values": "~18 quintillion + special NA",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "Inf", "nans": "NaN and NA", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP64 with special NA value",
+    "governance": { "type": "language-standard", "owner": "R Core", "status": "R-specific", "notes": "FP64 with NA for missing data" },
+    "language_support": [
+      { "language": "R", "native_support": "numeric", "notes": "Default numeric type, NA for missing values distinct from NaN" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Integer (R)",
+    "category": "integer",
+    "bits_total": 32,
+    "signed": true,
+    "range": "-2147483648 to 2147483647 + NA",
+    "values": "2^32 + special NA",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "32-bit with NA_integer_",
+    "governance": { "type": "language-standard", "owner": "R Core", "status": "R-specific", "notes": "INT32 with NA" },
+    "language_support": [
+      { "language": "R", "native_support": "integer", "notes": "32-bit signed integer, NA_integer_ for missing, created with L suffix" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Unum Type I",
+    "category": "other",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Variable with precision metadata",
+    "values": "Variable",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "variable (with size bits)",
+      "mantissa_bits": "variable (with size bits)",
+      "bias": "variable",
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "S + utag + E(variable) + F(variable) + ubit",
+    "governance": { "type": "proposed", "owner": "John Gustafson", "status": "experimental", "notes": "Universal number format" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "library": "SoftPosit", "notes": "Reference implementations" },
+      { "language": "Julia", "native_support": "none", "library": "Unums.jl", "notes": "Experimental package" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Unum Type II (Posit + Valids)",
+    "category": "other",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Interval arithmetic with posits",
+    "values": "Variable",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "variable regime",
+      "mantissa_bits": "variable",
+      "bias": "variable",
+      "specials": { "zeros": "true", "infinities": "±∞", "nans": false, "subnormals": false }
+    },
+    "bit_split": "Posit-based interval",
+    "governance": { "type": "proposed", "owner": "John Gustafson", "status": "experimental", "notes": "Interval arithmetic with posits" },
+    "language_support": [
+      { "language": "Julia", "native_support": "none", "notes": "Experimental implementations" }
+    ],
+    "links": []
+  },
+  {
+    "name": "BigFloat (Julia)",
+    "category": "float",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Configurable (default 256 bits precision)",
+    "values": "Depends on precision",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "configurable",
+      "mantissa_bits": "configurable (default 256)",
+      "bias": "computed",
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "MPFR-based arbitrary precision",
+    "governance": { "type": "de-facto", "owner": "MPFR via Julia", "status": "Julia standard", "notes": "Julia wrapper for MPFR" },
+    "arbitrary_precision_config": {
+      "precision_type": "configurable_float",
+      "default_precision_bits": 256,
+      "representation": "MPFR backend"
+    },
+    "language_support": [
+      { "language": "Julia", "native_support": "BigFloat", "version": "0.1+", "notes": "Uses MPFR, setprecision() to configure" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Irrational (Julia)",
+    "category": "symbolic",
+    "bits_total": "symbolic",
+    "signed": null,
+    "range": "Exact symbolic constants",
+    "values": "Symbolic",
+    "structure": {
+      "sign_bits": null,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "false", "infinities": "false", "nans": "false", "subnormals": "false" }
+    },
+    "bit_split": "Symbolic representation",
+    "governance": { "type": "language-standard", "owner": "Julia", "status": "Julia-specific", "notes": "Exact mathematical constants" },
+    "language_support": [
+      { "language": "Julia", "native_support": "Irrational", "version": "0.4+", "notes": "π, ℯ, φ as exact symbolic constants" }
+    ],
+    "links": []
+  },
+  {
+    "name": "DoubleDouble",
+    "category": "float",
+    "bits_total": 128,
+    "signed": true,
+    "range": "±1.8e308 with ~106 bits precision",
+    "values": "~2^106",
+    "structure": {
+      "sign_bits": "2",
+      "exponent_bits": "22",
+      "mantissa_bits": "104 effective (2×52)",
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "Two FP64 values (high + low)",
+    "governance": { "type": "de-facto", "owner": "QD library", "status": "library-specific", "notes": "Extended precision using two doubles" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "library": "QD", "type": "dd_real", "notes": "Via QD library" },
+      { "language": "C++", "native_support": "none", "library": "QD", "type": "dd_real", "notes": "Double-double arithmetic" },
+      { "language": "Python", "native_support": "none", "notes": "Can use mpmath for similar precision" },
+      { "language": "Julia", "native_support": "none", "library": "DoubleFloats.jl", "notes": "Via package" }
+    ],
+    "links": []
+  },
+  {
+    "name": "QuadDouble",
+    "category": "float",
+    "bits_total": 256,
+    "signed": true,
+    "range": "±1.8e308 with ~212 bits precision",
+    "values": "~2^212",
+    "structure": {
+      "sign_bits": "4",
+      "exponent_bits": "44",
+      "mantissa_bits": "208 effective (4×52)",
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "true", "nans": "true", "subnormals": "true" }
+    },
+    "bit_split": "Four FP64 values",
+    "governance": { "type": "de-facto", "owner": "QD library", "status": "library-specific", "notes": "Quad precision using four doubles" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "library": "QD", "type": "qd_real", "notes": "Via QD library" },
+      { "language": "C++", "native_support": "none", "library": "QD", "type": "qd_real", "notes": "Quad-double arithmetic" },
+      { "language": "Julia", "native_support": "none", "library": "DoubleFloats.jl", "notes": "Via package (quad support)" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Exact (Wolfram)",
+    "category": "symbolic",
+    "bits_total": "variable",
+    "signed": null,
+    "range": "All expressible exact numbers",
+    "values": "Symbolic/exact",
+    "structure": {
+      "sign_bits": null,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0", "infinities": "Infinity", "nans": "Indeterminate", "subnormals": false }
+    },
+    "bit_split": "Symbolic expression",
+    "governance": { "type": "vendor", "owner": "Wolfram Research", "status": "proprietary", "notes": "Exact arithmetic by default" },
+    "language_support": [
+      { "language": "Wolfram", "native_support": "default", "notes": "All numbers exact by default: integers, rationals, algebraic, π, etc." }
+    ],
+    "links": []
+  },
+  {
+    "name": "Arbitrary Precision (Wolfram)",
+    "category": "float",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Configurable",
+    "values": "Depends on precision",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "configurable",
+      "mantissa_bits": "configurable",
+      "bias": "computed",
+      "specials": { "zeros": "true", "infinities": "Infinity", "nans": "Indeterminate", "subnormals": "true" }
+    },
+    "bit_split": "Arbitrary precision mantissa + exponent",
+    "governance": { "type": "vendor", "owner": "Wolfram Research", "status": "proprietary", "notes": "Arbitrary precision floats" },
+    "arbitrary_precision_config": {
+      "precision_type": "configurable_float",
+      "representation": "Wolfram internal",
+      "notes": "N[expr, digits] for numerical evaluation"
+    },
+    "language_support": [
+      { "language": "Wolfram", "native_support": "default", "notes": "$MachinePrecision or configurable with N[], $MinPrecision, $MaxPrecision" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Arbitrary Precision (Maple)",
+    "category": "float",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Configurable (default 10 decimal digits)",
+    "values": "Depends on Digits setting",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "configurable",
+      "mantissa_bits": "configurable",
+      "bias": "computed",
+      "specials": { "zeros": "true", "infinities": "infinity", "nans": "undefined", "subnormals": "true" }
+    },
+    "bit_split": "Arbitrary precision",
+    "governance": { "type": "vendor", "owner": "Maplesoft", "status": "proprietary", "notes": "Software floating-point" },
+    "arbitrary_precision_config": {
+      "precision_type": "configurable_float",
+      "default_precision_bits": null,
+      "representation": "Decimal digits (Digits variable)"
+    },
+    "language_support": [
+      { "language": "Maple", "native_support": "default", "notes": "Digits := n to set precision; evalf() for numerical evaluation" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Hardware Float (Maple)",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±1.8e308",
+    "values": "~18 quintillion",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "Float(infinity)", "nans": "Float(undefined)", "subnormals": "true" }
+    },
+    "bit_split": "IEEE 754 FP64",
+    "governance": { "type": "IEEE", "owner": "IEEE 754", "status": "standardized", "notes": "Hardware float in Maple" },
+    "language_support": [
+      { "language": "Maple", "native_support": "HFloat", "notes": "Hardware double precision, UseHardwareFloats setting" }
+    ],
+    "links": []
+  },
+  {
+    "name": "String Number (Excel)",
+    "category": "other",
+    "bits_total": "variable",
+    "signed": null,
+    "range": "Text representation",
+    "values": "Infinite (strings)",
+    "structure": {
+      "sign_bits": null,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "\"0\"", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Text string",
+    "governance": { "type": "vendor", "owner": "Microsoft Excel", "status": "Excel-specific", "notes": "Numbers stored as text" },
+    "language_support": [
+      { "language": "Excel Lambda", "native_support": "text", "notes": "Numbers can be text, use VALUE() to convert, TEXT() to format" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Currency (Excel)",
+    "category": "decimal",
+    "bits_total": 64,
+    "signed": true,
+    "range": "Same as double",
+    "values": "Same as double",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "false (errors)", "nans": "#NUM!", "subnormals": "true" }
+    },
+    "bit_split": "FP64 with currency formatting",
+    "governance": { "type": "vendor", "owner": "Microsoft Excel", "status": "Excel-specific", "notes": "Double with currency display" },
+    "language_support": [
+      { "language": "Excel Lambda", "native_support": "currency format", "notes": "FP64 with currency formatting, no special type" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Percentage (Excel)",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "Same as double",
+    "values": "Same as double",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "true", "infinities": "false (errors)", "nans": "#NUM!", "subnormals": "true" }
+    },
+    "bit_split": "FP64 displayed as percentage",
+    "governance": { "type": "vendor", "owner": "Microsoft Excel", "status": "Excel-specific", "notes": "Double with percentage display" },
+    "language_support": [
+      { "language": "Excel Lambda", "native_support": "percentage format", "notes": "Stored as decimal (0.5 = 50%), formatted as %" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Date (Excel Serial)",
+    "category": "integer",
+    "bits_total": 64,
+    "signed": false,
+    "range": "1900-01-01 to 9999-12-31",
+    "values": "Days since epoch",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "1900-01-01 or 1904-01-01", "infinities": false, "nans": "#VALUE!", "subnormals": false }
+    },
+    "bit_split": "Double storing integer day count + fractional time",
+    "governance": { "type": "vendor", "owner": "Microsoft Excel", "status": "Excel-specific", "notes": "Serial date-time" },
+    "language_support": [
+      { "language": "Excel Lambda", "native_support": "date serial", "notes": "Double where integer = days since epoch, fraction = time of day" }
+    ],
+    "links": []
+  },
+  {
+    "name": "NonStandardFloat (Julia)",
+    "category": "float",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Configurable",
+    "values": "Configurable",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "configurable",
+      "mantissa_bits": "configurable",
+      "bias": "configurable",
+      "specials": { "zeros": "configurable", "infinities": "configurable", "nans": "configurable", "subnormals": "configurable" }
+    },
+    "bit_split": "Custom bit layout",
+    "governance": { "type": "language-standard", "owner": "Julia", "status": "Julia-specific", "notes": "User-defined float formats" },
+    "language_support": [
+      { "language": "Julia", "native_support": "none", "library": "Float8s.jl, custom", "notes": "Can define custom float formats with specified bit patterns" }
+    ],
+    "links": []
+  },
+  {
+    "name": "StridedArray (Julia)",
+    "category": "vector_processing",
+    "bits_total": "variable",
+    "signed": null,
+    "range": "Array of any numeric type",
+    "values": "Product of element type values × array size",
+    "structure": {
+      "sign_bits": null,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "depends on element type", "infinities": "depends on element type", "nans": "depends on element type", "subnormals": "depends on element type" }
+    },
+    "bit_split": "Contiguous or strided array",
+    "governance": { "type": "language-standard", "owner": "Julia", "status": "Julia-specific", "notes": "High-performance arrays" },
+    "language_support": [
+      { "language": "Julia", "native_support": "Array, StridedArray", "version": "0.1+", "notes": "Efficient multi-dimensional arrays with SIMD support" }
+    ],
+    "links": []
+  },
+  {
+    "name": "NumPy dtype",
+    "category": "other",
+    "bits_total": "variable",
+    "signed": "variable",
+    "range": "Depends on dtype",
+    "values": "Depends on dtype",
+    "structure": {
+      "sign_bits": "variable",
+      "exponent_bits": "variable",
+      "mantissa_bits": "variable",
+      "bias": "variable",
+      "specials": { "zeros": "dtype-dependent", "infinities": "dtype-dependent", "nans": "dtype-dependent", "subnormals": "dtype-dependent" }
+    },
+    "bit_split": "Flexible type system",
+    "governance": { "type": "de-facto", "owner": "NumPy", "status": "Python ecosystem", "notes": "Rich type system for arrays" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "library": "NumPy", "type": "dtype", "notes": "Comprehensive numeric type system: int8-64, uint8-64, float16/32/64/128, complex64/128, etc." }
+    ],
+    "links": []
+  },
+  {
+    "name": "Haskell Integer",
+    "category": "integer",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Unlimited",
+    "values": "Infinite",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": "variable",
+      "bias": null,
+      "specials": { "zeros": "0", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "GMP-based arbitrary precision",
+    "governance": { "type": "language-standard", "owner": "Haskell", "status": "language standard", "notes": "Arbitrary precision integer" },
+    "arbitrary_precision_config": {
+      "precision_type": "unlimited_integer",
+      "representation": "GMP backend"
+    },
+    "language_support": [
+      { "language": "Haskell", "native_support": "Integer", "module": "Prelude", "notes": "Arbitrary precision, uses GMP" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Haskell Int",
+    "category": "integer",
+    "bits_total": "platform-dependent (32 or 64)",
+    "signed": true,
+    "range": "±2^31 or ±2^63",
+    "values": "2^32 or 2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Platform native int",
+    "governance": { "type": "language-standard", "owner": "Haskell", "status": "language standard", "notes": "Fixed-size efficient int" },
+    "language_support": [
+      { "language": "Haskell", "native_support": "Int", "module": "Prelude", "notes": "Fixed-size, at least 30 bits, typically 32 or 64" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Scientific (Haskell)",
+    "category": "decimal",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Arbitrary",
+    "values": "Arbitrary",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "variable",
+      "mantissa_bits": "variable (Integer coefficient)",
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "coefficient (Integer) × 10^exponent",
+    "governance": { "type": "de-facto", "owner": "Haskell library", "status": "library", "notes": "Arbitrary precision decimal" },
+    "arbitrary_precision_config": {
+      "precision_type": "unlimited_rational",
+      "representation": "Integer coefficient + Int exponent"
+    },
+    "language_support": [
+      { "language": "Haskell", "native_support": "none", "library": "scientific", "type": "Scientific", "notes": "Efficient arbitrary precision decimal via scientific package" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Natural (Haskell)",
+    "category": "integer",
+    "bits_total": "variable",
+    "signed": false,
+    "range": "0 to ∞",
+    "values": "Infinite",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": "variable",
+      "bias": null,
+      "specials": { "zeros": "0", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Arbitrary precision",
+    "governance": { "type": "language-standard", "owner": "Haskell", "status": "GHC 7.10+", "notes": "Natural numbers only" },
+    "arbitrary_precision_config": {
+      "precision_type": "unlimited_integer",
+      "representation": "GMP-based"
+    },
+    "language_support": [
+      { "language": "Haskell", "native_support": "Natural", "module": "Numeric.Natural", "version": "GHC 7.10+", "notes": "Non-negative integers only" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Go rune",
+    "category": "integer",
+    "bits_total": 32,
+    "signed": true,
+    "range": "0 to 0x10FFFF (Unicode range)",
+    "values": "2^32",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "U+0000", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "32-bit int",
+    "governance": { "type": "language-standard", "owner": "Go", "status": "Go standard", "notes": "Alias for int32, Unicode code point" },
+    "language_support": [
+      { "language": "Go", "native_support": "rune", "package": "builtin", "version": "1.0+", "notes": "Type alias for int32, represents Unicode code points" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Go byte",
+    "category": "integer",
+    "bits_total": 8,
+    "signed": false,
+    "range": "0 to 255",
+    "values": "256",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0x00", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "8 bits",
+    "governance": { "type": "language-standard", "owner": "Go", "status": "Go standard", "notes": "Alias for uint8" },
+    "language_support": [
+      { "language": "Go", "native_support": "byte", "package": "builtin", "version": "1.0+", "notes": "Type alias for uint8" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Rust char",
+    "category": "integer",
+    "bits_total": 32,
+    "signed": false,
+    "range": "0x0 to 0x10FFFF (Unicode scalar values)",
+    "values": "~1.1 million valid Unicode scalars",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "'\\0'", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "32-bit Unicode scalar",
+    "governance": { "type": "language-standard", "owner": "Rust", "status": "Rust standard", "notes": "Unicode scalar value" },
+    "language_support": [
+      { "language": "Rust", "native_support": "char", "version": "1.0+", "notes": "4-byte Unicode scalar value, not all u32 values valid" }
+    ],
+    "links": []
+  }
+]

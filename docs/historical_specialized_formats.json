@@ -1,0 +1,623 @@
+[
+  {
+    "name": "IBM Hexadecimal Float (32-bit)",
+    "category": "float",
+    "bits_total": 32,
+    "signed": true,
+    "range": "±7.2e75",
+    "values": "~4.3B",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 7,
+      "mantissa_bits": 24,
+      "bias": 64,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "S + 7E + 24M (base-16 exponent)",
+    "governance": { "type": "vendor", "owner": "IBM mainframe", "status": "legacy", "notes": "Base-16 floating-point" },
+    "language_support": [
+      { "language": "Fortran", "native_support": "REAL on IBM", "notes": "IBM mainframe Fortran" },
+      { "language": "C", "native_support": "none", "notes": "IBM mainframe C compiler" }
+    ],
+    "links": []
+  },
+  {
+    "name": "IBM Hexadecimal Float (64-bit)",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±7.2e75",
+    "values": "~18Q",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 7,
+      "mantissa_bits": 56,
+      "bias": 64,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "S + 7E + 56M (base-16 exponent)",
+    "governance": { "type": "vendor", "owner": "IBM mainframe", "status": "legacy", "notes": "Base-16 double precision" },
+    "language_support": [
+      { "language": "Fortran", "native_support": "DOUBLE on IBM", "notes": "IBM mainframe" }
+    ],
+    "links": []
+  },
+  {
+    "name": "DEC VAX F_floating",
+    "category": "float",
+    "bits_total": 32,
+    "signed": true,
+    "range": "±1.7e38",
+    "values": "~4.3B",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 8,
+      "mantissa_bits": 23,
+      "bias": 128,
+      "specials": { "zeros": "true", "infinities": false, "nans": "Reserved Operand", "subnormals": false }
+    },
+    "bit_split": "S + 8E + 23M (non-IEEE)",
+    "governance": { "type": "vendor", "owner": "DEC VAX", "status": "legacy", "notes": "VAX floating-point" },
+    "language_support": [
+      { "language": "C", "native_support": "float on VAX", "notes": "DEC VAX systems" }
+    ],
+    "links": []
+  },
+  {
+    "name": "DEC VAX D_floating",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±1.7e38",
+    "values": "~18Q",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 8,
+      "mantissa_bits": 55,
+      "bias": 128,
+      "specials": { "zeros": "true", "infinities": false, "nans": "Reserved Operand", "subnormals": false }
+    },
+    "bit_split": "S + 8E + 55M (non-IEEE)",
+    "governance": { "type": "vendor", "owner": "DEC VAX", "status": "legacy", "notes": "VAX double" },
+    "language_support": [
+      { "language": "C", "native_support": "double on VAX", "notes": "DEC VAX systems" }
+    ],
+    "links": []
+  },
+  {
+    "name": "DEC VAX G_floating",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±8.9e307",
+    "values": "~18Q",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1024,
+      "specials": { "zeros": "true", "infinities": false, "nans": "Reserved Operand", "subnormals": false }
+    },
+    "bit_split": "S + 11E + 52M (non-IEEE)",
+    "governance": { "type": "vendor", "owner": "DEC VAX", "status": "legacy", "notes": "VAX extended double" },
+    "language_support": [
+      { "language": "Fortran", "native_support": "DOUBLE on VAX", "notes": "Some VAX Fortran" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Cray-1 Float",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±10^2466",
+    "values": "~18Q",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 15,
+      "mantissa_bits": 48,
+      "bias": 16384,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "S + 15E + 48M (non-IEEE)",
+    "governance": { "type": "vendor", "owner": "Cray Research", "status": "legacy", "notes": "Cray supercomputer format" },
+    "language_support": [
+      { "language": "Fortran", "native_support": "REAL on Cray", "notes": "Cray Fortran" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Unix time_t (32-bit)",
+    "category": "integer",
+    "bits_total": 32,
+    "signed": true,
+    "range": "1901-12-13 to 2038-01-19",
+    "values": "2^32",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "1970-01-01 00:00:00 UTC", "infinities": false, "nans": "-1 typically", "subnormals": false }
+    },
+    "bit_split": "32-bit signed int (seconds since epoch)",
+    "governance": { "type": "de-facto", "owner": "POSIX/Unix", "status": "legacy (Y2038 problem)", "notes": "Seconds since 1970-01-01" },
+    "language_support": [
+      { "language": "C", "native_support": "time_t", "header": "<time.h>", "notes": "32-bit on 32-bit systems" },
+      { "language": "C++", "native_support": "std::time_t", "header": "<ctime>", "notes": "32-bit on older systems" },
+      { "language": "Python", "native_support": "none", "notes": "Python uses arbitrary int for timestamps" },
+      { "language": "Go", "native_support": "none", "package": "time", "notes": "time.Time uses 64-bit" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Unix time_t (64-bit)",
+    "category": "integer",
+    "bits_total": 64,
+    "signed": true,
+    "range": "292 billion years",
+    "values": "2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "1970-01-01 00:00:00 UTC", "infinities": false, "nans": "-1 typically", "subnormals": false }
+    },
+    "bit_split": "64-bit signed int (seconds since epoch)",
+    "governance": { "type": "de-facto", "owner": "POSIX/Unix", "status": "modern standard", "notes": "Seconds since 1970-01-01" },
+    "language_support": [
+      { "language": "C", "native_support": "time_t", "header": "<time.h>", "notes": "64-bit on modern systems" },
+      { "language": "C++", "native_support": "std::time_t", "header": "<ctime>", "notes": "64-bit on modern systems" },
+      { "language": "Rust", "native_support": "none", "library": "std::time", "notes": "SystemTime uses platform time_t" },
+      { "language": "Go", "native_support": "none", "package": "time", "notes": "time.Time internally uses Unix time" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Windows FILETIME",
+    "category": "integer",
+    "bits_total": 64,
+    "signed": false,
+    "range": "1601-01-01 to ~30000 AD",
+    "values": "2^64",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "1601-01-01 00:00:00 UTC", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "64-bit unsigned (100-nanosecond intervals)",
+    "governance": { "type": "vendor", "owner": "Microsoft Windows", "status": "Windows standard", "notes": "100ns ticks since 1601" },
+    "language_support": [
+      { "language": "C", "native_support": "FILETIME", "header": "<windows.h>", "notes": "Windows API" },
+      { "language": "C++", "native_support": "FILETIME", "header": "<windows.h>", "notes": "Windows API" },
+      { "language": "C#", "native_support": "DateTime.Ticks", "notes": "DateTime uses similar concept" }
+    ],
+    "links": []
+  },
+  {
+    "name": ".NET DateTime Ticks",
+    "category": "integer",
+    "bits_total": 64,
+    "signed": false,
+    "range": "0001-01-01 to 9999-12-31",
+    "values": "~3.15e17 (limited by valid range)",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0001-01-01 00:00:00", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "62-bit ticks + 2-bit Kind",
+    "governance": { "type": "vendor", "owner": "Microsoft .NET", "status": ".NET standard", "notes": "100ns ticks since 0001-01-01" },
+    "language_support": [
+      { "language": "C#", "native_support": "DateTime", "namespace": "System", "version": ".NET 1.0+", "notes": "DateTime.Ticks property" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Java Instant",
+    "category": "integer",
+    "bits_total": "96 (64 + 32)",
+    "signed": true,
+    "range": "Practically unlimited",
+    "values": "2^64 seconds × 10^9 nanos",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "1970-01-01 00:00:00 UTC", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "64-bit seconds + 32-bit nanoseconds",
+    "governance": { "type": "language-standard", "owner": "Java", "status": "Java 8+", "notes": "High-precision timestamp" },
+    "language_support": [
+      { "language": "Java", "native_support": "Instant", "package": "java.time", "version": "1.8+", "notes": "Two-field representation" }
+    ],
+    "links": []
+  },
+  {
+    "name": "JavaScript Date",
+    "category": "float",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±100 million days from epoch",
+    "values": "~18Q",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 11,
+      "mantissa_bits": 52,
+      "bias": 1023,
+      "specials": { "zeros": "1970-01-01 00:00:00 UTC", "infinities": "Invalid Date", "nans": "Invalid Date", "subnormals": "true" }
+    },
+    "bit_split": "FP64 storing milliseconds since epoch",
+    "governance": { "type": "language-standard", "owner": "ECMAScript", "status": "JS standard", "notes": "Milliseconds as double" },
+    "language_support": [
+      { "language": "JavaScript", "native_support": "Date", "notes": "Milliseconds since 1970-01-01 as double" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Go time.Duration",
+    "category": "integer",
+    "bits_total": 64,
+    "signed": true,
+    "range": "±290 years",
+    "values": "2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "64-bit signed int (nanoseconds)",
+    "governance": { "type": "language-standard", "owner": "Go", "status": "Go standard", "notes": "Duration as int64 nanoseconds" },
+    "language_support": [
+      { "language": "Go", "native_support": "time.Duration", "package": "time", "version": "1.0+", "notes": "Type alias for int64" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Rust Duration",
+    "category": "integer",
+    "bits_total": "96 (64 + 32)",
+    "signed": false,
+    "range": "0 to ~584 years",
+    "values": "2^64 seconds × 10^9 nanos",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "64-bit seconds + 32-bit nanoseconds",
+    "governance": { "type": "language-standard", "owner": "Rust", "status": "Rust standard", "notes": "Two-field duration" },
+    "language_support": [
+      { "language": "Rust", "native_support": "std::time::Duration", "version": "1.0+", "notes": "Unsigned duration only" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Python datetime",
+    "category": "integer",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "0001-01-01 to 9999-12-31",
+    "values": "Limited by valid date range",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0001-01-01", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Multiple fields (year, month, day, hour, min, sec, microsec)",
+    "governance": { "type": "language-standard", "owner": "Python", "status": "Python standard", "notes": "Object with multiple fields" },
+    "language_support": [
+      { "language": "Python", "native_support": "datetime", "module": "datetime", "notes": "Microsecond resolution" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Julia DateTime",
+    "category": "integer",
+    "bits_total": 64,
+    "signed": true,
+    "range": "-146138512-01-01 to 146138512-12-31",
+    "values": "2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "0000-01-01", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "64-bit int (milliseconds from epoch)",
+    "governance": { "type": "language-standard", "owner": "Julia", "status": "Julia standard", "notes": "Millisecond precision" },
+    "language_support": [
+      { "language": "Julia", "native_support": "DateTime", "module": "Dates", "notes": "Int64 milliseconds" }
+    ],
+    "links": []
+  },
+  {
+    "name": "FP4 E2M1",
+    "category": "float",
+    "bits_total": 4,
+    "signed": true,
+    "range": "±6",
+    "values": "16",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 2,
+      "mantissa_bits": 1,
+      "bias": 1,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": true }
+    },
+    "bit_split": "SEEM",
+    "governance": { "type": "proposed", "owner": "ML research", "status": "experimental", "notes": "Extreme quantization" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "notes": "Research implementations only" }
+    ],
+    "links": []
+  },
+  {
+    "name": "FP4 E1M2",
+    "category": "float",
+    "bits_total": 4,
+    "signed": true,
+    "range": "±3",
+    "values": "16",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": 1,
+      "mantissa_bits": 2,
+      "bias": 0,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "SEMM",
+    "governance": { "type": "proposed", "owner": "ML research", "status": "experimental", "notes": "Extreme quantization" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "notes": "Research implementations only" }
+    ],
+    "links": []
+  },
+  {
+    "name": "INT2 Ternary",
+    "category": "integer",
+    "bits_total": 2,
+    "signed": true,
+    "range": "-1, 0, +1",
+    "values": "3 (uses 4 bit patterns)",
+    "structure": {
+      "sign_bits": "implicit",
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "2 bits for 3 values",
+    "governance": { "type": "proprietary", "owner": "ML research", "status": "experimental", "notes": "Ternary quantization" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "library": "PyTorch", "notes": "Experimental quantization" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Binary Quantization",
+    "category": "integer",
+    "bits_total": 1,
+    "signed": true,
+    "range": "-1, +1",
+    "values": "2",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "false", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "1 bit",
+    "governance": { "type": "proprietary", "owner": "ML hardware", "status": "experimental", "notes": "Binary neural networks" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "library": "ML frameworks", "notes": "Binary quantization in models" }
+    ],
+    "links": []
+  },
+  {
+    "name": "MXInt8",
+    "category": "integer",
+    "bits_total": 8,
+    "signed": true,
+    "range": "Block-scaled",
+    "values": "256 per element",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "shared block exponent",
+      "mantissa_bits": 7,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "8-bit with shared block scale",
+    "governance": { "type": "proposed", "owner": "Microsoft/OCP", "status": "experimental", "notes": "Microscaling integer format" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "notes": "Research implementations" }
+    ],
+    "links": []
+  },
+  {
+    "name": "AFPQ (Additive Float Point Quantization)",
+    "category": "float",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Depends on configuration",
+    "values": "Configurable",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "variable",
+      "mantissa_bits": "variable",
+      "bias": "variable",
+      "specials": { "zeros": "true", "infinities": "configurable", "nans": "configurable", "subnormals": "configurable" }
+    },
+    "bit_split": "Configurable additive quantization",
+    "governance": { "type": "proposed", "owner": "ML research", "status": "experimental", "notes": "Learned quantization" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "library": "research", "notes": "Experimental implementations" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Block FP (Meta)",
+    "category": "float",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Block-wise scaled",
+    "values": "Variable",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "shared per block",
+      "mantissa_bits": "variable per element",
+      "bias": "shared",
+      "specials": { "zeros": "per block", "infinities": false, "nans": false, "subnormals": "per block" }
+    },
+    "bit_split": "Shared exponent per block + individual mantissas",
+    "governance": { "type": "proposed", "owner": "Meta/Facebook", "status": "research", "notes": "Block floating-point" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "notes": "Research implementations" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Stochastic Rounding Float",
+    "category": "float",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Same as base format",
+    "values": "Same as base format",
+    "structure": {
+      "sign_bits": "same as base",
+      "exponent_bits": "same as base",
+      "mantissa_bits": "same as base",
+      "bias": "same as base",
+      "specials": { "zeros": "same as base", "infinities": "same as base", "nans": "same as base", "subnormals": "same as base" }
+    },
+    "bit_split": "Same as base format",
+    "governance": { "type": "de-facto", "owner": "Numerical computing", "status": "technique not format", "notes": "Rounding mode, not distinct format" },
+    "language_support": [
+      { "language": "Julia", "native_support": "none", "library": "StochasticRounding.jl", "notes": "Via package" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Logarithmic Number System (LNS)",
+    "category": "other",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Exponential range",
+    "values": "Variable",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": "log-encoded value",
+      "bias": null,
+      "specials": { "zeros": "-∞ encoding", "infinities": "+∞", "nans": "special", "subnormals": false }
+    },
+    "bit_split": "Sign + log(|value|)",
+    "governance": { "type": "proposed", "owner": "Research", "status": "experimental", "notes": "Logarithmic representation" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Research implementations" },
+      { "language": "CUDA", "native_support": "none", "notes": "Research implementations" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Residue Number System (RNS)",
+    "category": "other",
+    "bits_total": "variable",
+    "signed": false,
+    "range": "Product of moduli",
+    "values": "Product of moduli",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "all zeros", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Multiple residues modulo different primes",
+    "governance": { "type": "proposed", "owner": "Research", "status": "experimental", "notes": "Parallel arithmetic system" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Research implementations" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Tapered Floating Point",
+    "category": "float",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Non-uniform density",
+    "values": "Variable",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": "variable",
+      "mantissa_bits": "variable",
+      "bias": "variable",
+      "specials": { "zeros": "true", "infinities": "true", "nans": "configurable", "subnormals": "configurable" }
+    },
+    "bit_split": "Variable precision based on magnitude",
+    "governance": { "type": "proposed", "owner": "Research", "status": "experimental", "notes": "Non-uniform precision distribution" },
+    "language_support": [
+      { "language": "Julia", "native_support": "none", "notes": "Research implementations" }
+    ],
+    "links": []
+  },
+  {
+    "name": "APyFixed (Python)",
+    "category": "integer",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Configurable",
+    "values": "2^bits",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Configurable Qm.n format",
+    "governance": { "type": "de-facto", "owner": "Python library", "status": "library", "notes": "Arbitrary precision fixed-point" },
+    "language_support": [
+      { "language": "Python", "native_support": "none", "library": "apytypes", "notes": "Arbitrary precision fixed-point library" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Void Pointer",
+    "category": "other",
+    "bits_total": "platform-dependent (32 or 64)",
+    "signed": false,
+    "range": "Memory address space",
+    "values": "2^32 or 2^64",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "NULL", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Platform pointer size",
+    "governance": { "type": "de-facto", "owner": "C/C++", "status": "standardized", "notes": "Generic pointer type" },
+    "language_support": [
+      { "language": "C", "native_support": "void*", "notes": "Generic pointer" },
+      { "language": "C++", "native_support": "void*", "notes": "Generic pointer" },
+      { "language": "Rust", "native_support": "*const T, *mut T", "notes": "Raw pointers" }
+    ],
+    "links": []
+  }
+]

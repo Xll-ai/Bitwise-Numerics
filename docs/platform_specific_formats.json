@@ -1,0 +1,460 @@
+[
+  {
+    "name": "size_t",
+    "category": "integer",
+    "bits_total": "32 or 64 (platform-dependent)",
+    "signed": false,
+    "range": "0 to 4294967295 (32-bit) or 18446744073709551615 (64-bit)",
+    "values": "2^32 or 2^64",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Platform-dependent: 32 or 64 bits",
+    "governance": { "type": "de-facto", "owner": "ISO C/C++", "status": "standardized", "notes": "Unsigned type for object sizes" },
+    "language_support": [
+      { "language": "C", "native_support": "size_t", "header": "<stddef.h>", "standard": "C89+", "notes": "Result type of sizeof operator" },
+      { "language": "C++", "native_support": "std::size_t", "header": "<cstddef>", "standard": "C++98+", "notes": "Type for object sizes and array indexing" },
+      { "language": "C#", "native_support": "none", "notes": "Use UIntPtr or nuint (C# 9.0+)" },
+      { "language": "Java", "native_support": "none", "notes": "No direct equivalent, use long" },
+      { "language": "Go", "native_support": "none", "notes": "Use uint or uintptr" },
+      { "language": "Rust", "native_support": "usize", "version": "1.0+", "notes": "Pointer-sized unsigned integer" },
+      { "language": "Python", "native_support": "none", "notes": "No C-style size_t" },
+      { "language": "Haskell", "native_support": "none", "notes": "Use Word or Int for sizes" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No typed size concept" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "size_t", "version": "all", "notes": "Same as host C/C++" },
+      { "language": "Maple", "native_support": "none", "notes": "Not applicable" },
+      { "language": "Julia", "native_support": "none", "notes": "Use UInt for indices" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Not applicable" },
+      { "language": "R", "native_support": "none", "notes": "Use integer for sizes" }
+    ],
+    "links": []
+  },
+  {
+    "name": "ptrdiff_t",
+    "category": "integer",
+    "bits_total": "32 or 64 (platform-dependent)",
+    "signed": true,
+    "range": "±2^31 (32-bit) or ±2^63 (64-bit)",
+    "values": "2^32 or 2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Platform-dependent: 32 or 64 bits",
+    "governance": { "type": "de-facto", "owner": "ISO C/C++", "status": "standardized", "notes": "Signed type for pointer differences" },
+    "language_support": [
+      { "language": "C", "native_support": "ptrdiff_t", "header": "<stddef.h>", "standard": "C89+", "notes": "Result of pointer subtraction" },
+      { "language": "C++", "native_support": "std::ptrdiff_t", "header": "<cstddef>", "standard": "C++98+", "notes": "Type for pointer arithmetic" },
+      { "language": "C#", "native_support": "none", "notes": "Use IntPtr or nint (C# 9.0+)" },
+      { "language": "Java", "native_support": "none", "notes": "No pointer arithmetic" },
+      { "language": "Go", "native_support": "none", "notes": "Use int or uintptr" },
+      { "language": "Rust", "native_support": "isize", "version": "1.0+", "notes": "Pointer-sized signed integer" },
+      { "language": "Python", "native_support": "none", "notes": "No pointer types" },
+      { "language": "Haskell", "native_support": "none", "notes": "Use Int" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No pointers" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "ptrdiff_t", "version": "all", "notes": "Same as host" },
+      { "language": "Maple", "native_support": "none", "notes": "Not applicable" },
+      { "language": "Julia", "native_support": "none", "notes": "Use Int" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Not applicable" },
+      { "language": "R", "native_support": "none", "notes": "Not applicable" }
+    ],
+    "links": []
+  },
+  {
+    "name": "intptr_t",
+    "category": "integer",
+    "bits_total": "32 or 64 (platform-dependent)",
+    "signed": true,
+    "range": "±2^31 (32-bit) or ±2^63 (64-bit)",
+    "values": "2^32 or 2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Platform-dependent: 32 or 64 bits",
+    "governance": { "type": "de-facto", "owner": "ISO C/C++", "status": "standardized", "notes": "Integer type capable of holding pointer" },
+    "language_support": [
+      { "language": "C", "native_support": "intptr_t", "header": "<stdint.h>", "standard": "C99+", "notes": "Can hold any pointer" },
+      { "language": "C++", "native_support": "std::intptr_t", "header": "<cstdint>", "standard": "C++11+", "notes": "Optional type for pointer storage" },
+      { "language": "C#", "native_support": "IntPtr", "namespace": "System", "version": ".NET 1.0+", "notes": "Platform-specific integer pointer" },
+      { "language": "Java", "native_support": "none", "notes": "No pointer types in safe Java" },
+      { "language": "Go", "native_support": "none", "notes": "Use uintptr for unsafe pointer conversion" },
+      { "language": "Rust", "native_support": "isize", "version": "1.0+", "notes": "Also usize for unsigned" },
+      { "language": "Python", "native_support": "none", "notes": "No direct equivalent" },
+      { "language": "Haskell", "native_support": "IntPtr", "module": "Foreign.Ptr", "notes": "FFI pointer-sized int" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No pointers" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "intptr_t", "version": "all", "notes": "Same as host" },
+      { "language": "Maple", "native_support": "none", "notes": "Not applicable" },
+      { "language": "Julia", "native_support": "none", "notes": "Use Int" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Not applicable" },
+      { "language": "R", "native_support": "none", "notes": "Not applicable" }
+    ],
+    "links": []
+  },
+  {
+    "name": "wchar_t",
+    "category": "integer",
+    "bits_total": "16 or 32 (platform-dependent)",
+    "signed": false,
+    "range": "0 to 65535 (Windows) or 0 to 1114111 (Unix)",
+    "values": "2^16 or 2^32",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true (null character)", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "16 or 32 bits",
+    "governance": { "type": "de-facto", "owner": "ISO C/C++", "status": "standardized", "notes": "Wide character type" },
+    "language_support": [
+      { "language": "C", "native_support": "wchar_t", "header": "<wchar.h>", "standard": "C95+", "notes": "Wide character, 16-bit on Windows, 32-bit on Unix" },
+      { "language": "C++", "native_support": "wchar_t", "header": "<cwchar>", "standard": "C++98+", "notes": "Distinct type in C++" },
+      { "language": "C#", "native_support": "none", "notes": "char is always 16-bit UTF-16" },
+      { "language": "Java", "native_support": "none", "notes": "char is always 16-bit UTF-16" },
+      { "language": "Go", "native_support": "rune", "package": "builtin", "version": "1.0+", "notes": "rune is int32 for Unicode code points" },
+      { "language": "Rust", "native_support": "none", "notes": "char is always 32-bit Unicode scalar" },
+      { "language": "Python", "native_support": "none", "notes": "str uses variable-width encoding" },
+      { "language": "Haskell", "native_support": "Char", "notes": "Char is 32-bit Unicode" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No distinct wide char, strings are UTF-16" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "wchar_t", "version": "all", "notes": "Same as host" },
+      { "language": "Maple", "native_support": "none", "notes": "Not applicable" },
+      { "language": "Julia", "native_support": "Char", "notes": "Char is 32-bit Unicode" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Characters are full Unicode" },
+      { "language": "R", "native_support": "none", "notes": "character strings only" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Boolean (bool)",
+    "category": "integer",
+    "bits_total": "1 (logical) or 8 (storage)",
+    "signed": false,
+    "range": "false (0) to true (1)",
+    "values": "2",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "false", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "1 bit (usually stored in 8 bits)",
+    "governance": { "type": "de-facto", "owner": "Multiple language standards", "status": "standardized", "notes": "Boolean logic type" },
+    "language_support": [
+      { "language": "C", "native_support": "bool", "header": "<stdbool.h>", "standard": "C99+", "notes": "_Bool is built-in, bool is macro" },
+      { "language": "C++", "native_support": "bool", "standard": "C++98+", "notes": "Built-in boolean type" },
+      { "language": "C#", "native_support": "bool", "namespace": "System", "version": ".NET 1.0+", "notes": "System.Boolean" },
+      { "language": "Java", "native_support": "boolean", "version": "1.0+", "notes": "Primitive boolean type" },
+      { "language": "Go", "native_support": "bool", "package": "builtin", "version": "1.0+", "notes": "Boolean type" },
+      { "language": "Rust", "native_support": "bool", "version": "1.0+", "notes": "Primitive boolean" },
+      { "language": "Python", "native_support": "bool", "notes": "bool is subclass of int" },
+      { "language": "Haskell", "native_support": "Bool", "module": "Prelude", "notes": "Data type: True | False" },
+      { "language": "JavaScript", "native_support": "boolean", "notes": "Primitive boolean type" },
+      { "language": "Excel Lambda", "native_support": "TRUE/FALSE", "notes": "Logical values TRUE and FALSE" },
+      { "language": "CUDA", "native_support": "bool", "version": "all", "notes": "Same as C++" },
+      { "language": "Maple", "native_support": "true/false", "notes": "Boolean constants" },
+      { "language": "Julia", "native_support": "Bool", "version": "0.1+", "notes": "Boolean type" },
+      { "language": "Wolfram", "native_support": "True/False", "notes": "Boolean symbols" },
+      { "language": "R", "native_support": "logical", "notes": "TRUE, FALSE, NA" }
+    ],
+    "links": []
+  },
+  {
+    "name": "half2 (CUDA Vector)",
+    "category": "vector_processing",
+    "bits_total": 32,
+    "signed": true,
+    "range": "2x FP16 values",
+    "values": "2 × 65536",
+    "structure": {
+      "sign_bits": "2 (one per element)",
+      "exponent_bits": "10 (5 per element)",
+      "mantissa_bits": "20 (10 per element)",
+      "bias": 15,
+      "specials": { "zeros": "per element", "infinities": "per element", "nans": "per element", "subnormals": "per element" }
+    },
+    "bit_split": "2 × SEEEEEEMMMMMMMMMM",
+    "governance": { "type": "vendor", "owner": "NVIDIA", "status": "adopted", "notes": "Vectorized half precision" },
+    "language_support": [
+      { "language": "CUDA", "native_support": "__half2", "version": "7.5+", "notes": "Two FP16 values for parallel operations" }
+    ],
+    "links": []
+  },
+  {
+    "name": "float4 (CUDA Vector)",
+    "category": "vector_processing",
+    "bits_total": 128,
+    "signed": true,
+    "range": "4x FP32 values",
+    "values": "4 × 4.3B",
+    "structure": {
+      "sign_bits": "4",
+      "exponent_bits": "32 (8 per element)",
+      "mantissa_bits": "92 (23 per element)",
+      "bias": 127,
+      "specials": { "zeros": "per element", "infinities": "per element", "nans": "per element", "subnormals": "per element" }
+    },
+    "bit_split": "4 × float",
+    "governance": { "type": "vendor", "owner": "NVIDIA", "status": "adopted", "notes": "Vectorized single precision" },
+    "language_support": [
+      { "language": "CUDA", "native_support": "float4", "version": "all", "notes": "Four floats for memory coalescing" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Quaternion",
+    "category": "other",
+    "bits_total": "variable (typically 128 or 256)",
+    "signed": true,
+    "range": "Depends on component type",
+    "values": "Depends on component type",
+    "structure": {
+      "sign_bits": "4 (one per component)",
+      "exponent_bits": "depends on base type",
+      "mantissa_bits": "depends on base type",
+      "bias": null,
+      "specials": { "zeros": "0 + 0i + 0j + 0k", "infinities": "per component", "nans": "per component", "subnormals": "per component" }
+    },
+    "bit_split": "w + xi + yj + zk (4 scalar components)",
+    "governance": { "type": "de-facto", "owner": "Mathematical libraries", "status": "library-defined", "notes": "4D hypercomplex numbers" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Manual or library implementation" },
+      { "language": "C++", "native_support": "none", "library": "Eigen, GLM", "notes": "Via math libraries" },
+      { "language": "C#", "native_support": "Quaternion", "namespace": "System.Numerics", "version": ".NET 5.0+", "notes": "For 3D rotations" },
+      { "language": "Java", "native_support": "none", "library": "JOML", "notes": "Via libraries" },
+      { "language": "Go", "native_support": "none", "notes": "Third-party libraries" },
+      { "language": "Rust", "native_support": "none", "library": "nalgebra", "notes": "Via nalgebra crate" },
+      { "language": "Python", "native_support": "none", "library": "NumPy", "type": "quaternion", "notes": "Via numpy-quaternion package" },
+      { "language": "Haskell", "native_support": "none", "library": "linear", "notes": "Via linear package" },
+      { "language": "JavaScript", "native_support": "none", "library": "three.js", "notes": "Via 3D libraries" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No support" },
+      { "language": "CUDA", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Maple", "native_support": "none", "library": "Quaternion package", "notes": "Via add-on" },
+      { "language": "Julia", "native_support": "none", "library": "Quaternions.jl", "notes": "Via package" },
+      { "language": "Wolfram", "native_support": "Quaternion", "notes": "Built-in quaternion type" },
+      { "language": "R", "native_support": "none", "library": "onion", "notes": "Via onion package" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Money (SQL MONEY)",
+    "category": "decimal",
+    "bits_total": 64,
+    "signed": true,
+    "range": "-922337203685477.5808 to 922337203685477.5807",
+    "values": "2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "64-bit integer scaled by 10000 (4 decimal places)",
+    "governance": { "type": "vendor", "owner": "Microsoft SQL Server", "status": "database-specific", "notes": "Fixed-point decimal for currency" },
+    "language_support": [
+      { "language": "C#", "native_support": "none", "notes": "Map to decimal or use SqlMoney" },
+      { "language": "Java", "native_support": "none", "notes": "Use BigDecimal for currency" },
+      { "language": "Python", "native_support": "none", "library": "decimal", "notes": "Use Decimal for currency" },
+      { "language": "R", "native_support": "none", "notes": "Use numeric with rounding" }
+    ],
+    "links": []
+  },
+  {
+    "name": "TimeSpan (.NET)",
+    "category": "integer",
+    "bits_total": 64,
+    "signed": true,
+    "range": "-10675199.02:48:05.4775808 to 10675199.02:48:05.4775807",
+    "values": "2^64",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "64-bit integer counting 100-nanosecond ticks",
+    "governance": { "type": "vendor", "owner": "Microsoft .NET", "status": ".NET standard", "notes": "Time duration type" },
+    "language_support": [
+      { "language": "C#", "native_support": "TimeSpan", "namespace": "System", "version": ".NET 1.0+", "notes": "Represents time intervals" }
+    ],
+    "links": []
+  },
+  {
+    "name": "DateTime (.NET)",
+    "category": "integer",
+    "bits_total": 64,
+    "signed": false,
+    "range": "0001-01-01 00:00:00 to 9999-12-31 23:59:59.9999999",
+    "values": "2^62 (2 bits reserved for Kind)",
+    "structure": {
+      "sign_bits": 0,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "01/01/0001 00:00:00", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "62-bit ticks + 2-bit DateTimeKind",
+    "governance": { "type": "vendor", "owner": "Microsoft .NET", "status": ".NET standard", "notes": "Date and time type" },
+    "language_support": [
+      { "language": "C#", "native_support": "DateTime", "namespace": "System", "version": ".NET 1.0+", "notes": "100-nanosecond ticks since 0001-01-01" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Atomic Int",
+    "category": "integer",
+    "bits_total": "variable (typically 32 or 64)",
+    "signed": true,
+    "range": "Same as underlying int type",
+    "values": "Same as underlying type",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Same as underlying int",
+    "governance": { "type": "de-facto", "owner": "C11, C++11, language standards", "status": "standardized", "notes": "Thread-safe atomic operations" },
+    "language_support": [
+      { "language": "C", "native_support": "atomic_int", "header": "<stdatomic.h>", "standard": "C11+", "notes": "Atomic integer operations" },
+      { "language": "C++", "native_support": "std::atomic<int>", "header": "<atomic>", "standard": "C++11+", "notes": "Atomic template" },
+      { "language": "C#", "native_support": "none", "notes": "Use Interlocked class for atomic ops" },
+      { "language": "Java", "native_support": "AtomicInteger", "package": "java.util.concurrent.atomic", "version": "1.5+", "notes": "Thread-safe integer" },
+      { "language": "Go", "native_support": "none", "package": "sync/atomic", "notes": "Package for atomic operations" },
+      { "language": "Rust", "native_support": "AtomicI32", "module": "std::sync::atomic", "version": "1.0+", "notes": "Atomic integer types" },
+      { "language": "Python", "native_support": "none", "notes": "GIL makes most ops atomic, use threading.Lock" },
+      { "language": "Haskell", "native_support": "none", "library": "atomic-primops", "notes": "Via library" },
+      { "language": "JavaScript", "native_support": "none", "library": "Atomics", "notes": "Atomics object for SharedArrayBuffer" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "Single-threaded" },
+      { "language": "CUDA", "native_support": "atomicAdd, etc.", "version": "all", "notes": "Atomic operations, not types" },
+      { "language": "Maple", "native_support": "none", "notes": "Not applicable" },
+      { "language": "Julia", "native_support": "Atomic", "module": "Base.Threads", "notes": "Atomic wrapper types" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Not applicable" },
+      { "language": "R", "native_support": "none", "notes": "Single-threaded" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Saturating Integer",
+    "category": "integer",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Same as base type",
+    "values": "Same as base type",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Same as base integer",
+    "governance": { "type": "vendor", "owner": "Various implementations", "status": "language/library-specific", "notes": "Clamps to min/max on overflow" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "C++", "native_support": "none", "library": "Boost.SafeNumerics", "notes": "Via libraries" },
+      { "language": "C#", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Java", "native_support": "none", "notes": "Manual clamping" },
+      { "language": "Go", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Rust", "native_support": "saturating_*", "version": "1.0+", "notes": "saturating_add, saturating_sub methods" },
+      { "language": "Python", "native_support": "none", "notes": "Not needed, int is unbounded" },
+      { "language": "Haskell", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "JavaScript", "native_support": "none", "notes": "Manual clamping" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "Use MAX/MIN functions" },
+      { "language": "CUDA", "native_support": "none", "notes": "Manual implementation" },
+      { "language": "Maple", "native_support": "none", "notes": "Not applicable" },
+      { "language": "Julia", "native_support": "none", "library": "SaferIntegers.jl", "notes": "Via package" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Not applicable" },
+      { "language": "R", "native_support": "none", "notes": "Use pmin/pmax" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Wrapping Integer",
+    "category": "integer",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Same as base type",
+    "values": "Same as base type",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Same as base integer",
+    "governance": { "type": "de-facto", "owner": "Two's complement arithmetic", "status": "widely implemented", "notes": "Wraps on overflow (modular arithmetic)" },
+    "language_support": [
+      { "language": "C", "native_support": "default for unsigned", "notes": "Unsigned overflow is defined, signed is UB" },
+      { "language": "C++", "native_support": "default for unsigned", "notes": "Unsigned wraps, signed overflow is UB" },
+      { "language": "C#", "native_support": "default (unchecked)", "notes": "Default behavior wraps, use checked for exceptions" },
+      { "language": "Java", "native_support": "default", "notes": "Wraps on overflow silently" },
+      { "language": "Go", "native_support": "default", "notes": "Wraps on overflow" },
+      { "language": "Rust", "native_support": "wrapping_*", "version": "1.0+", "notes": "wrapping_add, wrapping_sub methods; panic in debug" },
+      { "language": "Python", "native_support": "none", "notes": "int is unbounded" },
+      { "language": "Haskell", "native_support": "default", "notes": "Fixed-size integers wrap" },
+      { "language": "JavaScript", "native_support": "default for bitwise", "notes": "Bitwise ops wrap at 32-bit" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "Uses doubles" },
+      { "language": "CUDA", "native_support": "default", "notes": "Default integer behavior" },
+      { "language": "Maple", "native_support": "none", "notes": "Arbitrary precision" },
+      { "language": "Julia", "native_support": "default", "notes": "Wraps by default" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Arbitrary precision" },
+      { "language": "R", "native_support": "default", "notes": "Wraps with warning" }
+    ],
+    "links": []
+  },
+  {
+    "name": "Checked Integer",
+    "category": "integer",
+    "bits_total": "variable",
+    "signed": true,
+    "range": "Same as base type",
+    "values": "Same as base type",
+    "structure": {
+      "sign_bits": 1,
+      "exponent_bits": null,
+      "mantissa_bits": null,
+      "bias": null,
+      "specials": { "zeros": "true", "infinities": false, "nans": false, "subnormals": false }
+    },
+    "bit_split": "Same as base integer",
+    "governance": { "type": "language-specific", "owner": "Various", "status": "language features", "notes": "Throws/panics on overflow" },
+    "language_support": [
+      { "language": "C", "native_support": "none", "notes": "No built-in overflow checking" },
+      { "language": "C++", "native_support": "none", "library": "Boost.SafeNumerics", "notes": "Via libraries" },
+      { "language": "C#", "native_support": "checked keyword", "version": ".NET 1.0+", "notes": "checked { } blocks throw OverflowException" },
+      { "language": "Java", "native_support": "none", "library": "Math.addExact", "version": "1.8+", "notes": "Methods like addExact throw ArithmeticException" },
+      { "language": "Go", "native_support": "none", "notes": "No built-in checking" },
+      { "language": "Rust", "native_support": "checked_*", "version": "1.0+", "notes": "checked_add returns Option, panic in debug mode by default" },
+      { "language": "Python", "native_support": "none", "notes": "int is unbounded" },
+      { "language": "Haskell", "native_support": "none", "notes": "Use safe arithmetic libraries" },
+      { "language": "JavaScript", "native_support": "none", "notes": "No overflow checking" },
+      { "language": "Excel Lambda", "native_support": "none", "notes": "No overflow in doubles" },
+      { "language": "CUDA", "native_support": "none", "notes": "No built-in checking" },
+      { "language": "Maple", "native_support": "none", "notes": "Arbitrary precision" },
+      { "language": "Julia", "native_support": "none", "library": "SaferIntegers.jl", "notes": "Via package" },
+      { "language": "Wolfram", "native_support": "none", "notes": "Arbitrary precision" },
+      { "language": "R", "native_support": "none", "notes": "No overflow checking" }
+    ],
+    "links": []
+  }
+]

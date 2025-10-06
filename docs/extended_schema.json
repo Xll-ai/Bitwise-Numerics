@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/universal-numeric-format.schema.json",
+  "title": "Universal Numeric Format Schema",
+  "description": "Schema for all numerical formats - from INT2 to arbitrary-precision symbolic systems",
+  "type": "object",
+  "properties": {
+    "name": { 
+      "type": "string", 
+      "description": "Human-readable name (e.g., FP16, BigInteger, MPFR)." 
+    },
+    "category": {
+      "type": "string",
+      "enum": ["integer", "float", "decimal", "rational", "symbolic", "interval", "other"],
+      "description": "High-level numeric type family."
+    },
+    "bits_total": { 
+      "type": ["integer", "string"],
+      "description": "Total bit width or 'variable' for arbitrary precision."
+    },
+    "signed": { 
+      "type": ["boolean", "null"], 
+      "description": "Indicates if integer is signed; null for floats/decimals/arbitrary." 
+    },
+
+    "structure": {
+      "type": "object",
+      "properties": {
+        "sign_bits": { "type": ["integer", "string", "null"] },
+        "exponent_bits": { "type": ["integer", "string", "null"] },
+        "mantissa_bits": { "type": ["integer", "string", "null"] },
+        "bias": { "type": ["integer", "string", "null"] },
+        "specials": {
+          "type": "object",
+          "properties": {
+            "zeros": { "type": ["string", "boolean"] },
+            "infinities": { "type": "boolean" },
+            "nans": { "type": "boolean" },
+            "subnormals": { "type": "boolean" }
+          },
+          "required": ["zeros", "infinities", "nans", "subnormals"]
+        }
+      },
+      "required": ["sign_bits", "exponent_bits", "mantissa_bits", "bias", "specials"]
+    },
+
+    "arbitrary_precision_config": {
+      "type": "object",
+      "description": "Configuration for variable-precision formats",
+      "properties": {
+        "precision_type": {
+          "type": "string",
+          "enum": ["unlimited_integer", "unlimited_rational", "configurable_float", "symbolic", "interval"]
+        },
+        "default_precision_bits": { "type": ["integer", "null"] },
+        "max_practical_precision": { "type": ["integer", "string", "null"] },
+        "memory_scaling": { 
+          "type": "string",
+          "description": "How memory grows with precision (e.g., 'O(n)', 'O(n log n)')"
+        },
+        "computational_complexity": {
+          "type": "object",
+          "properties": {
+            "addition": { "type": "string" },
+            "multiplication": { "type": "string" },
+            "division": { "type": "string" }
+          }
+        },
+        "representation": {
+          "type": "string",
+          "description": "Internal representation (e.g., 'num/den', 'mantissa + exponent', 'symbolic tree')"
+        }
+      }
+    },
+
+    "bit_split": {
+      "type": "string",
+      "description": "Human-readable bit field layout or 'variable' for arbitrary precision."
+    },
+
+    "hex_examples": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "Examples of encoded values."
+    },
+
+    "binary_examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "bits": { "type": "string" },
+          "value": { "type": "string" }
+        },
+        "required": ["bits", "value"]
+      }
+    },
+
+    "governance": {
+      "type": "object",
+      "properties": {
+        "type": { 
+          "type": "string", 
+          "enum": ["IEEE", "vendor", "de-facto", "IETF", "Apache", "proprietary", "proposed", "language-standard"]
+        },
+        "owner": { "type": "string" },
+        "status": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["type", "owner", "status"]
+    },
+
+    "range": { "type": "string" },
+    "values": { "type": "string" },
+
+    "language_support": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "language": { "type": "string" },
+          "native_support": { "type": ["string", "null"] },
+          "library_support": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "library_name": { "type": "string" },
+                "data_type": { "type": "string" },
+                "operations": { "type": "array", "items": { "type": "string" } },
+                "version_required": { "type": "string" }
+              }
+            }
+          },
+          "compiler_requirements": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+
+    "platform_support": { "type": "object" },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    }
+  },
+
+  "required": [
+    "name",
+    "category",
+    "bits_total",
+    "signed",
+    "structure",
+    "bit_split",
+    "governance"
+  ]
+}
